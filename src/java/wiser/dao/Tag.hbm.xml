@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+  <class name="wiser.dao.Tag" table="Tag">
+    <id column="ID" name="id">
+      <generator class="native"/>
+    </id>
+    <property name="nome">
+      <column length="255" name="nome" not-null="true"/>
+    </property>
+    <property name="pos">
+      <column length="255" name="pos" not-null="true"/>
+    </property>
+    <property name="offset" type="long">
+      <column length="255" name="offset" not-null="true"/>
+    </property>
+  </class>
+</hibernate-mapping>

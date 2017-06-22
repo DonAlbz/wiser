@@ -1,0 +1,143 @@
+/* ==========================================================================
+   Tibi's custom styles
+   ========================================================================== */
+
+.well{
+    background-image: none;
+    background-color: white !important;
+}
+
+.well:hover{
+    background-color: #eee  !important;
+}
+
+/* ==========================================================================
+   Alb's custom styles
+   ========================================================================== */
+
+.left {
+  float: left;
+  margin-left: 13px
+}
+.glyphicon-search {
+	color: #fff
+}
+.mobile_search {
+	margin: 6px 0 5px 0;
+}
+
+.navbar{
+    min-height: 115px;
+}
+.navbar-nav{
+    display: flex;
+}
+.height-40{
+    height: 40px;
+}
+
+.white{
+    color:white;
+}
+
+
+#container-nav{
+    padding-top: 30px;
+}
+#nav-centrata{
+    width:100%;
+    position:  relative;
+}
+
+
+.pulsante-dropdown{
+    width: 134%;
+}
+
+
+#login-dp{
+    min-width: 275px;
+    padding: 14px 14px 0;
+    overflow:hidden;
+    /*background-color:rgba(255,255,255,.8);*/
+}
+#login-dp .help-block{
+    font-size:12px    
+}
+#login-dp .bottom{
+   /* background-color:rgba(255,255,255,.8);*/
+    border-top:1px solid #ddd;
+    clear:both;
+    padding:14px;
+}
+#login-dp .social-buttons{
+    margin:12px 0    
+}
+#login-dp .social-buttons a{
+    width: 49%;
+}
+#login-dp .form-group {
+    margin-bottom: 10px;
+}
+.btn-fb{
+    color: #fff;
+    background-color:#3b5998;
+}
+.btn-fb:hover{
+    color: #fff;
+    background-color:#496ebc 
+}
+.btn-tw{
+    color: #fff;
+    background-color:#55acee;
+}
+.btn-tw:hover{
+    color: #fff;
+    background-color:#59b5fa;
+}
+
+
+
+
+
+
+
+.half {
+    position:relative;
+}
+.font{
+    font-size:6em;
+}
+.half:before {
+
+      content: "\e006"; /* put here default icon code*/
+      width: 47%;
+      display: block;
+      position: absolute;
+      overflow: hidden;
+
+}
+.half:after {
+    content: "\e007"; /* put here icon-empty code*/
+}
+
+.half-heart:before {
+
+      content: "\e005"; /* put here default icon code*/
+      width: 57%;
+      display: block;
+      position: absolute;
+      overflow: hidden;
+
+}
+.half-heart:after {
+    content: "\e143"; /* put here icon-empty code*/
+}
+
+
+
+
+
+
+
+

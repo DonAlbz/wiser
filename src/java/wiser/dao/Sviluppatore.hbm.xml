@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+  <class name="wiser.dao.Sviluppatore" table="Sviluppatore">
+    <id column="id" name="id">
+      <generator class="native"/>
+    </id>
+    <property name="nome">
+      <column length="16" name="nome" not-null="true"/>
+    </property>
+    <property name="password">
+      <column length="50" name="password" not-null="true"/>
+    </property>
+    <many-to-one class="wiser.dao.Ambiente" column="id_amb" name="ambiente" not-null="true"/>
+    <set cascade="all" fetch="select" inverse="false" lazy="false" name="elencoDR" table="dev_DR">
+      <key>
+        <column name="id_dev" not-null="false"/>
+      </key>
+      <one-to-many class="wiser.dao.CoppiaDR"/>
+    </set>
+    <set cascade="all" fetch="select" inverse="false" lazy="false" name="followed" table="Follow">
+      <key>
+        <column name="id_follower" not-null="true"/>
+      </key>
+      <many-to-many entity-name="wiser.dao.Sviluppatore">
+        <column name="id_followed" not-null="true"/>
+      </many-to-many>
+    </set>
+    <property name="credibilita" type="double">
+      <column length="16" name="credibilita" not-null="true"/>
+    </property>
+  </class>
+</hibernate-mapping>

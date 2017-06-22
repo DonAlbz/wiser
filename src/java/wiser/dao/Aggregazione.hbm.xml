@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+  <class name="wiser.dao.Aggregazione" table="Aggregazione">
+    <id column="id" name="id">
+      <generator class="native"/>
+    </id>
+    <property name="nome">
+      <column length="16" name="nome" not-null="true"/>
+    </property>
+    <property name="descrizione">
+      <column length="255" name="descrizione" not-null="true"/>
+    </property>
+    <many-to-one class="wiser.dao.Sviluppatore" column="id_dev" name="autore" not-null="true"/>
+    <set cascade="all" fetch="select" inverse="false" lazy="true" name="elencoDS" table="agg_ds">
+      <key>
+        <column name="id_agg" not-null="true"/>
+      </key>
+      <many-to-many entity-name="wiser.dao.DataService">
+        <column name="id_ds" not-null="true"/>
+      </many-to-many>
+    </set>
+  </class>
+</hibernate-mapping>

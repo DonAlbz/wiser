@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+  <class name="wiser.dao.Ambiente" table="Ambiente">
+    <id column="id" name="id">
+      <generator class="native"/>
+    </id>
+    <property name="struttura">
+      <column length="50" name="struttura" not-null="true"/>
+    </property>
+    <property name="contesto">
+      <column length="50" name="contesto" not-null="true"/>
+    </property>
+    <property name="ampiezza">
+      <column length="50" name="ampiezza" not-null="true"/>
+    </property>
+    <property name="maturita">
+      <column length="50" name="maturita" not-null="true"/>
+    </property>
+  </class>
+</hibernate-mapping>

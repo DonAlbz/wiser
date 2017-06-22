@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+  <class name="wiser.dao.Voto" table="Voto">
+    <id column="id" name="id">
+      <generator class="native"/>
+    </id>
+    <property name="voto" type="integer">
+      <column length="16" name="voto" not-null="true"/>
+    </property>
+    <many-to-one class="wiser.dao.Sviluppatore" column="id_dev" name="d" not-null="true"/>
+    <many-to-one class="wiser.dao.Aggregazione" column="id_agg" name="a" not-null="true"/>
+  </class>
+</hibernate-mapping>

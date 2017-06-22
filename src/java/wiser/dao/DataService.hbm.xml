@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+  <class name="wiser.dao.DataService" table="DataService">
+    <id column="id" name="id">
+      <generator class="native"/>
+    </id>
+    <property name="nome">
+      <column length="16" name="nome" not-null="true"/>
+    </property>
+    <property name="descrizione">
+      <column length="255" name="descrizione" not-null="true"/>
+    </property>
+    <property name="numeroUtilizzi">
+      <column length="16" name="numeroUtilizzi" not-null="true"/>
+    </property>
+    <property name="input">
+      <column length="16" name="input" not-null="true"/>
+    </property>
+    <property name="output">
+      <column length="16" name="output" not-null="true"/>
+    </property>
+    <set cascade="all" fetch="select" inverse="false" lazy="true" name="voti" table="voti">
+      <key>
+        <column name="id_ds" not-null="false"/>
+      </key>
+      <one-to-many class="wiser.dao.Voto"/>
+    </set>
+    <!--
+  		<array name="input" table="Input">
+   			<key column="idSinonimo" />
+			<index column="tytle_index" />
+			<element column="nome" type="string" />
+		</array>
+		
+        <array name="output" table="Output">
+                <key column="idSinonimo" />
+                <index column="tytle_index" />
+                <element column="nome" type="string" />
+        </array> -->
+    <set cascade="all" fetch="select" inverse="false" lazy="true" name="tag" table="ds_tag">
+      <key>
+        <column name="id_ds" not-null="true"/>
+      </key>
+      <many-to-many entity-name="wiser.dao.Tag">
+        <column name="id_tag" not-null="true"/>
+      </many-to-many>
+    </set>
+  </class>
+</hibernate-mapping>
