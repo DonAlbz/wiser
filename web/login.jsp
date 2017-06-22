@@ -9,51 +9,63 @@
         <link rel="stylesheet" href="css/bootstrap.min.css">
         <link rel="stylesheet" href="css/bootstrap-theme.min.css">
 
-        <style>#centra{margin-top: 50pt;margin-left: 40%;}</style>
 
         <title>Login</title>
     </head>
     <body>
-        <div class="row">
-            <div class="col-lg-10 col-md-10 col-sm-10">
+        
+        <div class="container">
+            <div class="row">
+                <br>
+                <div class="col-lg-3 col-md-2 col-sm-2"></div>
+                <div class="col-lg-6 col-md-8 col-sm-8">
 
-                <form class="form-horizontal" action='ActionServlet' method="post" id="centra">
-                    <fieldset>
-                        <div id="legend">
-                            <legend class="">Login</legend>
-                        </div>
-                        <div class="control-group">
-                            <!-- Username -->
-                            <label class="control-label"  for="username">Username</label>
-                            <div class="controls">
-                                <input type="text" id="username" name="username" placeholder="" class="input-xlarge">
+                    <form class="form-horizontal" action='ActionServlet' method="post" id="centra">
+                        <fieldset>
+                            <div id="legend"  class="title text-center">
+                                <h2 class="">Login</h2>
                             </div>
-                        </div>
-                        <div class="control-group">
-                            <!-- Password-->
-                            <label class="control-label" for="password">Password</label>
-                            <div class="controls">
-                                <input type="password" id="password" name="password" placeholder="" class="input-xlarge">
-                                <input name="op" value="login" hidden="hidden">
+                            <div class="form-group has-feedback">
+                                <!-- Username -->
+                                <label class="control-label"  for="username">Username</label>
+                                <div class="controls">
+                                    <input type="text" id="username" name="username" placeholder="" class="form-control">
+                                </div>
                             </div>
-                            <span class="error" style="color:red;text-align: center;"><b>${error}</b><br></span>
-                        </div>
+                            <div class="form-group">
+                                <!-- Password-->
+                                <label class="control-label" for="password">Password</label>
+                                <div class="controls">
+                                    <input type="password" id="password" name="password" placeholder="" class="form-control">
+                                    <input name="op" value="login" hidden="hidden">
+                                </div>
+                                <span class="error" style="color:red;text-align: center;"><b>${error}</b><br></span>
+                            </div>
 
 
-                        <br>
-                        <div class="control-group">
-                            <!-- Button -->
-                            <div class="controls">
-                                <button class="btn btn-success">Accedi</button>
+                            <br>
+                            <div class="text-center">
+                                <!-- Button -->
+                                <div class="controls">
+                                    <button class="btn btn-success">Accedi</button>
+                                </div>
                             </div>
-                        </div>
-                        <div class="bottom text-center">
-                            Nuovo utente? <a href="registrazione.jsp"><b> Registrati!</b></a>
-                        </div>
-                    </fieldset>
-                </form>
+                            
+                            <div class="clearfix"></div>
+                                <div class="well">
+                                  <div class="bottom text-center">
+                                    Nuovo utente? <a class="text-success" href="registrazione.jsp"><b> Registrati!</b></a>
+                                    </div>
+                                </div>
+                        </fieldset>
+                    </form>
+                </div>
             </div>
         </div>
+        <script type="text/javascript" src="./js/jquery.js"></script>
+        <script type="text/javascript" src="./js/bootstrap.js"></script>
+        <script type="text/javascript" src="./js/Alb.js"></script> 
+        <script type="text/javascript" src="./js/main.js"></script>
     </body>
 
 </html>

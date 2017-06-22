@@ -35,7 +35,7 @@
                                 <label class="control-label"  for="username">Username</label>
                                 <div class="controls">
                                     <input type="text" id="username" name="username" placeholder="" class="form-control" onkeyup="confrontaPassword()">
-                                    <p class="help-block">Username can contain any letters or numbers, without spaces</p>
+                                    <p id="user-text" class="help-block">Username can contain any letters or numbers, without spaces and can't start with a number</p>
                                 </div>
                             </div>
 
@@ -44,7 +44,7 @@
                                 <label class="control-label" for="password">Password</label>
                                 <div class="controls">
                                     <input type="password" id="password" name="password" placeholder="" class="form-control" onkeyup="confrontaPassword()">
-                                    <p class="help-block">Password should be at least 4 characters</p>
+                                    <p id="pwd-text" class="help-block">Password should be at least 4 characters</p>
                                 </div>
                             </div>
 
@@ -53,7 +53,7 @@
                                 <label class="control-label"  for="password_confirm">Password (Confirm)</label>
                                 <div class="controls">
                                     <input type="password" id="password_confirm" name="password_confirm" onkeyup="confrontaPassword()" placeholder="" class="form-control">
-                                    <p class="help-block">Please confirm password</p>
+                                    <p id="pwd-confirm-text" class="help-block">Please confirm password</p>
                                </div>                        
                                 <span class="error" style="color:red;text-align: center;"><b>${error_a}</b><br></span>
                             </div>
@@ -67,22 +67,29 @@
                                     var user = document.getElementById("username").value;
                                     var pwd1 = document.getElementById("password").value;
                                     var pwd2 = document.getElementById("password_confirm").value;
-
-                                    if((user !== "") && (pwd1 !== "") && (pwd2 !== "") && (pwd1 === pwd2)) {
+                                    
+                                    
+                                    
+                                    if((user !== "") && (pwd1 !== "") && (pwd2 !== "") && (pwd1 === pwd2) && (pwd1.length>3)) {
                                         document.getElementById("daAbilitare").removeAttribute("disabled");
                                         $("#form-pwd-confirm").removeClass("has-error");
                                         $("#form-pwd").removeClass("has-error");
+                                        
                                         if(pwd1 === pwd2){
                                             $("#form-pwd-confirm").addClass("has-success");
                                             $("#form-pwd").addClass("has-success");
+                                            $("#pwd-confirm-text").html("Password confirmed");
                                         }
                                     }
                                     else
                                     {  
                                         document.getElementById("daAbilitare").setAttribute("disabled", true);
-                                        if(pwd2!=="" && pwd1 !== pwd2){
+                                        
+                                        if(pwd2!=="" && pwd2.length >= pwd1.length && pwd1 !== pwd2){
                                             $("#form-pwd-confirm").addClass("has-error");
                                             $("#form-pwd").addClass("has-error");
+                                            $("#pwd-confirm-text").html("This is not the same password!");
+                                            
                                         }
                                     }
                                 }
@@ -95,6 +102,9 @@
                                     <input name="op" value="registrazione" hidden="hidden">
                                 </div>
                             </div>
+                            
+                            
+                            
                         </fieldset>
                     </form>
                 </div>

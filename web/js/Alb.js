@@ -17,9 +17,37 @@ function alb(){
         else{
              $("#form-user").removeClass("has-success");
              $("#form-user").addClass("has-error");
+             $("#user-text").html("Username can contain any letters or numbers, without spaces and can't start with a number");
         }
+        
+        $("#password").blur(
+                function(){
+                    pwd1=$(this).val();
+                    if(pwd1.length>3){
+                        $("#pwd-text").html("Password accettable");
+                        $("#form-pwd").removeClass("has-error");
+                         $("#form-pwd").addClass("has-success");
+                    }
+                    else{
+                        $("#pwd-text").html("Password should be at least 4 characters");
+                         if(pwd1!==""){ 
+                             $("#form-pwd").addClass("has-error");
+                         }
+                    }
+                });
+                
+        $("#password_confirm").blur(
+                function(){
+                        pwd1=$("#password").val();
+                        pwd2=$(this).val();
+                        if(pwd1 !== pwd2){                           
+                            $("#form-pwd-confirm").addClass("has-error");
+                        }
+                    });
      // $(this).css("background-color","#0A5B68");
     });
+    
+    
     
 
 }
@@ -31,11 +59,12 @@ function controlloUsername(username){
             if(response.trim()==="false"){                
                 $("#form-user").removeClass("has-error");
                 $("#form-user").addClass("has-success");
+                $("#user-text").html("Username accettable");
             }
-            else{
-                
+            else{                
                 $("#form-user").removeClass("has-success");
                 $("#form-user").addClass("has-error");
+                $("#user-text").html("Username already taken, please choose another one!");
             }
         }, "text");
     }
