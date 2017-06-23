@@ -20,6 +20,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.ServletConfig;
+import org.json.JSONObject;
 
 /**
  *
@@ -59,6 +60,9 @@ public class ActionServlet extends HttpServlet {
         }
         if (op.equalsIgnoreCase("controlloUsername")) {
             doPostControlloUsername(req, resp);
+        }
+        if (op.equalsIgnoreCase("find")) {
+            doGetFind(req, resp);
         }
     }
 
@@ -137,6 +141,38 @@ public class ActionServlet extends HttpServlet {
         
         resp.getWriter().println(utenteGiaPresente);
     };
+   
+    public void doGetFind(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
+        String s = (String) req.getParameter("s");
+        ArrayList<DataService> services = hibernate.readDataServices();
+        ArrayList<Tag> tags = hibernate.readTags();
+        Iterator iterService = services.iterator();
+        ArrayList<JSONObject> list = new ArrayList<>();
+        while (iterService.hasNext()) {
+            JSONObject obj = new JSONObject();
+            DataService service = (DataService) iterService.next();
+            String name = service.getNome();
+            if (name.toLowerCase().contains(s.toLowerCase())) {
+                obj.put("nome", name);
+                list.add(obj);
+            }
+        }
+        Iterator iterTags = tags.iterator();
+        while (iterTags.hasNext()) {
+            JSONObject obj = new JSONObject();
+            Tag tagSel = (Tag) iterTags.next();
+            String name = tagSel.getNome();
+            if (name.toLowerCase().contains(s)) {
+                obj.put("nome", name);
+                list.add(obj);
+            }
+        }
+        JSONObject toRet = new JSONObject();
+        toRet.put("suggerimenti", list);
+        PrintWriter out = resp.getWriter();
+        out.print(toRet);
+    }
     
     
 }
