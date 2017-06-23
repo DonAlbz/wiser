@@ -4,6 +4,7 @@
     Author     : Sara
 --%>
 
+<%@page import="javaFunctions.Functions"%>
 <%@page import="java.util.*"%>
 <%@page import="wiser.dao.*"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
@@ -142,7 +143,7 @@
                             while (iterTagCat.hasNext()) {
                                 Tag selTagCat = (Tag) iterTagCat.next();
                         %>        
-                        <a href="#" class="list-group-item"> <%=selTagCat.getNome()%> </a>
+                                <a href="ActionServlet?op=getList&filtro=<%=selTagCat.getNome()%>" class="list-group-item"> <%=selTagCat.getNome()%></a>
                         <%
                             }
                         %>
@@ -228,6 +229,22 @@
                     </div>
                 </div>
             </div>
+                    <ul class="pagination">
+                <%
+                    int servicesDim = (Integer) request.getAttribute("servicesDim");
+                    int numPages = Functions.numberOfPages(servicesDim);
+                    String filter = (String) request.getAttribute("filtro");
+                    if(numPages > 1) {
+                    for (int i = 0; i < numPages; i++) {
+                        
+                %>
+
+                <li><a href="ActionServlet?op=getList&start=<%=i * 8%>&filtro=<%=filter%>"><%=i + 1%></a></li>
+                    <%
+                        }
+                    }
+                    %>
+            </ul>
         </div>
 
         <footer class="container-fluid text-right" style="color: black; padding: 15px;">

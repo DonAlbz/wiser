@@ -13,6 +13,7 @@ import java.util.*;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import javaFunctions.Functions;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -62,11 +63,23 @@ public class ActionServlet extends HttpServlet {
         }
     }
 
-    private void doGetList(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+       private void doGetList(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         ArrayList<DataService> services = hibernate.readDataServices();
         ArrayList<Tag> tags = hibernate.readTags();
+        Integer start = Functions.parseInteger(req.getParameter("start"));
+        String tagFilter = req.getParameter("filtro");
+        ArrayList<DataService> servicesParsed;
+        if ((tagFilter != null)&&(!tagFilter.equalsIgnoreCase("")&&(!tagFilter.equalsIgnoreCase("null")))) {
+            ArrayList<DataService> servicesFiltered = Functions.filterDSList(services, tagFilter);
+            servicesParsed = Functions.parseDSList(servicesFiltered, start);
+            req.setAttribute("servicesDim", servicesFiltered.size());
+            req.setAttribute("filtro", tagFilter);
+        } else {
+            servicesParsed = Functions.parseDSList(services, start);
+            req.setAttribute("servicesDim", services.size());
+        }
         RequestDispatcher rd = this.getServletContext().getRequestDispatcher("/index.jsp");
-        req.setAttribute("list", services);
+        req.setAttribute("list", servicesParsed);
         req.setAttribute("tags", tags);
         rd.forward(req, resp);
     }
