@@ -35,7 +35,7 @@
                 <div class="row">      
                     <div class="navbar-header col-lg-1 col-md-1 col-sm-1">
 
-                        <a class="navbar-brand" href="#">Wiser</a>
+                        <a class="navbar-brand" href="ActionServlet?op=getList">Wiser</a>
                         <button type="button" class="navbar-toggle collapsed left" data-toggle="collapse" data-target="#menu">
                             <span class="sr-only">Menu</span>
                             <span class="icon-bar"></span>
