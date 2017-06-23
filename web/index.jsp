@@ -54,7 +54,7 @@
                                 <div class="collapse navbar-collapse" id="menu">
                                     <div class="col-lg-3 col-md-3 col-sm-3">
                                         <ul class="nav navbar-nav">
-                                            <li><a href="#">Link <span class="sr-only">Link at: </span></a></li>
+                                            <li><a href="#">modifica tia <span class="sr-only">Link at: </span></a></li>
                                             <li><a href="#">Link</a></li>
                                             <li class="dropdown">
                                                 <a href="#" class="dropdown-toggle pulsante-dropdown" data-toggle="dropdown" role="button" >Menu <span class="caret"></span></a>
