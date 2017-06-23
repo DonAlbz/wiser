@@ -74,9 +74,13 @@
                                     <div class="col-lg-1 col-md-1 col-sm-1">
                                     </div>
                                     <div class="col-lg-8 col-md-8 col-sm-8">
-                                        <form class="navbar-form   hidden-xs" role="search" action="/" method="GET">
+                                          <form class="navbar-form   hidden-xs" role="search" action="/" method="GET">
                                             <div id="nav-centrata" class="input-group" >
-                                                <input type="text" class="form-control center-block height-40" placeholder="search..."/>
+                                                <input id="auto0" type="text" class="form-control center-block height-40" placeholder="search..." onkeyup="autocompl(this.value);">
+                                                <input id="auto1" type="text" class ="canter-block height-40" hidden="hidden" disabled="disabled"> 
+                                                <input id="auto2" type="text" class ="canter-block height-40" hidden disabled="disabled"> 
+                                                <input id="auto3" type="text" class ="canter-block height-40" hidden disabled="disabled"> 
+                                                <input id="auto4" type="text" class ="canter-block height-40" hidden disabled="disabled"> 
                                                 <span class="input-group-btn">
                                                     <button class="btn btn-success height-40" type="button">Search</button>
                                                 </span>
@@ -252,6 +256,7 @@
         </footer>
         <script type="text/javascript" src="./js/jquery.js"></script>
         <script type="text/javascript" src="./js/bootstrap.js"></script>
+        <script type="text/javascript" src="./js/autocomplAjax.js"></script>
 
         <!-- script per comprimere sidebar -->
         <script>
