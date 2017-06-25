@@ -70,6 +70,10 @@ public class ActionServlet extends HttpServlet {
        private void doGetList(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         ArrayList<DataService> services = hibernate.readDataServices();
         ArrayList<Tag> tags = hibernate.readTags();
+        
+        //Ordinamento dei tag
+        tags.sort((t1, t2) -> t1.getNome().compareTo(t2.getNome()));
+        
         Integer start = Functions.parseInteger(req.getParameter("start"));
         String tagFilter = req.getParameter("filtro");
         ArrayList<DataService> servicesParsed;
