@@ -3,8 +3,8 @@ package wiser.dao;
 /**
  * This class represents an aggregation of data services.
  *
- * @author Flavia Venturelli
- * @version 1.0
+ * @author Flavia Venturelli, Alberto Vivenzi
+ * @version 1.1
  */
 import java.util.*;
 
@@ -93,4 +93,40 @@ public class Aggregazione {
 
         return false;
     }
+    
+    /**
+     * Add data service specified as input parameter in the aggregation.
+     *
+     * @param s Data service to add.
+     * @return FALSE if the data service was already added to the aggregation, otherwise return TRUE;.
+     */
+    public boolean addDS(DataService s){
+        java.util.Iterator<DataService> iter = elencoDS.iterator();
+        boolean giaInserito=false;
+        while (iter.hasNext()) {
+            DataService ds = iter.next();
+            if (Objects.equals(ds.getId(), s.getId())) {
+                giaInserito= true;
+            }
+        }
+        if(!giaInserito){
+            elencoDS.add(s);
+        }
+        return !giaInserito;
+    }
+    
+     /**
+     * Remove data service specified as input parameter in the aggregation.
+     *
+     * @param s Data service to add.
+     * @return TRUE if the data service is succesfully removed, otherwise returns FALSE.
+     */
+    public boolean removeDS(DataService s){   
+        boolean dsFound;
+        if(dsFound=includeDS(s)){
+            elencoDS.remove(s);
+        }
+        return dsFound;
+    }
+    
 }
