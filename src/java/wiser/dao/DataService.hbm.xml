@@ -46,5 +46,16 @@
         <column name="id_tag" not-null="true"/>
       </many-to-many>
     </set>
+    
+    <!-- Aggiunta -->
+    <set cascade="all" fetch="select" inverse="false" lazy="true" name="category" table="ds_cat">
+      <key>
+        <column name="id_ds" not-null="true"/>
+      </key>
+      <many-to-many entity-name="wiser.dao.Category">
+        <column name="id_cat" not-null="true"/>
+      </many-to-many>
+    </set>
+    <!-- Fine aggiunta -->
   </class>
 </hibernate-mapping>

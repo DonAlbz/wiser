@@ -69,22 +69,22 @@ public class ActionServlet extends HttpServlet {
 
        private void doGetList(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         ArrayList<DataService> services = hibernate.readDataServices();
-        ArrayList<Tag> tags = hibernate.readTags();
+        ArrayList<Category> categories = hibernate.readCategories();
         Integer start = Functions.parseInteger(req.getParameter("start"));
-        String tagFilter = req.getParameter("filtro");
+        String catFilter = req.getParameter("filtro");
         ArrayList<DataService> servicesParsed;
-        if ((tagFilter != null)&&(!tagFilter.equalsIgnoreCase("")&&(!tagFilter.equalsIgnoreCase("null")))) {
-            ArrayList<DataService> servicesFiltered = Functions.filterDSList(services, tagFilter);
+        if ((catFilter != null)&&(!catFilter.equalsIgnoreCase("")&&(!catFilter.equalsIgnoreCase("null")))) {
+            ArrayList<DataService> servicesFiltered = Functions.filterDSList(services, catFilter);
             servicesParsed = Functions.parseDSList(servicesFiltered, start);
             req.setAttribute("servicesDim", servicesFiltered.size());
-            req.setAttribute("filtro", tagFilter);
+            req.setAttribute("filtro", catFilter);
         } else {
             servicesParsed = Functions.parseDSList(services, start);
             req.setAttribute("servicesDim", services.size());
         }
         RequestDispatcher rd = this.getServletContext().getRequestDispatcher("/index.jsp");
         req.setAttribute("list", servicesParsed);
-        req.setAttribute("tags", tags);
+        req.setAttribute("cats", categories);
         rd.forward(req, resp);
     }
 

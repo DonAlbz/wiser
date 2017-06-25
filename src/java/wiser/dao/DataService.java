@@ -46,8 +46,16 @@ public class DataService {
      * The list of ratings assigned to the data service.
      */
     private Set<Voto> voti;
-
+    
+    //Aggiunta
+        /**
+     * A set of category used to classify the data service.
+     */
+    private Set<Category> category;
+    //Fine aggiunta
+    
     private static final int MAX_VOTO = 100;
+    
 
     public DataService() {
 
@@ -116,6 +124,16 @@ public class DataService {
     public void setVoti(Set<Voto> v) {
         this.voti = v;
     }
+    
+    //Aggiunta
+     public Set<Category> getCategory() {
+        return category;
+    }
+
+    public void setCategory(Set<Category> category) {
+        this.category = category;
+    }
+    //Fine aggiunta
 
     /**
      * Finds developers who used the service.

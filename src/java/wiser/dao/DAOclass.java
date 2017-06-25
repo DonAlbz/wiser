@@ -119,6 +119,48 @@ public class DAOclass {
 
         return t;
     }
+    
+// Vecchio Metodo    
+//       /**
+//     * Save in a persistent way a data service on the database.
+//     *
+//     * @param nome Data service name.
+//     * @param descrizione Data service description.
+//     * @param specifiche Set of Tags that describe the data service.
+//     * @param input Input parameters (comma separated, each of them expressed
+//     * through the semantic type of the parameter).
+//     * @param output Output parameters (comma separated, each of them expressed
+//     * through the semantic type of the parameter).
+//     */
+//    public void createDataService(String nome, String descrizione, Set<Tag> specifiche, String input, String output) {
+//        boolean outerTransaction = true;
+//
+//        // if the transaction is already active, this means that has been 
+//        // opened by the invoking method
+//        if (!this.session.getTransaction().isActive()) {
+//            this.session.beginTransaction();
+//            outerTransaction = false;
+//        }
+//
+//        DataService ds = new DataService();
+//
+//        ds.setNome(nome);
+//        ds.setDescrizione(descrizione);
+//        ds.setTag(specifiche);
+//        ds.setNumeroUtilizzi(0);
+//        ds.setInput(input);
+//        ds.setOutput(output);
+//        ds.setVoti(new HashSet<>());
+//
+//        this.session.save(ds);
+//
+//        // if the transaction has been opened by the invoking method, 
+//        // it is that method that is in charge of commit/abort
+//        if (!outerTransaction) {
+//            this.session.getTransaction().commit();
+//        }
+//    }
+    
 
     /**
      * Save in a persistent way a data service on the database.
@@ -126,12 +168,13 @@ public class DAOclass {
      * @param nome Data service name.
      * @param descrizione Data service description.
      * @param specifiche Set of Tags that describe the data service.
+     * @param categorie Set of Categories that classify the data service
      * @param input Input parameters (comma separated, each of them expressed
      * through the semantic type of the parameter).
      * @param output Output parameters (comma separated, each of them expressed
      * through the semantic type of the parameter).
      */
-    public void createDataService(String nome, String descrizione, Set<Tag> specifiche, String input, String output) {
+    public void createDataService(String nome, String descrizione, Set<Tag> specifiche, Set<Category> categorie, String input, String output) {
         boolean outerTransaction = true;
 
         // if the transaction is already active, this means that has been 
@@ -146,6 +189,7 @@ public class DAOclass {
         ds.setNome(nome);
         ds.setDescrizione(descrizione);
         ds.setTag(specifiche);
+        ds.setCategory(categorie);
         ds.setNumeroUtilizzi(0);
         ds.setInput(input);
         ds.setOutput(output);
@@ -166,6 +210,7 @@ public class DAOclass {
      * @param id ID of data service to read.
      * @return The retrieved data service.
      */
+    
     public DataService readDataService(Long id) {
         boolean outerTransaction = true;
 
@@ -895,6 +940,55 @@ public class DAOclass {
         }
 
         return new ArrayList<>(ds);
+    }
+        
+      public ArrayList<Category> readCategories() {
+        boolean outerTransaction = true;
+
+        // if the transaction is already active, this means that has been 
+        // opened by the invoking method
+        if (!this.session.getTransaction().isActive()) {
+            this.session.beginTransaction();
+            outerTransaction = false;
+        }
+
+        List<Category> elenco = this.session.createQuery("select ds from Category ds").list();
+        Set<Category> ds = new HashSet<>(elenco);
+
+        // if the transaction has been opened by the invoking method, 
+        // it is that method that is in charge of commit/abort
+        if (!outerTransaction) {
+            this.session.getTransaction().commit();
+        }
+
+        return new ArrayList<>(ds);
+    }
+      
+    /**
+     * Read a Category from the database.
+     *
+     * @param id The ID of Category to be read.
+     * @return The Category retrieved from the database.
+     */
+    public Category readCategory(Long id) {
+        boolean outerTransaction = true;
+
+        // if the transaction is already active, this means that has been 
+        // opened by the invoking method
+        if (!this.session.getTransaction().isActive()) {
+            this.session.beginTransaction();
+            outerTransaction = false;
+        }
+
+        Category c = (Category) this.session.get(Category.class, id);
+
+        // if the transaction has been opened by the invoking method, 
+        // it is that method that is in charge of commit/abort
+        if (!outerTransaction) {
+            this.session.getTransaction().commit();
+        }
+
+        return c;
     }
 
 }

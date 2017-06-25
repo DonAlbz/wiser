@@ -53,11 +53,11 @@ public class Functions {
         ArrayList<DataService> services = new ArrayList<>();
         for(int i=0; i<list.size(); i++) {
             DataService service = list.get(i);
-            Set<Tag> taglist = service.getTag();
-            Object[] listaDiArray = taglist.toArray();
+            Set<Category> catlist = service.getCategory();
+            Object[] listaDiArray = catlist.toArray();
             for(int j=0; j<listaDiArray.length; j++) {
-                Tag tag = (Tag) listaDiArray[j];
-                if(filter.equalsIgnoreCase(tag.getNome())) {
+                Category cat = (Category) listaDiArray[j];
+                if(filter.equalsIgnoreCase(cat.getNome())) {
                     services.add(list.get(i));
                 }
             }

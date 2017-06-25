@@ -142,12 +142,12 @@
                     <h3> Filter by Categories </h3>
                     <div class="list-group">
                         <%
-                            ArrayList<Tag> tags = (ArrayList<Tag>) request.getAttribute("tags");
-                            Iterator<Tag> iterTagCat = tags.iterator();
-                            while (iterTagCat.hasNext()) {
-                                Tag selTagCat = (Tag) iterTagCat.next();
+                            ArrayList<Category> categories = (ArrayList<Category>) request.getAttribute("cats");
+                            Iterator<Category> iterCat = categories.iterator();
+                            while (iterCat.hasNext()) {
+                                Category selCat = (Category) iterCat.next();
                         %>        
-                                <a href="ActionServlet?op=getList&filtro=<%=selTagCat.getNome()%>" class="list-group-item"> <%=selTagCat.getNome()%></a>
+                                <a href="ActionServlet?op=getList&filtro=<%=selCat.getNome()%>" class="list-group-item"> <%=selCat.getNome()%></a>
                         <%
                             }
                         %>
