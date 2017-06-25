@@ -883,7 +883,7 @@ public class DAOclass {
             outerTransaction = false;
         }
 
-        List<Tag> elenco = this.session.createQuery("select ds from Tag ds order by ds.nome").list();
+        List<Tag> elenco = this.session.createQuery("select ds from Tag ds").list();
         Set<Tag> ds = new HashSet<>(elenco);
         
  
