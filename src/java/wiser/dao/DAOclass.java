@@ -991,4 +991,79 @@ public class DAOclass {
         return c;
     }
 
+    /**
+    * Add a data service to an aggregation
+    *
+    * @param id ID of the aggregation.
+    * @param s data service
+    * @return TRUE  if the data service is added, otherwise FALSE        
+    */
+
+    public boolean addDsToAggregation(Long id, DataService s) {
+        boolean outerTransaction = true;
+        boolean toReturn;
+        // if the transaction is already active, this means that has been 
+        // opened by the invoking method
+        if (!this.session.getTransaction().isActive()) {
+            this.session.beginTransaction();
+            outerTransaction = false;
+        }
+
+        Aggregazione a = (Aggregazione) this.session.get(Aggregazione.class, id);
+
+        toReturn = a.addDS(s);    
+
+        //incremento utilizzi data service
+        updateDataService(s.getId(), 1);
+
+        this.session.save(a);
+
+        // if the transaction has been opened by the invoking method, 
+        // it is that method that is in charge of commit/abort
+        if (!outerTransaction) {
+            this.session.getTransaction().commit();
+        }
+        return toReturn;
+    }
+        
+        
+     /**
+    * remove a data service to an aggregation
+    *
+    * @param id ID of the aggregation.
+    * @param s data service
+    * @return TRUE  if the data service is added, otherwise FALSE        
+    */
+
+    public boolean removeDsToAggregation(Long id, DataService s) {
+        boolean outerTransaction = true;
+        boolean toReturn;
+        // if the transaction is already active, this means that has been 
+        // opened by the invoking method
+        if (!this.session.getTransaction().isActive()) {
+            this.session.beginTransaction();
+            outerTransaction = false;
+        }
+
+        Aggregazione a = (Aggregazione) this.session.get(Aggregazione.class, id);
+
+        toReturn = a.removeDS(s);    
+
+        //incremento utilizzi data service
+        updateDataService(s.getId(), 1);
+
+        this.session.save(a);
+
+        // if the transaction has been opened by the invoking method, 
+        // it is that method that is in charge of commit/abort
+        if (!outerTransaction) {
+            this.session.getTransaction().commit();
+        }
+        return toReturn;
+    }
+        
+        
+        
 }
+
+
