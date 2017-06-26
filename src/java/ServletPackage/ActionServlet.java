@@ -62,34 +62,49 @@ public class ActionServlet extends HttpServlet {
         if (op.equalsIgnoreCase("controlloUsername")) {
             doPostControlloUsername(req, resp);
         }
-        if (op.equalsIgnoreCase("find")) {
-            doGetFind(req, resp);
+        if (op.equalsIgnoreCase("autoc")) {
+            doGetAutoc(req, resp);
         }
     }
 
-       private void doGetList(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        ArrayList<DataService> services = hibernate.readDataServices();
-        ArrayList<Tag> tags = hibernate.readTags();
-        
-        //Ordinamento dei tag
-        tags.sort((t1, t2) -> t1.getNome().compareTo(t2.getNome()));
-        
+
+    private void doGetList(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String key = (String) req.getParameter("search");
+        ArrayList<DataService> servicesFiltered = new ArrayList<>();
+        ArrayList<DataService> servicesParsed = new ArrayList<>();
+
         Integer start = Functions.parseInteger(req.getParameter("start"));
-        String tagFilter = req.getParameter("filtro");
-        ArrayList<DataService> servicesParsed;
-        if ((tagFilter != null)&&(!tagFilter.equalsIgnoreCase("")&&(!tagFilter.equalsIgnoreCase("null")))) {
-            ArrayList<DataService> servicesFiltered = Functions.filterDSList(services, tagFilter);
-            servicesParsed = Functions.parseDSList(servicesFiltered, start);
-            req.setAttribute("servicesDim", servicesFiltered.size());
-            req.setAttribute("filtro", tagFilter);
-        } else {
-            servicesParsed = Functions.parseDSList(services, start);
-            req.setAttribute("servicesDim", services.size());
+        String catFilter = req.getParameter("filtro");
+        boolean isReady = false;
+        if ((key != null) && (!key.equalsIgnoreCase("null"))) {
+            if (isCategory(key)) {
+                catFilter = key;
+            } else {
+                servicesFiltered = getSearchDS(key);
+                req.setAttribute("search", key);
+                isReady = true;
+            }
         }
+        if ((catFilter != null) && (!catFilter.equalsIgnoreCase("") && (!catFilter.equalsIgnoreCase("null")))) {
+            if (!isReady) {
+                servicesFiltered = getCategoryDS(catFilter);
+                req.setAttribute("filtro", catFilter);
+                isReady = true;
+            }
+        } else {
+            if (!isReady) {
+                servicesFiltered = hibernate.readDataServices();
+                isReady = true;
+            }
+        }
+        servicesParsed = Functions.parseDSList(servicesFiltered, start);
+        req.setAttribute("servicesDim", servicesFiltered.size());
+        ArrayList<Category> categories = hibernate.readCategories();
         RequestDispatcher rd = this.getServletContext().getRequestDispatcher("/index.jsp");
         req.setAttribute("list", servicesParsed);
-        req.setAttribute("tags", tags);
+        req.setAttribute("cats", categories);
         rd.forward(req, resp);
+
     }
 
     protected void doPostLogin(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -133,33 +148,31 @@ public class ActionServlet extends HttpServlet {
 
         return stato;
     }
-    
+
     public boolean cercaUtente(String name) {
         boolean stato = false;
         String nome1 = name.toLowerCase();
         Set<Sviluppatore> utenti = hibernate.readDevelopers();
 
         for (Sviluppatore sviluppatore : utenti) {
-            if (nome1.equals(sviluppatore.getNome().toLowerCase()) ) {
+            if (nome1.equals(sviluppatore.getNome().toLowerCase())) {
                 stato = true;
             }
         }
 
         return stato;
     }
-    
-    
-    
-    
 
-   public void doPostControlloUsername(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    public void doPostControlloUsername(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String username = req.getParameter("username");
         Boolean utenteGiaPresente = cercaUtente(username);
-        
+
         resp.getWriter().println(utenteGiaPresente);
-    };
+    }
+
+    ;
    
-    public void doGetFind(HttpServletRequest req, HttpServletResponse resp)
+    public void doGetAutoc(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
         String s = (String) req.getParameter("s");
         ArrayList<DataService> services = hibernate.readDataServices();
@@ -190,6 +203,46 @@ public class ActionServlet extends HttpServlet {
         PrintWriter out = resp.getWriter();
         out.print(toRet);
     }
+
+    private boolean isCategory(String key) {
+        ArrayList<Category> categories = hibernate.readCategories();
+        Iterator iterCats = categories.iterator();
+        while (iterCats.hasNext()) {
+            Category catSel = (Category) iterCats.next();
+            if (catSel.getNome().equalsIgnoreCase(key)) {
+                return true;
+            }
+        }
+        return false;
+    }
     
+    private ArrayList<DataService> getCategoryDS(String catName) {
+        ArrayList<DataService> services = hibernate.readDataServices();
+        ArrayList<DataService> toRet = Functions.filterCategoryDSList(services, catName);
+        return toRet;
+    }
     
+    private ArrayList<DataService> getSearchDS(String key) {
+        ArrayList<DataService> services = hibernate.readDataServices();
+        Iterator iterService = services.iterator();
+        ArrayList<DataService> toRet = new ArrayList<>();
+        while (iterService.hasNext()) {
+            DataService service = (DataService) iterService.next();
+            if (service.getNome().equalsIgnoreCase(key)) {
+                toRet.add(service);
+            }
+        }
+        iterService = services.iterator();
+        while (iterService.hasNext()) {
+            DataService service = (DataService) iterService.next();
+            if (service.getNome().toLowerCase().contains(key.toLowerCase())) {
+                if(!service.getNome().equalsIgnoreCase(key))
+                {
+                    toRet.add(service);
+                }
+            }
+        }
+        return toRet;
+    }
+
 }

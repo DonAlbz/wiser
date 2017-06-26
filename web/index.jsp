@@ -74,15 +74,16 @@
                                     <div class="col-lg-1 col-md-1 col-sm-1">
                                     </div>
                                     <div class="col-lg-8 col-md-8 col-sm-8">
-                                          <form class="navbar-form   hidden-xs" role="search" action="/" method="GET">
+                                          <form class="navbar-form   hidden-xs" role="search" action="ActionServlet" method="GET">
                                             <div id="nav-centrata" class="input-group" >
-                                                <input id="auto0" type="text" class="form-control center-block height-40" placeholder="search..." onkeyup="autocompl(this.value);">
+                                                <input id="auto0" name="search" type="text" class="form-control center-block height-40" placeholder="search..." onkeyup="autocompl(this.value);" autocomplete="off">
                                                 <input id="auto1" type="text" class ="canter-block height-40" hidden="hidden" disabled="disabled"> 
                                                 <input id="auto2" type="text" class ="canter-block height-40" hidden disabled="disabled"> 
                                                 <input id="auto3" type="text" class ="canter-block height-40" hidden disabled="disabled"> 
                                                 <input id="auto4" type="text" class ="canter-block height-40" hidden disabled="disabled"> 
+                                                <input name="op"  type="text" value="getList" hidden>
                                                 <span class="input-group-btn">
-                                                    <button class="btn btn-success height-40" type="button">Search</button>
+                                                    <button class="btn btn-success height-40" type="submit">Search</button>
                                                 </span>
 
                                                 <!--<ul class="nav navbar-nav navbar-right">
@@ -142,12 +143,12 @@
                     <h3> Filter by Categories </h3>
                     <div class="list-group">
                         <%
-                            ArrayList<Tag> tags = (ArrayList<Tag>) request.getAttribute("tags");
-                            Iterator<Tag> iterTagCat = tags.iterator();
-                            while (iterTagCat.hasNext()) {
-                                Tag selTagCat = (Tag) iterTagCat.next();
+                            ArrayList<Category> categories = (ArrayList<Category>) request.getAttribute("cats");
+                            Iterator<Category> iterCat = categories.iterator();
+                            while (iterCat.hasNext()) {
+                                Category selCat = (Category) iterCat.next();
                         %>        
-                                <a href="ActionServlet?op=getList&filtro=<%=selTagCat.getNome()%>" class="list-group-item"> <%=selTagCat.getNome()%></a>
+                                <a href="ActionServlet?op=getList&filtro=<%=selCat.getNome()%>" class="list-group-item"> <%=selCat.getNome()%></a>
                         <%
                             }
                         %>
@@ -238,12 +239,13 @@
                     int servicesDim = (Integer) request.getAttribute("servicesDim");
                     int numPages = Functions.numberOfPages(servicesDim);
                     String filter = (String) request.getAttribute("filtro");
+                    String key = (String) request.getAttribute("search");
                     if(numPages > 1) {
                     for (int i = 0; i < numPages; i++) {
                         
                 %>
 
-                <li><a href="ActionServlet?op=getList&start=<%=i * 8%>&filtro=<%=filter%>"><%=i + 1%></a></li>
+                <li><a href="ActionServlet?op=getList&start=<%=i * 8%>&filtro=<%=filter%>&search=<%=key%>"><%=i + 1%></a></li>
                     <%
                         }
                     }

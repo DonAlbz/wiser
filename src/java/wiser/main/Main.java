@@ -23,6 +23,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Configuration;
 import wiser.dao.Aggregazione;
+import wiser.dao.Category;
 import wiser.dao.DAOclass;
 import wiser.dao.DataService;
 import wiser.dao.Sviluppatore;
@@ -222,31 +223,58 @@ public class Main {
             Tag t2 = dao.readTag((long) 2);
             Tag t3 = dao.readTag((long) 3);
 
+            Category c1 = dao.readCategory((long) 1);
+            Category c2 = dao.readCategory((long) 2);
+            Category c3 = dao.readCategory((long) 3);
+
             Set<Tag> elencoTag1 = new HashSet<>();
             elencoTag1.add(t1);
             elencoTag1.add(t2);
             elencoTag1.add(t3);
-            dao.createDataService("s1", "Provides the distribution by age of consumer who bought a given product", elencoTag1, "int-int", "boolean");
+
+            Set<Category> elencoCat1 = new HashSet<>();
+            elencoCat1.add(c1);
+            elencoCat1.add(c2);
+            elencoCat1.add(c3);
+            dao.createDataService("s1", "Provides the distribution by age of consumer who bought a given product", elencoTag1, elencoCat1, "int-int", "boolean");
 
             t1 = dao.readTag((long) 1);
             t2 = dao.readTag((long) 3);
             t3 = dao.readTag((long) 4);
 
+            c1 = dao.readCategory((long) 1);
+            c2 = dao.readCategory((long) 3);
+            c3 = dao.readCategory((long) 4);
+
             Set<Tag> elencoTag2 = new HashSet<>();
             elencoTag2.add(t1);
             elencoTag2.add(t2);
             elencoTag2.add(t3);
-            dao.createDataService("s2", "Provides the distribution by gender of consumer who bought the product", elencoTag2, "char-string", "void");
+
+            Set<Category> elencoCat2 = new HashSet<>();
+            elencoCat1.add(c1);
+            elencoCat1.add(c2);
+            elencoCat1.add(c3);
+
+            dao.createDataService("s2", "Provides the distribution by gender of consumer who bought the product", elencoTag2, elencoCat2, "char-string", "void");
 
             t1 = dao.readTag((long) 2);
             t2 = dao.readTag((long) 5);
             t3 = dao.readTag((long) 10);
 
+            c1 = dao.readCategory((long) 2);
+            c2 = dao.readCategory((long) 5);
+            c3 = dao.readCategory((long) 10);
+
             Set<Tag> elencoTag3 = new HashSet<>();
             elencoTag3.add(t1);
             elencoTag3.add(t2);
             elencoTag3.add(t3);
-            dao.createDataService("s3", "Provides the median age for all people per zip code", elencoTag3, "vector<int>", "double");
+            Set<Category> elencoCat3 = new HashSet<>();
+            elencoCat1.add(c1);
+            elencoCat1.add(c2);
+            elencoCat1.add(c3);
+            dao.createDataService("s3", "Provides the median age for all people per zip code", elencoTag3, elencoCat3, "vector<int>", "double");
 
             t1 = dao.readTag((long) 2);
             t2 = dao.readTag((long) 10);
@@ -255,6 +283,13 @@ public class Main {
             Tag t5 = dao.readTag((long) 8);
             Tag t6 = dao.readTag((long) 9);
 
+            c1 = dao.readCategory((long) 2);
+            c2 = dao.readCategory((long) 10);
+            c3 = dao.readCategory((long) 6);
+            Category c4 = dao.readCategory((long) 7);
+            Category c5 = dao.readCategory((long) 8);
+            Category c6 = dao.readCategory((long) 9);
+
             Set<Tag> elencoTag4 = new HashSet<>();
             elencoTag4.add(t1);
             elencoTag4.add(t2);
@@ -262,183 +297,336 @@ public class Main {
             elencoTag4.add(t4);
             elencoTag4.add(t5);
             elencoTag4.add(t6);
-            dao.createDataService("s4", "Provides the median age of male and female people fiven the latitude and longitude values", elencoTag4, "double", "string");
+            Set<Category> elencoCat4 = new HashSet<>();
+            elencoCat1.add(c1);
+            elencoCat1.add(c2);
+            elencoCat1.add(c3);
+            elencoCat1.add(c4);
+            elencoCat1.add(c5);
+            elencoCat1.add(c6);
+            dao.createDataService("s4", "Provides the median age of male and female people fiven the latitude and longitude values", elencoTag4, elencoCat4, "double", "string");
 
             t1 = dao.readTag((long) 1);
             t2 = dao.readTag((long) 5);
             t3 = dao.readTag((long) 3);
 
+            c1 = dao.readCategory((long) 1);
+            c2 = dao.readCategory((long) 5);
+            c3 = dao.readCategory((long) 3);
+
             Set<Tag> elencoTag5 = new HashSet<>();
             elencoTag5.add(t1);
             elencoTag5.add(t2);
             elencoTag5.add(t3);
-            dao.createDataService("s5", "Provides the distribution by area (zip code) of consumer who bought the product", elencoTag5, "", "");
+            Set<Category> elencoCat5 = new HashSet<>();
+            elencoCat1.add(c1);
+            elencoCat1.add(c2);
+            elencoCat1.add(c3);
+            dao.createDataService("s5", "Provides the distribution by area (zip code) of consumer who bought the product", elencoTag5, elencoCat5, "", "");
 
             t1 = dao.readTag((long) 1);
             t2 = dao.readTag((long) 3);
             t3 = dao.readTag((long) 13);
 
+            c1 = dao.readCategory((long) 1);
+            c2 = dao.readCategory((long) 3);
+            c3 = dao.readCategory((long) 13);
+
             Set<Tag> elencoTag6 = new HashSet<>();
             elencoTag6.add(t1);
             elencoTag6.add(t2);
             elencoTag6.add(t3);
-            dao.createDataService("s6", "Provides the distribution of sellers of the product", elencoTag6, "", "");
+            Set<Category> elencoCat6 = new HashSet<>();
+            elencoCat1.add(c1);
+            elencoCat1.add(c2);
+            elencoCat1.add(c3);
+            dao.createDataService("s6", "Provides the distribution of sellers of the product", elencoTag6, elencoCat6, "", "");
 
             t1 = dao.readTag((long) 2);
             t2 = dao.readTag((long) 14);
             t3 = dao.readTag((long) 10);
 
+            c1 = dao.readCategory((long) 2);
+            c2 = dao.readCategory((long) 14);
+            c3 = dao.readCategory((long) 10);
+
             Set<Tag> elencoTag7 = new HashSet<>();
             elencoTag7.add(t1);
             elencoTag7.add(t2);
             elencoTag7.add(t3);
-            dao.createDataService("s7", "Provides the average age of families that bought the product", elencoTag7, "", "");
+            Set<Category> elencoCat7 = new HashSet<>();
+            elencoCat1.add(c1);
+            elencoCat1.add(c2);
+            elencoCat1.add(c3);
+            dao.createDataService("s7", "Provides the average age of families that bought the product", elencoTag7, elencoCat7, "", "");
 
             t1 = dao.readTag((long) 15);
             t2 = dao.readTag((long) 6);
             t3 = dao.readTag((long) 7);
             t4 = dao.readTag((long) 16);
 
+            c1 = dao.readCategory((long) 15);
+            c2 = dao.readCategory((long) 6);
+            c3 = dao.readCategory((long) 7);
+            c4 = dao.readCategory((long) 16);
+
             Set<Tag> elencoTag8 = new HashSet<>();
             elencoTag8.add(t1);
             elencoTag8.add(t2);
             elencoTag8.add(t3);
             elencoTag8.add(t4);
-            dao.createDataService("s8", "Provides the list of animals living at the latitude, longitude and temperature specified", elencoTag8, "", "");
+            Set<Category> elencoCat8 = new HashSet<>();
+            elencoCat1.add(c1);
+            elencoCat1.add(c2);
+            elencoCat1.add(c3);
+            elencoCat1.add(c4);
+            dao.createDataService("s8", "Provides the list of animals living at the latitude, longitude and temperature specified", elencoTag8, elencoCat8, "", "");
 
             t1 = dao.readTag((long) 17);
             t2 = dao.readTag((long) 18);
             t3 = dao.readTag((long) 6);
             t4 = dao.readTag((long) 7);
 
+            c1 = dao.readCategory((long) 17);
+            c2 = dao.readCategory((long) 18);
+            c3 = dao.readCategory((long) 6);
+            c4 = dao.readCategory((long) 7);
+
             Set<Tag> elencoTag9 = new HashSet<>();
             elencoTag9.add(t1);
             elencoTag9.add(t2);
             elencoTag9.add(t3);
             elencoTag9.add(t4);
-            dao.createDataService("s9", "Provides the weather information of the place specified by its latitude and longitude", elencoTag9, "", "");
+            Set<Category> elencoCat9 = new HashSet<>();
+            elencoCat1.add(c1);
+            elencoCat1.add(c2);
+            elencoCat1.add(c3);
+            elencoCat1.add(c4);
+            dao.createDataService("s9", "Provides the weather information of the place specified by its latitude and longitude", elencoTag9, elencoCat9, "", "");
 
             t1 = dao.readTag((long) 12);
             t2 = dao.readTag((long) 19);
             t3 = dao.readTag((long) 20);
 
+            c1 = dao.readCategory((long) 12);
+            c2 = dao.readCategory((long) 19);
+            c3 = dao.readCategory((long) 20);
+
             Set<Tag> elencoTag10 = new HashSet<>();
             elencoTag10.add(t1);
             elencoTag10.add(t2);
             elencoTag10.add(t3);
-            dao.createDataService("s10", "Provides the express fares for the postal code specified", elencoTag10, "", "");
+            Set<Category> elencoCat10 = new HashSet<>();
+            elencoCat1.add(c1);
+            elencoCat1.add(c2);
+            elencoCat1.add(c3);
+            dao.createDataService("s10", "Provides the express fares for the postal code specified", elencoTag10, elencoCat10, "", "");
 
             t1 = dao.readTag((long) 21);
             t2 = dao.readTag((long) 4);
             t3 = dao.readTag((long) 22);
 
+            c1 = dao.readCategory((long) 21);
+            c2 = dao.readCategory((long) 4);
+            c3 = dao.readCategory((long) 22);
+
             Set<Tag> elencoTag11 = new HashSet<>();
             elencoTag11.add(t1);
             elencoTag11.add(t2);
             elencoTag11.add(t3);
-            dao.createDataService("s11", "Provides the distribution by sex of the population living in the city specified", elencoTag11, "", "");
+            Set<Category> elencoCat11 = new HashSet<>();
+            elencoCat1.add(c1);
+            elencoCat1.add(c2);
+            elencoCat1.add(c3);
+            elencoCat1.add(c4);
+            dao.createDataService("s11", "Provides the distribution by sex of the population living in the city specified", elencoTag11, elencoCat11, "", "");
 
             t1 = dao.readTag((long) 21);
             t2 = dao.readTag((long) 23);
             t3 = dao.readTag((long) 2);
 
+            c1 = dao.readCategory((long) 21);
+            c2 = dao.readCategory((long) 23);
+            c3 = dao.readCategory((long) 2);
+
             Set<Tag> elencoTag12 = new HashSet<>();
             elencoTag12.add(t1);
             elencoTag12.add(t2);
             elencoTag12.add(t3);
-            dao.createDataService("s12", "Provides the average age of people who practise the specified sport", elencoTag12, "", "");
+            Set<Category> elencoCat12 = new HashSet<>();
+            elencoCat1.add(c1);
+            elencoCat1.add(c2);
+            elencoCat1.add(c3);
+            dao.createDataService("s12", "Provides the average age of people who practise the specified sport", elencoTag12, elencoCat12, "", "");
 
             t1 = dao.readTag((long) 23);
             t2 = dao.readTag((long) 24);
             t3 = dao.readTag((long) 25);
 
+            c1 = dao.readCategory((long) 23);
+            c2 = dao.readCategory((long) 24);
+            c3 = dao.readCategory((long) 25);
+
             Set<Tag> elencoTag13 = new HashSet<>();
             elencoTag13.add(t1);
             elencoTag13.add(t2);
             elencoTag13.add(t3);
-            dao.createDataService("s13", "Provides the average number of calories burnt with the specified sport", elencoTag13, "", "");
+            Set<Category> elencoCat13 = new HashSet<>();
+            elencoCat1.add(c1);
+            elencoCat1.add(c2);
+            elencoCat1.add(c3);
+            dao.createDataService("s13", "Provides the average number of calories burnt with the specified sport", elencoTag13, elencoCat13, "", "");
 
             t1 = dao.readTag((long) 3);
             t2 = dao.readTag((long) 21);
             t3 = dao.readTag((long) 35);
             t4 = dao.readTag((long) 36);
 
+            c1 = dao.readCategory((long) 3);
+            c2 = dao.readCategory((long) 21);
+            c3 = dao.readCategory((long) 35);
+            c4 = dao.readCategory((long) 36);
+
             Set<Tag> elencoTag14 = new HashSet<>();
             elencoTag14.add(t1);
             elencoTag14.add(t2);
             elencoTag14.add(t3);
             elencoTag14.add(t4);
-            dao.createDataService("s14", "Provides the distribution of the world's population", elencoTag14, "", "");
+            Set<Category> elencoCat14 = new HashSet<>();
+            elencoCat1.add(c1);
+            elencoCat1.add(c2);
+            elencoCat1.add(c3);
+            elencoCat1.add(c4);
+            dao.createDataService("s14", "Provides the distribution of the world's population", elencoTag14, elencoCat14, "", "");
 
             t1 = dao.readTag((long) 10);
             t2 = dao.readTag((long) 26);
             t3 = dao.readTag((long) 32);
             t4 = dao.readTag((long) 27);
 
+            c1 = dao.readCategory((long) 10);
+            c2 = dao.readCategory((long) 26);
+            c3 = dao.readCategory((long) 32);
+            c4 = dao.readCategory((long) 27);
+
             Set<Tag> elencoTag15 = new HashSet<>();
             elencoTag15.add(t1);
             elencoTag15.add(t2);
             elencoTag15.add(t3);
             elencoTag15.add(t4);
-            dao.createDataService("s15", "Provide the numbers of births of the city in the period specified", elencoTag15, "", "");
+            Set<Category> elencoCat15 = new HashSet<>();
+            elencoCat1.add(c1);
+            elencoCat1.add(c2);
+            elencoCat1.add(c3);
+            elencoCat1.add(c4);
+            dao.createDataService("s15", "Provide the numbers of births of the city in the period specified", elencoTag15, elencoCat15, "", "");
 
             t1 = dao.readTag((long) 10);
             t2 = dao.readTag((long) 28);
             t3 = dao.readTag((long) 37);
             t4 = dao.readTag((long) 27);
 
+            c1 = dao.readCategory((long) 10);
+            c2 = dao.readCategory((long) 28);
+            c3 = dao.readCategory((long) 37);
+            c4 = dao.readCategory((long) 27);
+
             Set<Tag> elencoTag16 = new HashSet<>();
             elencoTag16.add(t1);
             elencoTag16.add(t2);
             elencoTag16.add(t3);
             elencoTag16.add(t4);
-            dao.createDataService("s16", "Provide the numbers of deaths of the city in the period specified", elencoTag16, "", "");
+            Set<Category> elencoCat16 = new HashSet<>();
+            elencoCat1.add(c1);
+            elencoCat1.add(c2);
+            elencoCat1.add(c3);
+            elencoCat1.add(c4);
+            dao.createDataService("s16", "Provide the numbers of deaths of the city in the period specified", elencoTag16, elencoCat16, "", "");
 
             t1 = dao.readTag((long) 3);
             t2 = dao.readTag((long) 11);
             t3 = dao.readTag((long) 26);
             t4 = dao.readTag((long) 12);
 
+            c1 = dao.readCategory((long) 3);
+            c2 = dao.readCategory((long) 11);
+            c3 = dao.readCategory((long) 26);
+            c4 = dao.readCategory((long) 12);
+
             Set<Tag> elencoTag17 = new HashSet<>();
             elencoTag17.add(t1);
             elencoTag17.add(t2);
             elencoTag17.add(t3);
             elencoTag17.add(t4);
-            dao.createDataService("s17", "Provides the distribution by sex of newborn in the city specified", elencoTag17, "", "");
+            Set<Category> elencoCat17 = new HashSet<>();
+            elencoCat1.add(c1);
+            elencoCat1.add(c2);
+            elencoCat1.add(c3);
+            elencoCat1.add(c4);
+            dao.createDataService("s17", "Provides the distribution by sex of newborn in the city specified", elencoTag17, elencoCat17, "", "");
 
             t1 = dao.readTag((long) 29);
             t2 = dao.readTag((long) 30);
             t3 = dao.readTag((long) 31);
             t4 = dao.readTag((long) 32);
 
+            c1 = dao.readCategory((long) 29);
+            c2 = dao.readCategory((long) 30);
+            c3 = dao.readCategory((long) 31);
+            c4 = dao.readCategory((long) 32);
+
             Set<Tag> elencoTag18 = new HashSet<>();
             elencoTag18.add(t1);
             elencoTag18.add(t2);
             elencoTag18.add(t3);
             elencoTag18.add(t4);
-            dao.createDataService("s18", "Provides the statistic of marks in the university specified", elencoTag18, "", "");
+            Set<Category> elencoCat18 = new HashSet<>();
+            elencoCat1.add(c1);
+            elencoCat1.add(c2);
+            elencoCat1.add(c3);
+            elencoCat1.add(c4);
+            dao.createDataService("s18", "Provides the statistic of marks in the university specified", elencoTag18, elencoCat18, "", "");
 
             t1 = dao.readTag((long) 30);
             t2 = dao.readTag((long) 33);
             t3 = dao.readTag((long) 22);
             t4 = dao.readTag((long) 1);
 
+            c1 = dao.readCategory((long) 30);
+            c2 = dao.readCategory((long) 33);
+            c3 = dao.readCategory((long) 22);
+            c4 = dao.readCategory((long) 1);
+
             Set<Tag> elencoTag19 = new HashSet<>();
             elencoTag19.add(t1);
             elencoTag19.add(t2);
             elencoTag19.add(t3);
             elencoTag19.add(t4);
-            dao.createDataService("s19", "Provides the statistic of the product's sales in the city specified", elencoTag19, "", "");
+            Set<Category> elencoCat19 = new HashSet<>();
+            elencoCat1.add(c1);
+            elencoCat1.add(c2);
+            elencoCat1.add(c3);
+            elencoCat1.add(c4);
+            dao.createDataService("s19", "Provides the statistic of the product's sales in the city specified", elencoTag19, elencoCat19, "", "");
 
             t1 = dao.readTag((long) 11);
             t2 = dao.readTag((long) 38);
             t3 = dao.readTag((long) 33);
 
+            c1 = dao.readCategory((long) 11);
+            c2 = dao.readCategory((long) 38);
+            c3 = dao.readCategory((long) 33);
+
             Set<Tag> elencoTag20 = new HashSet<>();
             elencoTag20.add(t1);
             elencoTag20.add(t2);
             elencoTag20.add(t3);
-            dao.createDataService("s20", "Provides the distribution of people by sex over job", elencoTag20, "", "");
+            Set<Category> elencoCat20 = new HashSet<>();
+            elencoCat1.add(c1);
+            elencoCat1.add(c2);
+            elencoCat1.add(c3);
+            elencoCat1.add(c4);
+            dao.createDataService("s20", "Provides the distribution of people by sex over job", elencoTag20, elencoCat20, "", "");
 
             double c = 0.5;
 
@@ -1064,17 +1252,19 @@ public class Main {
         String tags = MyUtil.leggiStringa(TAG_DS);
         String[] elenco = tags.split("/");
         Set<Tag> tagDisambiguati = new HashSet<>();
-
-        for (String elenco1 : elenco) {
-            Tag temp = disambigua(elenco1);
-            tagDisambiguati.add(temp);
-        }
+        
+        //Aggiunta
+        Set<Category> categories = new HashSet<>();
+        Category C1 = new Category();
+        C1.setId(1);
+        categories.add(C1);
+        //Fine aggiunta
 
         Session session = sf.openSession();
 
         DAOclass dao = new DAOclass(session);
 
-        dao.createDataService(nomeDS, descrDS, tagDisambiguati, input, output);
+        dao.createDataService(nomeDS, descrDS, tagDisambiguati, categories, input, output);
 
         System.out.println();
         System.out.println(OP_OK);

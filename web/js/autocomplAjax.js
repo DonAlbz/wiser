@@ -5,7 +5,7 @@ function autocompl(stringa)
 {
     if ((stringa.trim() !== null)&&(stringa.trim() !== ""))
     {
-        var url = "ActionServlet?op=find&s=" + stringa;
+        var url = "ActionServlet?op=autoc&s=" + stringa;
         xhr = myGetXmlHttpRequest();
         xhr.open("GET", url, true);
         xhr.onreadystatechange = inserisciSuggerimento;

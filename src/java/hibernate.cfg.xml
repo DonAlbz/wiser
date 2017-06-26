@@ -25,5 +25,6 @@
     <mapping resource="wiser/dao/Sviluppatore.hbm.xml"/>
     <mapping resource="wiser/dao/Tag.hbm.xml"/>
     <mapping resource="wiser/dao/Voto.hbm.xml"/>
+    <mapping resource="wiser/dao/Category.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>

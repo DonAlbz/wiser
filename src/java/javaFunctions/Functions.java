@@ -38,26 +38,23 @@ public class Functions {
 
     public static Integer numberOfPages(Integer servicesDim) {
         Integer numPages;
-        if (servicesDim % DS_PER_PAGINA != 0) 
-        {
+        if (servicesDim % DS_PER_PAGINA != 0) {
             numPages = servicesDim / DS_PER_PAGINA + 1;
-        } 
-        else 
-        {
+        } else {
             numPages = servicesDim / DS_PER_PAGINA;
         }
-        return numPages;       
+        return numPages;
     }
-    
-    public static ArrayList<DataService> filterDSList(ArrayList<DataService> list, String filter) {
+
+    public static ArrayList<DataService> filterCategoryDSList(ArrayList<DataService> list, String filter) {
         ArrayList<DataService> services = new ArrayList<>();
-        for(int i=0; i<list.size(); i++) {
+        for (int i = 0; i < list.size(); i++) {
             DataService service = list.get(i);
-            Set<Tag> taglist = service.getTag();
-            Object[] listaDiArray = taglist.toArray();
-            for(int j=0; j<listaDiArray.length; j++) {
-                Tag tag = (Tag) listaDiArray[j];
-                if(filter.equalsIgnoreCase(tag.getNome())) {
+            Set<Category> catlist = service.getCategory();
+            Object[] listaDiArray = catlist.toArray();
+            for (int j = 0; j < listaDiArray.length; j++) {
+                Category cat = (Category) listaDiArray[j];
+                if (filter.equalsIgnoreCase(cat.getNome())) {
                     services.add(list.get(i));
                 }
             }
@@ -65,6 +62,4 @@ public class Functions {
         return services;
     }
 
-    
-    
 }
