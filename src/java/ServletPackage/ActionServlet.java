@@ -67,10 +67,12 @@ public class ActionServlet extends HttpServlet {
         }
     }
 
+
     private void doGetList(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String key = (String) req.getParameter("search");
         ArrayList<DataService> servicesFiltered = new ArrayList<>();
         ArrayList<DataService> servicesParsed = new ArrayList<>();
+
         Integer start = Functions.parseInteger(req.getParameter("start"));
         String catFilter = req.getParameter("filtro");
         boolean isReady = false;

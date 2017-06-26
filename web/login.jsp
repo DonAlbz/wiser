@@ -52,11 +52,12 @@
                             </div>
                             
                             <div class="clearfix"></div>
-                                <div class="well">
+                                <br>
+                                <br>
                                   <div class="bottom text-center">
                                     Nuovo utente? <a class="text-success" href="registrazione.jsp"><b> Registrati!</b></a>
                                     </div>
-                                </div>
+                              
                         </fieldset>
                     </form>
                 </div>
