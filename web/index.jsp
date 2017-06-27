@@ -74,30 +74,16 @@
                                     <div class="col-lg-1 col-md-1 col-sm-1">
                                     </div>
                                     <div class="col-lg-8 col-md-8 col-sm-8">
-                                        <form class="navbar-form hidden-xs" role="search" action="ActionServlet" method="GET">
-                                            <div id="nav-centrata" class="input-group">
-                                                <input id="auto0" name="search" type="text" class="form-control center-block height-40" placeholder="search..." onkeyup="autocompl(this.value);" autocomplete="off">
-                                                <input id="auto1" type="text" class ="canter-block height-40 menu_links" onmouseover="riempiSearch(id.valueOf())" hidden="hidden"><br> 
-                                                <input id="auto2" type="text" class ="canter-block height-40 menu_links" onmouseover="riempiSearch(id.valueOf())" hidden> <br>
-                                                <input id="auto3" type="text" class ="canter-block height-40 menu_links" onmouseover="riempiSearch(id.valueOf())" hidden> <br>
-                                                <input id="auto4" type="text" class ="canter-block height-40 menu_links" onmouseover="riempiSearch(id.valueOf())" hidden> <br>
+
+                                        <form class="navbar-form   hidden-xs" role="search" action="ActionServlet" method="GET">
+                                            <div id="nav-centrata" class="input-group" >
+                                                <input id="auto0" name="search" type="text" class="form-control center-block height-40" placeholder="search..." onkeyup="autocompl(this.value);" 
+                                                       autocomplete="off">
                                                 <input name="op"  type="text" value="getList" hidden>
                                                 <span class="input-group-btn">
                                                     <button class="btn btn-success height-40" type="submit">Search</button>
                                                 </span>
-
-                                                <!--<ul class="nav navbar-nav navbar-right">
-                                                <form class="navbar-form navbar-right hidden-sm hidden-md hidden-xs" role="search" action="/" method="GET">
-                                                     <div class="input-group">
-                                                     <input type="text" class="form-control" placeholder="Tìm kiếm..."/>
-                                                     <span class="input-group-btn">
-                                                       <button class="btn btn-success" type="button">Tìm kiếm</button>
-                                                     </span>
-                                                     </form>
-                                                </ul>-->
-
                                             </div>
-
                                         </form>
                                     </div>
                                 </div>
@@ -134,6 +120,13 @@
                 </div>
             </div>
         </nav> 
+   
+        <div id="autocompl" style="display:none">
+            <div id="auto1" class="autoc autoc-selected" style="display: none"></div>
+            <div id="auto2" class="autoc"></div>
+            <div id="auto3" class="autoc"></div>
+            <div id="auto4" class="autoc"></div>
+        </div>
 
         <!-- Sidebar -->
         <!-- il div wrapper serve per comprimere la navbar e comprende tutto il contenuto della pagina-->
@@ -157,8 +150,32 @@
             </div>
 
             <!-- Pagina centrale -->
-            <!-- Tasto per comprimere sidebar -->
-            <a href="#menu-toggle" class="btn btn-default hidden-lg hidden-md" id="menu-toggle">Toggle Menu</a>
+           <div>
+                <!-- Tasto per comprimere sidebar -->
+                <a href="#menu-toggle" class="btn hidden-sm btn-default hidden-lg hidden-md" id="menu-toggle">Toggle Menu</a>
+
+                <!--Paginazione schermo piccolo-->
+                <ul class="pagination  hidden-sm hidden-lg hidden-md" style="float:right; margin: 0px;" >
+                    <%
+                        int servicesDim = (Integer) request.getAttribute("servicesDim");
+                        int numPages = Functions.numberOfPages(servicesDim);
+                        String filter = (String) request.getAttribute("filtro");
+                        String key = (String) request.getAttribute("search");
+                        String tag = (String) request.getAttribute("tag");
+                        String ordinamento = (String) request.getAttribute("orderBy");
+                        if (numPages > 1) {
+                            for (int i = 0; i < numPages; i++) {
+
+                    %>
+
+                    <li><a href="ActionServlet?op=getList&start=<%=i * 8%>&filtro=<%=filter%>&search=<%=key%>&tag=<%=tag%>&orderBy=<%=ordinamento%>"><%=i + 1%></a></li>
+                        <%
+                                }
+                            }
+                        %>
+                </ul>
+            </div>
+                
             <!-- Page Content -->
             <div class="container" style="margin: 0 auto"> 
                 <div id="page-content-wrapper">
@@ -235,14 +252,17 @@
                                         <%          count++;
                                                         }                   %>     
 
+
                                         <%      if (parteDecimale < 0.5) {       %>          
                                         <span class="glyphicon glyphicon-star-empty"></span> 
                                         <%          count++;
+
                                                     } else {                %>
                                         <span class="glyphicon glyphicon-star half"></span> 
                                         <%              count++;
                                                         }
                                                         for (i = count; i < 5; i++) {                 %>                                                                                                                                                
+
                                         <span class="glyphicon glyphicon-star-empty"></span>
                                         <%      }%>
 
@@ -258,19 +278,22 @@
                     </div>
                 </div>
             </div>
-            <ul class="pagination">
+          
+           <ul class="pagination hidden-xs">
                 <%
-                    int servicesDim = (Integer) request.getAttribute("servicesDim");
-                    int numPages = Functions.numberOfPages(servicesDim);
-                    String filter = (String) request.getAttribute("filtro");
-                    String key = (String) request.getAttribute("search");
-                    String ordinamento = (String) request.getAttribute("orderBy");
+                    servicesDim = (Integer) request.getAttribute("servicesDim");
+                    numPages = Functions.numberOfPages(servicesDim);
+                    filter = (String) request.getAttribute("filtro");
+                    key = (String) request.getAttribute("search");
+                    tag = (String) request.getAttribute("tag");
+                    ordinamento = (String) request.getAttribute("orderBy");
                     if (numPages > 1) {
                         for (int i = 0; i < numPages; i++) {
 
                 %>
 
-                <li><a href="ActionServlet?op=getList&start=<%=i * 8%>&filtro=<%=filter%>&search=<%=key%>&orderBy=<%=ordinamento%>"><%=i + 1%></a></li>
+                <li><a href="ActionServlet?op=getList&start=<%=i * 8%>&filtro=<%=filter%>&search=<%=key%>&tag=<%=tag%>&orderBy=<%=ordinamento%>"><%=i + 1%></a></li>
+          
                     <%
                             }
                         }
@@ -292,10 +315,10 @@
 
         <!-- script per comprimere sidebar -->
         <script>
-            $("#menu-toggle").click(function (e) {
-                e.preventDefault();
-                $("#wrapper").toggleClass("toggled");
-            });
+                                                    $("#menu-toggle").click(function (e) {
+                                                        e.preventDefault();
+                                                        $("#wrapper").toggleClass("toggled");
+                                                    });
         </script>
     </body>
 </html>

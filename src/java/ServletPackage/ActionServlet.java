@@ -70,12 +70,11 @@ public class ActionServlet extends HttpServlet {
         }
     }
 
-
     private void doGetList(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String key = (String) req.getParameter("search");
         ArrayList<DataService> servicesFiltered = new ArrayList<>();
         ArrayList<DataService> servicesParsed = new ArrayList<>();
-
+        String tagFilter = req.getParameter("tag");
         Integer start = Functions.parseInteger(req.getParameter("start"));
         String catFilter = req.getParameter("filtro");
         boolean isReady = false;
@@ -83,9 +82,13 @@ public class ActionServlet extends HttpServlet {
             if (isCategory(key)) {
                 catFilter = key;
             } else {
-                servicesFiltered = getSearchDS(key);
-                req.setAttribute("search", key);
-                isReady = true;
+                if (isTag(key)) {
+                    tagFilter = key;
+                } else {
+                    servicesFiltered = getSearchDS(key);
+                    req.setAttribute("search", key);
+                    isReady = true;
+                }
             }
         }
         if ((catFilter != null) && (!catFilter.equalsIgnoreCase("") && (!catFilter.equalsIgnoreCase("null")))) {
@@ -94,14 +97,19 @@ public class ActionServlet extends HttpServlet {
                 req.setAttribute("filtro", catFilter);
                 isReady = true;
             }
-        } else {
-            if (!isReady) {
-                servicesFiltered = hibernate.readDataServices();
-                isReady = true;
-            }
         }
-        
-        
+            if ((tagFilter != null) && (!tagFilter.equalsIgnoreCase("") && (!tagFilter.equalsIgnoreCase("null")))) {
+                if (!isReady) {
+                    servicesFiltered = getTagDS(tagFilter);
+                    req.setAttribute("tag", tagFilter);
+                    isReady = true;
+                }
+            } else {
+                if (!isReady) {
+                    servicesFiltered = hibernate.readDataServices();
+                    isReady = true;
+                }
+            }        
         String richiesta = req.getParameter("orderBy");
         if (richiesta==null)
             servicesFiltered.sort((t1,t2) -> t1.getNome().compareTo(t2.getNome()));
@@ -128,19 +136,7 @@ public class ActionServlet extends HttpServlet {
            servicesFiltered.sort((t1,t2) -> Double.compare(t1.getMediaVoti(), t2.getMediaVoti()));
            req.setAttribute("ordinamento", "Dai meno ai pi&ugrave; votati");    
         }
-     /*   else if (richiesta.equalsIgnoreCase("utilizzi")) {
-                Collections.sort(servicesFiltered, new Comparator<DataService>(){
-                    public  int compare(DataService ds1, DataService ds2){
-                        int toReturn;
-                        if (ds1.getNumeroUtilizzi()<= ds2.getNumeroUtilizzi())
-                            toReturn = -1;
-                        else{
-                            toReturn = 1;
-                        }
-                        return toReturn;
-                    }
-                });
-            } */
+  
         
         }
         servicesParsed = Functions.parseDSList(servicesFiltered, start);
@@ -272,13 +268,13 @@ public class ActionServlet extends HttpServlet {
         }
         return false;
     }
-    
+
     private ArrayList<DataService> getCategoryDS(String catName) {
         ArrayList<DataService> services = hibernate.readDataServices();
         ArrayList<DataService> toRet = Functions.filterCategoryDSList(services, catName);
         return toRet;
     }
-    
+
     private ArrayList<DataService> getSearchDS(String key) {
         ArrayList<DataService> services = hibernate.readDataServices();
         Iterator iterService = services.iterator();
@@ -293,12 +289,29 @@ public class ActionServlet extends HttpServlet {
         while (iterService.hasNext()) {
             DataService service = (DataService) iterService.next();
             if (service.getNome().toLowerCase().contains(key.toLowerCase())) {
-                if(!service.getNome().equalsIgnoreCase(key))
-                {
+                if (!service.getNome().equalsIgnoreCase(key)) {
                     toRet.add(service);
                 }
             }
         }
+        return toRet;
+    }
+
+    private boolean isTag(String key) {
+        ArrayList<Tag> tags = hibernate.readTags();
+        Iterator iterTags = tags.iterator();
+        while (iterTags.hasNext()) {
+            Tag tagSel = (Tag) iterTags.next();
+            if (tagSel.getNome().equalsIgnoreCase(key)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private ArrayList<DataService> getTagDS(String tagName) {
+        ArrayList<DataService> services = hibernate.readDataServices();
+        ArrayList<DataService> toRet = Functions.filterTagDSList(services, tagName);
         return toRet;
     }
 
