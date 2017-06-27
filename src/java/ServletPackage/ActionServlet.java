@@ -244,11 +244,11 @@ public class ActionServlet extends HttpServlet {
                 obj.put("nome", name);
                 list.add(obj);
             }
-        }
-        Iterator iterCats = categs.iterator();
-        while(iterCats.hasNext()) {
+        }     
+        Iterator iterCat = categs.iterator();
+        while(iterCat.hasNext()) {
             JSONObject obj = new JSONObject();
-            Category catSel = (Category) iterCats.next();
+            Category catSel = (Category) iterCat.next();
             String name = catSel.getNome();
             if (name.toLowerCase().contains(s)) {
                 obj.put("nome", name);
