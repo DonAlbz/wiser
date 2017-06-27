@@ -74,6 +74,7 @@
                                     <div class="col-lg-1 col-md-1 col-sm-1">
                                     </div>
                                     <div class="col-lg-8 col-md-8 col-sm-8">
+
                                         <form class="navbar-form   hidden-xs" role="search" action="ActionServlet" method="GET">
                                             <div id="nav-centrata" class="input-group" >
                                                 <input id="auto0" name="search" type="text" class="form-control center-block height-40" placeholder="search..." onkeyup="autocompl(this.value);" 
@@ -119,7 +120,7 @@
                 </div>
             </div>
         </nav> 
-        
+   
         <div id="autocompl" style="display:none">
             <div id="auto1" class="autoc autoc-selected" style="display: none"></div>
             <div id="auto2" class="autoc"></div>
@@ -161,12 +162,13 @@
                         String filter = (String) request.getAttribute("filtro");
                         String key = (String) request.getAttribute("search");
                         String tag = (String) request.getAttribute("tag");
+                        String ordinamento = (String) request.getAttribute("orderBy");
                         if (numPages > 1) {
                             for (int i = 0; i < numPages; i++) {
 
                     %>
 
-                    <li><a href="ActionServlet?op=getList&start=<%=i * 8%>&filtro=<%=filter%>&search=<%=key%>&tag=<%=tag%>"><%=i + 1%></a></li>
+                    <li><a href="ActionServlet?op=getList&start=<%=i * 8%>&filtro=<%=filter%>&search=<%=key%>&tag=<%=tag%>&orderBy=<%=ordinamento%>"><%=i + 1%></a></li>
                         <%
                                 }
                             }
@@ -175,9 +177,33 @@
             </div>
                 
             <!-- Page Content -->
-            <div class="container"> 
+            <div class="container" style="margin: 0 auto"> 
                 <div id="page-content-wrapper">
                     <div class="container-fluid">
+                        <div class=" btn-group" id="ordinaPer">  
+                            <button type="button" class="btn btn-success dropdown-toggle pos" data-toggle="dropdown">
+                                Ordina per <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a id="1" class="mouseOver" href="ActionServlet?op=getList&orderBy=nome">Nome</a></li>
+                                <li class="dropdown-submenu">
+                                    <a class="test mouseOver" id="2" tabindex="-1" id="2">Utilizzi<span class="caret"></span></a>
+                                    <ul class="dropdown-menu" id="menu1">
+                                        <li><a tabindex="-1" class="mouseOver" id="3" href="ActionServlet?op=getList&orderBy=utilizziMax">Dai più ai meno utilizzati</a></li>
+                                        <li><a tabindex="-1" class="mouseOver" id="4" href="ActionServlet?op=getList&orderBy=utilizziMin">Dai meno ai più utilizzati</a></li>
+                                    </ul>
+                                </li>
+                                <li class="dropdown-submenu">
+                                    <a class="test1 mouseOver" id="5" tabindex="-1">Voti<span class="caret"></span></a>
+                                    <ul class="dropdown-menu" id="menu2">
+                                        <li><a tabindex="-1" class="mouseOver" id="6" href="ActionServlet?op=getList&orderBy=votoMax">Dai più ai meno votati</a></li>
+                                        <li><a tabindex="-1" class="mouseOver" id="7" href="ActionServlet?op=getList&orderBy=votoMin">Dai meno ai più votati</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div><br>
+                        <div id="ord" class="label label-success" role="alert">${ordinamento}</div>
+                      
 
                         <%
                             ArrayList<DataService> services = (ArrayList<DataService>) request.getAttribute("list");
@@ -224,16 +250,19 @@
                                         <%      for (k = 0; k < parteIntera; k++) {                                        %>           
                                         <span class="glyphicon glyphicon-star"></span>
                                         <%          count++;
-                                            }                   %>     
+                                                        }                   %>     
+
 
                                         <%      if (parteDecimale < 0.5) {       %>          
                                         <span class="glyphicon glyphicon-star-empty"></span> 
                                         <%          count++;
-                                        } else {                %>
+
+                                                    } else {                %>
                                         <span class="glyphicon glyphicon-star half"></span> 
                                         <%              count++;
-                                            }
-                                            for (i = count; i < 5; i++) {                 %>                                                                                                                                                
+                                                        }
+                                                        for (i = count; i < 5; i++) {                 %>                                                                                                                                                
+
                                         <span class="glyphicon glyphicon-star-empty"></span>
                                         <%      }%>
 
@@ -249,6 +278,7 @@
                     </div>
                 </div>
             </div>
+          
            <ul class="pagination hidden-xs">
                 <%
                     servicesDim = (Integer) request.getAttribute("servicesDim");
@@ -256,12 +286,14 @@
                     filter = (String) request.getAttribute("filtro");
                     key = (String) request.getAttribute("search");
                     tag = (String) request.getAttribute("tag");
+                    ordinamento = (String) request.getAttribute("orderBy");
                     if (numPages > 1) {
                         for (int i = 0; i < numPages; i++) {
 
                 %>
 
-                <li><a href="ActionServlet?op=getList&start=<%=i * 8%>&filtro=<%=filter%>&search=<%=key%>&tag=<%=tag%>"><%=i + 1%></a></li>
+                <li><a href="ActionServlet?op=getList&start=<%=i * 8%>&filtro=<%=filter%>&search=<%=key%>&tag=<%=tag%>&orderBy=<%=ordinamento%>"><%=i + 1%></a></li>
+          
                     <%
                             }
                         }
@@ -275,6 +307,11 @@
         <script type="text/javascript" src="./js/jquery.js"></script>
         <script type="text/javascript" src="./js/bootstrap.js"></script>
         <script type="text/javascript" src="./js/autocomplAjax.js"></script>
+        <script type="text/javascript" src="./js/main.js"></script>
+        <script type="text/javascript" src="./js/Tibi.js"></script>
+
+
+
 
         <!-- script per comprimere sidebar -->
         <script>

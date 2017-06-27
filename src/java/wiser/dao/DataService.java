@@ -3,7 +3,7 @@ package wiser.dao;
 /**
  * This class represents a data service.
  *
- * @author Flavia Venturelli
+ * @author Flavia Venturelli, Andrea Tiberti
  * @version 1.0
  */
 import wiser.middleware.similarity.MyUtil;
@@ -229,4 +229,10 @@ public class DataService {
         double parteDecimale = mediaNormalizzata - parteIntera;
         return parteDecimale;
     }
+    
+    public Double getMediaVoti() {
+        return mediaVoti();
+    }
+
+    
 }
