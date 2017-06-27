@@ -74,13 +74,13 @@
                                     <div class="col-lg-1 col-md-1 col-sm-1">
                                     </div>
                                     <div class="col-lg-8 col-md-8 col-sm-8">
-                                          <form class="navbar-form   hidden-xs" role="search" action="ActionServlet" method="GET">
-                                            <div id="nav-centrata" class="input-group" >
+                                        <form class="navbar-form hidden-xs" role="search" action="ActionServlet" method="GET">
+                                            <div id="nav-centrata" class="input-group">
                                                 <input id="auto0" name="search" type="text" class="form-control center-block height-40" placeholder="search..." onkeyup="autocompl(this.value);" autocomplete="off">
-                                                <input id="auto1" type="text" class ="canter-block height-40" hidden="hidden" disabled="disabled"> 
-                                                <input id="auto2" type="text" class ="canter-block height-40" hidden disabled="disabled"> 
-                                                <input id="auto3" type="text" class ="canter-block height-40" hidden disabled="disabled"> 
-                                                <input id="auto4" type="text" class ="canter-block height-40" hidden disabled="disabled"> 
+                                                <input id="auto1" type="text" class ="canter-block height-40 menu_links" onmouseover="riempiSearch(id.valueOf())" hidden="hidden"><br> 
+                                                <input id="auto2" type="text" class ="canter-block height-40 menu_links" onmouseover="riempiSearch(id.valueOf())" hidden> <br>
+                                                <input id="auto3" type="text" class ="canter-block height-40 menu_links" onmouseover="riempiSearch(id.valueOf())" hidden> <br>
+                                                <input id="auto4" type="text" class ="canter-block height-40 menu_links" onmouseover="riempiSearch(id.valueOf())" hidden> <br>
                                                 <input name="op"  type="text" value="getList" hidden>
                                                 <span class="input-group-btn">
                                                     <button class="btn btn-success height-40" type="submit">Search</button>
@@ -108,11 +108,11 @@
                     <div class="hidden-xs col-lg-1 col-md-1 col-sm-1 ">
                         <ul class="nav navbar-nav navbar-right">
                             <li class="dropdown">
-                                
+
                                 <a href="login.jsp">
                                     <img src="immagini/padlock.png" height="23" width="23">
                                     <b style="size:15pt !important;">Login</b></a>
-                                
+
                             </li>
                         </ul>
 
@@ -134,7 +134,7 @@
                 </div>
             </div>
         </nav> 
-        
+
         <!-- Sidebar -->
         <!-- il div wrapper serve per comprimere la navbar e comprende tutto il contenuto della pagina-->
         <div id="wrapper"> 
@@ -148,7 +148,7 @@
                             while (iterCat.hasNext()) {
                                 Category selCat = (Category) iterCat.next();
                         %>        
-                                <a href="ActionServlet?op=getList&filtro=<%=selCat.getNome()%>" class="list-group-item"> <%=selCat.getNome()%></a>
+                        <a href="ActionServlet?op=getList&filtro=<%=selCat.getNome()%>" class="list-group-item"> <%=selCat.getNome()%></a>
                         <%
                             }
                         %>
@@ -160,9 +160,33 @@
             <!-- Tasto per comprimere sidebar -->
             <a href="#menu-toggle" class="btn btn-default hidden-lg hidden-md" id="menu-toggle">Toggle Menu</a>
             <!-- Page Content -->
-            <div class="container"> 
+            <div class="container" style="margin: 0 auto"> 
                 <div id="page-content-wrapper">
                     <div class="container-fluid">
+                        <div class=" btn-group" id="ordinaPer">  
+                            <button type="button" class="btn btn-success dropdown-toggle pos" data-toggle="dropdown">
+                                Ordina per <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a id="1" class="mouseOver" href="ActionServlet?op=getList&orderBy=nome">Nome</a></li>
+                                <li class="dropdown-submenu">
+                                    <a class="test mouseOver" id="2" tabindex="-1" id="2">Utilizzi<span class="caret"></span></a>
+                                    <ul class="dropdown-menu" id="menu1">
+                                        <li><a tabindex="-1" class="mouseOver" id="3" href="ActionServlet?op=getList&orderBy=utilizziMax">Dai più ai meno utilizzati</a></li>
+                                        <li><a tabindex="-1" class="mouseOver" id="4" href="ActionServlet?op=getList&orderBy=utilizziMin">Dai meno ai più utilizzati</a></li>
+                                    </ul>
+                                </li>
+                                <li class="dropdown-submenu">
+                                    <a class="test1 mouseOver" id="5" tabindex="-1">Voti<span class="caret"></span></a>
+                                    <ul class="dropdown-menu" id="menu2">
+                                        <li><a tabindex="-1" class="mouseOver" id="6" href="ActionServlet?op=getList&orderBy=votoMax">Dai più ai meno votati</a></li>
+                                        <li><a tabindex="-1" class="mouseOver" id="7" href="ActionServlet?op=getList&orderBy=votoMin">Dai meno ai più votati</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div><br>
+                        <div id="ord" class="label label-success" role="alert">${ordinamento}</div>
+                      
 
                         <%
                             ArrayList<DataService> services = (ArrayList<DataService>) request.getAttribute("list");
@@ -207,19 +231,19 @@
                                             int i;   %>
 
                                         <%      for (k = 0; k < parteIntera; k++) {                                        %>           
-                                                    <span class="glyphicon glyphicon-star"></span>
+                                        <span class="glyphicon glyphicon-star"></span>
                                         <%          count++;
-                                                }                   %>     
+                                                        }                   %>     
 
                                         <%      if (parteDecimale < 0.5) {       %>          
-                                                    <span class="glyphicon glyphicon-star-empty"></span> 
+                                        <span class="glyphicon glyphicon-star-empty"></span> 
                                         <%          count++;
-                                                } else {                %>
-                                                        <span class="glyphicon glyphicon-star half"></span> 
+                                                    } else {                %>
+                                        <span class="glyphicon glyphicon-star half"></span> 
                                         <%              count++;
                                                         }
-                                                for (i = count; i < 5; i++) {                 %>                                                                                                                                                
-                                                    <span class="glyphicon glyphicon-star-empty"></span>
+                                                        for (i = count; i < 5; i++) {                 %>                                                                                                                                                
+                                        <span class="glyphicon glyphicon-star-empty"></span>
                                         <%      }%>
 
                                         <p> <%=service.getNumeroUtilizzi()%> reviews</p>
@@ -234,21 +258,22 @@
                     </div>
                 </div>
             </div>
-                    <ul class="pagination">
+            <ul class="pagination">
                 <%
                     int servicesDim = (Integer) request.getAttribute("servicesDim");
                     int numPages = Functions.numberOfPages(servicesDim);
                     String filter = (String) request.getAttribute("filtro");
                     String key = (String) request.getAttribute("search");
-                    if(numPages > 1) {
-                    for (int i = 0; i < numPages; i++) {
-                        
+                    String ordinamento = (String) request.getAttribute("orderBy");
+                    if (numPages > 1) {
+                        for (int i = 0; i < numPages; i++) {
+
                 %>
 
-                <li><a href="ActionServlet?op=getList&start=<%=i * 8%>&filtro=<%=filter%>&search=<%=key%>"><%=i + 1%></a></li>
+                <li><a href="ActionServlet?op=getList&start=<%=i * 8%>&filtro=<%=filter%>&search=<%=key%>&orderBy=<%=ordinamento%>"><%=i + 1%></a></li>
                     <%
+                            }
                         }
-                    }
                     %>
             </ul>
         </div>
@@ -259,6 +284,11 @@
         <script type="text/javascript" src="./js/jquery.js"></script>
         <script type="text/javascript" src="./js/bootstrap.js"></script>
         <script type="text/javascript" src="./js/autocomplAjax.js"></script>
+        <script type="text/javascript" src="./js/main.js"></script>
+        <script type="text/javascript" src="./js/Tibi.js"></script>
+
+
+
 
         <!-- script per comprimere sidebar -->
         <script>

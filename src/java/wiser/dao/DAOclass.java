@@ -3,7 +3,7 @@ package wiser.dao;
 /**
  * Utility class to manage interactions with the database.
  *
- * @author Flavia Venturelli, Devis Bianchini.
+ * @author Flavia Venturelli, Devis Bianchini, Andrea Tiberti.
  * @version 1.1
  */
 import java.sql.ResultSet;

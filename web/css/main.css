@@ -11,6 +11,73 @@
     background-color: #eee  !important;
 }
 
+.half {
+    position:relative;
+}
+.font{
+    font-size:6em;
+}
+.half:before {
+
+      content: "\e006"; /* put here default icon code*/
+      width: 47%;
+      display: block;
+      position: absolute;
+      overflow: hidden;
+
+}
+.half:after {
+    content: "\e007"; /* put here icon-empty code*/
+}
+
+.half-heart:before {
+
+      content: "\e005"; /* put here default icon code*/
+      width: 57%;
+      display: block;
+      position: absolute;
+      overflow: hidden;
+
+}
+.half-heart:after {
+    content: "\e143"; /* put here icon-empty code*/
+}
+
+.pos {
+    margin-top: -39px !important;
+    position: absolute;
+}
+
+.menu_links:hover{
+    cursor : pointer;
+    background-color: #ACE1AF;
+}
+
+.dropdown-submenu {
+    position: relative;
+}
+
+.dropdown-submenu .dropdown-menu {
+    top: 0;
+    left: 100%;
+    margin-top: -1px;
+}
+
+.test{
+    cursor: pointer;
+}
+
+.test1{
+    cursor: pointer;
+}
+
+.mouseOver:hover{
+    color: green !important;
+}
+
+.colore{
+    color: green;
+}
 /* ==========================================================================
    Alb's custom styles
    ========================================================================== */
@@ -95,49 +162,3 @@
     color: #fff;
     background-color:#59b5fa;
 }
-
-
-
-
-
-
-
-.half {
-    position:relative;
-}
-.font{
-    font-size:6em;
-}
-.half:before {
-
-      content: "\e006"; /* put here default icon code*/
-      width: 47%;
-      display: block;
-      position: absolute;
-      overflow: hidden;
-
-}
-.half:after {
-    content: "\e007"; /* put here icon-empty code*/
-}
-
-.half-heart:before {
-
-      content: "\e005"; /* put here default icon code*/
-      width: 57%;
-      display: block;
-      position: absolute;
-      overflow: hidden;
-
-}
-.half-heart:after {
-    content: "\e143"; /* put here icon-empty code*/
-}
-
-
-
-
-
-
-
-
