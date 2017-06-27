@@ -223,6 +223,7 @@ public class ActionServlet extends HttpServlet {
         String s = (String) req.getParameter("s");
         ArrayList<DataService> services = hibernate.readDataServices();
         ArrayList<Tag> tags = hibernate.readTags();
+        ArrayList<Category> categs = hibernate.readCategories();
         Iterator iterService = services.iterator();
         ArrayList<JSONObject> list = new ArrayList<>();
         while (iterService.hasNext()) {
@@ -239,6 +240,16 @@ public class ActionServlet extends HttpServlet {
             JSONObject obj = new JSONObject();
             Tag tagSel = (Tag) iterTags.next();
             String name = tagSel.getNome();
+            if (name.toLowerCase().contains(s)) {
+                obj.put("nome", name);
+                list.add(obj);
+            }
+        }
+        Iterator iterCats = categs.iterator();
+        while(iterCats.hasNext()) {
+            JSONObject obj = new JSONObject();
+            Category catSel = (Category) iterCats.next();
+            String name = catSel.getNome();
             if (name.toLowerCase().contains(s)) {
                 obj.put("nome", name);
                 list.add(obj);
