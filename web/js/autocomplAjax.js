@@ -1,4 +1,3 @@
-
 var xhr;
 
 function autocompl(stringa)
@@ -34,7 +33,7 @@ function myGetXmlHttpRequest()
     }
     catch (e)
     {
-        // poi come oggetto ActiveX dal pi� al meno recente
+        // poi come oggetto ActiveX dal pi? al meno recente
         var created = false;
         for (var i = 0; i < activeXopt.length && !created; i++)
         {
@@ -57,6 +56,7 @@ function inserisciSuggerimento() {
     {
         var ajaxResp = xhr.responseText;
         var jo = JSON.parse(ajaxResp);
+        console.log(ajaxResp);
         for (var i = 1; i < 5; i++)
         {
             $("#autocompl").css("display","");
@@ -74,8 +74,6 @@ function inserisciSuggerimento() {
                 $("#auto" + i).css("display", "none");
             }
         }
-
-
     }
 }
 
@@ -89,4 +87,62 @@ function getPosizione()
     $("#autocompl").css("left", pos.left);
     $("#autocompl").css("width", width + 26);
 }
+
+function arrowEnable(e)
+{
+    if(e.keyCode == 40)
+    {
+        if($(".autoc-selected")[0])
+        {
+            var id = $(".autoc-selected").first().attr("id");
+            var int = id.replace("auto", "");
+            if((int>0)&&(int<4))
+            {
+                $("#auto"+int).toggleClass("autoc-selected");
+                int = parseInt(int)+1;
+                $("#auto"+int).toggleClass("autoc-selected");
+            }
+            else
+            {
+                $("#auto"+int).toggleClass("autoc-selected");
+            }
+        }
+        else
+        {
+            $("#auto1").toggleClass("autoc-selected"); 
+        } 
+        
+    }
+    else if(e.keyCode == 38){
+    if($(".autoc-selected")[0])
+        {
+            var id = $(".autoc-selected").first().attr("id");
+            var int = id.replace("auto", "");
+            if((int>1)&&(int<5))
+            {
+                $("#auto"+int).toggleClass("autoc-selected");
+                int = parseInt(int)-1;
+                $("#auto"+int).toggleClass("autoc-selected");
+            }
+            else
+            {
+                $("#auto"+int).toggleClass("autoc-selected");
+            }
+        }
+        else
+        {
+            $("#auto4").toggleClass("autoc-selected");
+        } 
+        
+    }
+    else if(e.keyCode==13) {
+        if($(".autoc-selected")[0])
+        {
+            var id = $(".autoc-selected").first().attr("id");
+            var daInviare = ($("#"+id)).text().toString();
+            $("#auto0").val(daInviare); 
+        }
+    }    
+}
+
 

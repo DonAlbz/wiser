@@ -93,13 +93,14 @@ html, body {
     margin-top: -1px;
 }
 
-.test{
+.autoc{
     cursor: pointer;
+}    
+
+.autoc:hover {
+    background-color: #ccffcc;
 }
 
-.test1{
-    cursor: pointer;
-}
 
 .mouseOver:hover{
     color: green !important;

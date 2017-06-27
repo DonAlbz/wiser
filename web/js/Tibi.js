@@ -25,17 +25,15 @@ $(document).ready(function () {
 
 function riempiSearch(id) {
     if (id.valueOf() == "auto1") {
-        $("#auto0").val($("#auto1").val());
+        $("#auto0").val($("#auto1").text());
     }
     else if (id.valueOf() == "auto2") {
-        $("#auto0").val($("#auto2").val());
+        $("#auto0").val($("#auto2").text());
     }
     else if (id.valueOf() == "auto3") {
-        $("#auto0").val($("#auto3").val());
+        $("#auto0").val($("#auto3").text());
     }
     else if (id.valueOf() == "auto4") {
-        $("#auto0").val($("#auto4").val());
+        $("#auto0").val($("#auto4").text());
     }
 }
-
-

@@ -77,7 +77,7 @@
 
                                         <form class="navbar-form   hidden-xs" role="search" action="ActionServlet" method="GET">
                                             <div id="nav-centrata" class="input-group" >
-                                                <input id="auto0" name="search" type="text" class="form-control center-block height-40" placeholder="search..." onkeyup="autocompl(this.value);" 
+                                                <input id="auto0" name="search" type="text" class="form-control center-block height-40" placeholder="search..." onkeydown="arrowEnable(event)" onkeyup="autocompl(this.value);" 
                                                        autocomplete="off">
                                                 <input name="op"  type="text" value="getList" hidden>
                                                 <span class="input-group-btn">
@@ -122,10 +122,10 @@
         </nav> 
    
         <div id="autocompl" style="display:none">
-            <div id="auto1" class="autoc autoc-selected" style="display: none"></div>
-            <div id="auto2" class="autoc"></div>
-            <div id="auto3" class="autoc"></div>
-            <div id="auto4" class="autoc"></div>
+            <div id="auto1" class="autoc" style="display: none" onmouseover="riempiSearch(id.valueOf())"></div>
+            <div id="auto2" class="autoc" onmouseover="riempiSearch(id.valueOf())"></div>
+            <div id="auto3" class="autoc" onmouseover="riempiSearch(id.valueOf())"></div>
+            <div id="auto4" class="autoc" onmouseover="riempiSearch(id.valueOf())"></div>
         </div>
 
         <!-- Sidebar -->
@@ -185,19 +185,19 @@
                                 Ordina per <span class="caret"></span>
                             </button>
                             <ul class="dropdown-menu" role="menu">
-                                <li><a id="1" class="mouseOver" href="ActionServlet?op=getList&orderBy=nome">Nome</a></li>
+                                <li><a id="1" class="mouseOver" href="ActionServlet?op=getList&filtro=<%=filter%>&search=<%=key%>&tag=<%=tag%>&orderBy=nome">Nome</a></li>
                                 <li class="dropdown-submenu">
                                     <a class="test mouseOver" id="2" tabindex="-1" id="2">Utilizzi<span class="caret"></span></a>
                                     <ul class="dropdown-menu" id="menu1">
-                                        <li><a tabindex="-1" class="mouseOver" id="3" href="ActionServlet?op=getList&orderBy=utilizziMax">Dai più ai meno utilizzati</a></li>
-                                        <li><a tabindex="-1" class="mouseOver" id="4" href="ActionServlet?op=getList&orderBy=utilizziMin">Dai meno ai più utilizzati</a></li>
+                                        <li><a tabindex="-1" class="mouseOver" id="3" href="ActionServlet?op=getList&filtro=<%=filter%>&search=<%=key%>&tag=<%=tag%>&orderBy=utilizziMax">Dai più ai meno utilizzati</a></li>
+                                        <li><a tabindex="-1" class="mouseOver" id="4" href="ActionServlet?op=getList&filtro=<%=filter%>&search=<%=key%>&tag=<%=tag%>&orderBy=utilizziMin">Dai meno ai più utilizzati</a></li>
                                     </ul>
                                 </li>
                                 <li class="dropdown-submenu">
                                     <a class="test1 mouseOver" id="5" tabindex="-1">Voti<span class="caret"></span></a>
                                     <ul class="dropdown-menu" id="menu2">
-                                        <li><a tabindex="-1" class="mouseOver" id="6" href="ActionServlet?op=getList&orderBy=votoMax">Dai più ai meno votati</a></li>
-                                        <li><a tabindex="-1" class="mouseOver" id="7" href="ActionServlet?op=getList&orderBy=votoMin">Dai meno ai più votati</a></li>
+                                        <li><a tabindex="-1" class="mouseOver" id="6" href="ActionServlet?op=getList&filtro=<%=filter%>&search=<%=key%>&tag=<%=tag%>&orderBy=votoMax">Dai più ai meno votati</a></li>
+                                        <li><a tabindex="-1" class="mouseOver" id="7" href="ActionServlet?op=getList&filtro=<%=filter%>&search=<%=key%>&tag=<%=tag%>&orderBy=votoMin">Dai meno ai più votati</a></li>
                                     </ul>
                                 </li>
                             </ul>
@@ -281,12 +281,6 @@
           
            <ul class="pagination hidden-xs">
                 <%
-                    servicesDim = (Integer) request.getAttribute("servicesDim");
-                    numPages = Functions.numberOfPages(servicesDim);
-                    filter = (String) request.getAttribute("filtro");
-                    key = (String) request.getAttribute("search");
-                    tag = (String) request.getAttribute("tag");
-                    ordinamento = (String) request.getAttribute("orderBy");
                     if (numPages > 1) {
                         for (int i = 0; i < numPages; i++) {
 
