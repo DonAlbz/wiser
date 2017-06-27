@@ -21,6 +21,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.ServletConfig;
+import org.hibernate.sql.ordering.antlr.OrderingSpecification;
 import org.json.JSONObject;
 
 /**
@@ -59,9 +60,11 @@ public class ActionServlet extends HttpServlet {
         if (op.equalsIgnoreCase("registrazione")) {
             doPostRegistrazione(req, resp);
         }
+        
         if (op.equalsIgnoreCase("controlloUsername")) {
             doPostControlloUsername(req, resp);
         }
+        
         if (op.equalsIgnoreCase("autoc")) {
             doGetAutoc(req, resp);
         }
@@ -97,14 +100,57 @@ public class ActionServlet extends HttpServlet {
                 isReady = true;
             }
         }
+        
+        
+        String richiesta = req.getParameter("orderBy");
+        if (richiesta==null)
+            servicesFiltered.sort((t1,t2) -> t1.getNome().compareTo(t2.getNome()));
+        else{
+        if(richiesta.equalsIgnoreCase("nome")) {
+            servicesFiltered.sort((t1,t2) -> t1.getNome().compareTo(t2.getNome()));
+            req.setAttribute("ordinamento", "Ordinamento per nome");
+        }
+        else if (richiesta.equalsIgnoreCase("utilizziMax")) {   
+           servicesFiltered.sort((t1,t2) -> Integer.compare(t1.getNumeroUtilizzi(), t2.getNumeroUtilizzi()));
+           Collections.reverse(servicesFiltered); 
+           req.setAttribute("ordinamento", "Dai pi&ugrave; ai meno utilizzati");    
+        }
+        else if (richiesta.equalsIgnoreCase("utilizziMin")) {   
+           servicesFiltered.sort((t1,t2) -> Integer.compare(t1.getNumeroUtilizzi(), t2.getNumeroUtilizzi())); 
+           req.setAttribute("ordinamento", "Dai meno ai pi&ugrave; utilizzati");    
+        }
+        else if (richiesta.equalsIgnoreCase("votoMax")) {   
+           servicesFiltered.sort((t1,t2) -> Double.compare(t1.getMediaVoti(), t2.getMediaVoti()));
+           Collections.reverse(servicesFiltered);
+           req.setAttribute("ordinamento", "Dai pi&ugrave; ai meno votati");    
+        }
+        else if (richiesta.equalsIgnoreCase("votoMin")) {   
+           servicesFiltered.sort((t1,t2) -> Double.compare(t1.getMediaVoti(), t2.getMediaVoti()));
+           req.setAttribute("ordinamento", "Dai meno ai pi&ugrave; votati");    
+        }
+     /*   else if (richiesta.equalsIgnoreCase("utilizzi")) {
+                Collections.sort(servicesFiltered, new Comparator<DataService>(){
+                    public  int compare(DataService ds1, DataService ds2){
+                        int toReturn;
+                        if (ds1.getNumeroUtilizzi()<= ds2.getNumeroUtilizzi())
+                            toReturn = -1;
+                        else{
+                            toReturn = 1;
+                        }
+                        return toReturn;
+                    }
+                });
+            } */
+        
+        }
         servicesParsed = Functions.parseDSList(servicesFiltered, start);
         req.setAttribute("servicesDim", servicesFiltered.size());
         ArrayList<Category> categories = hibernate.readCategories();
         RequestDispatcher rd = this.getServletContext().getRequestDispatcher("/index.jsp");
         req.setAttribute("list", servicesParsed);
         req.setAttribute("cats", categories);
+        req.setAttribute("orderBy", richiesta);
         rd.forward(req, resp);
-
     }
 
     protected void doPostLogin(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
