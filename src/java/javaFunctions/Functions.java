@@ -61,5 +61,21 @@ public class Functions {
         }
         return services;
     }
+    
+    public static ArrayList<DataService> filterTagDSList(ArrayList<DataService> list, String filter) {
+        ArrayList<DataService> services = new ArrayList<>();
+        for(int i=0; i<list.size(); i++) {
+            DataService service = list.get(i);
+            Set<Tag> taglist = service.getTag();
+            Object[] listaDiArray = taglist.toArray();
+            for(int j=0; j<listaDiArray.length; j++) {
+                Tag tag= (Tag) listaDiArray[j];
+                if(filter.equalsIgnoreCase(tag.getNome())) {
+                    services.add(list.get(i));
+                }
+            }
+        }
+        return services;
+    }
 
 }

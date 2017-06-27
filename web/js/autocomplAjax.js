@@ -3,7 +3,7 @@ var xhr;
 
 function autocompl(stringa)
 {
-    if ((stringa.trim() !== null)&&(stringa.trim() !== ""))
+    if ((stringa.trim() !== null) && (stringa.trim() !== ""))
     {
         var url = "ActionServlet?op=autoc&s=" + stringa;
         xhr = myGetXmlHttpRequest();
@@ -13,9 +13,12 @@ function autocompl(stringa)
     }
     else
     {
-        for(i=1; i<5; i++)
-        { 
-            document.getElementById("auto" + i).setAttribute("hidden", "hidden");   
+        $("#autocompl").css("display", "none");
+        for (i = 1; i < 5; i++)
+        {
+            /*document.getElementById("auto" + i).setAttribute("hidden", "hidden");*/
+            $("#auto" + i).css("display", "none");
+           
         }
     }
 }
@@ -56,14 +59,19 @@ function inserisciSuggerimento() {
         var jo = JSON.parse(ajaxResp);
         for (var i = 1; i < 5; i++)
         {
+            $("#autocompl").css("display","");
             if (i <= jo.suggerimenti.length)
             {
-                document.getElementById("auto" + i).value = jo.suggerimenti[i - 1].nome;
-                document.getElementById("auto" + i).removeAttribute("hidden");
+                /*document.getElementById("auto" + i).value = jo.suggerimenti[i - 1].nome;
+                 document.getElementById("auto" + i).removeAttribute("hidden");*/
+                getPosizione();
+                $("#auto" + i).css("display", "");
+                $("#auto" + i).text(jo.suggerimenti[i - 1].nome);
             }
             else
             {
-                document.getElementById("auto" + i).setAttribute("hidden", "hidden");
+                /*document.getElementById("auto" + i).setAttribute("hidden", "hidden");*/
+                $("#auto" + i).css("display", "none");
             }
         }
 
@@ -71,4 +79,14 @@ function inserisciSuggerimento() {
     }
 }
 
+function getPosizione()
+{
+    var pos = $("#auto0").offset();
+    var width = $("#auto0").width();
+    var height = $("#auto0").height();
+    $(".autoc").css("heigth", height);
+    $("#autocompl").css("top", pos.top + height + 12);
+    $("#autocompl").css("left", pos.left);
+    $("#autocompl").css("width", width + 26);
+}
 
