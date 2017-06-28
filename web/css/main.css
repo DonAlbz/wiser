@@ -193,3 +193,12 @@ html, body {
     color: #fff;
     background-color:#59b5fa;
 }
+
+#divOrd{
+    padding-left: 0px;
+    padding-bottom: 1.5%;
+}
+
+#ord{
+    font-size: small;
+}
