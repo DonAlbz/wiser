@@ -1,23 +1,25 @@
 var xhr;
 
-function autocompl(stringa)
+function autocompl(stringa, e)
 {
-    if ((stringa.trim() !== null) && (stringa.trim() !== ""))
-    {
-        var url = "ActionServlet?op=autoc&s=" + stringa;
-        xhr = myGetXmlHttpRequest();
-        xhr.open("GET", url, true);
-        xhr.onreadystatechange = inserisciSuggerimento;
-        xhr.send(null);
-    }
-    else
-    {
-        $("#autocompl").css("display", "none");
-        for (i = 1; i < 5; i++)
+    if ((e.keyCode !== 38) && (e.keyCode !== 40)) {
+        if ((stringa.trim() !== null) && (stringa.trim() !== ""))
         {
-            /*document.getElementById("auto" + i).setAttribute("hidden", "hidden");*/
-            $("#auto" + i).css("display", "none");
-           
+            var url = "ActionServlet?op=autoc&s=" + stringa;
+            xhr = myGetXmlHttpRequest();
+            xhr.open("GET", url, true);
+            xhr.onreadystatechange = inserisciSuggerimento;
+            xhr.send(null);
+        }
+        else
+        {
+            $("#autocompl").css("display", "none");
+            for (i = 1; i < 5; i++)
+            {
+                /*document.getElementById("auto" + i).setAttribute("hidden", "hidden");*/
+                $("#auto" + i).css("display", "none");
+                $("#auto" + i).text("");
+            }
         }
     }
 }
@@ -59,7 +61,7 @@ function inserisciSuggerimento() {
         console.log(ajaxResp);
         for (var i = 1; i < 5; i++)
         {
-            $("#autocompl").css("display","");
+            $("#autocompl").css("display", "");
             if (i <= jo.suggerimenti.length)
             {
                 /*document.getElementById("auto" + i).value = jo.suggerimenti[i - 1].nome;
@@ -72,6 +74,7 @@ function inserisciSuggerimento() {
             {
                 /*document.getElementById("auto" + i).setAttribute("hidden", "hidden");*/
                 $("#auto" + i).css("display", "none");
+                $("#auto" + i).text("");
             }
         }
     }
@@ -90,59 +93,73 @@ function getPosizione()
 
 function arrowEnable(e)
 {
-    if(e.keyCode == 40)
+    if (e.keyCode == 40)
     {
-        if($(".autoc-selected")[0])
+        if ($(".autoc-selected")[0])
         {
             var id = $(".autoc-selected").first().attr("id");
             var int = id.replace("auto", "");
-            if((int>0)&&(int<4))
+            if ((int > 0) && (int < 4))
             {
-                $("#auto"+int).toggleClass("autoc-selected");
-                int = parseInt(int)+1;
-                $("#auto"+int).toggleClass("autoc-selected");
+                $("#auto" + int).toggleClass("autoc-selected");
+                int = parseInt(int) + 1;
+                if (($("#auto" + int)).text().toString() !== "")
+                {
+                    $("#auto" + int).toggleClass("autoc-selected");
+                    $("#auto0").val($("#auto" + int).text());
+                }
+                else
+                {
+                    $("#auto1").toggleClass("autoc-selected");
+                    $("#auto0").val($("#auto1").text());
+                }
             }
             else
             {
-                $("#auto"+int).toggleClass("autoc-selected");
+                $("#auto" + int).toggleClass("autoc-selected");
+                $("#auto0").val($("#auto" + int).text());
             }
         }
         else
         {
-            $("#auto1").toggleClass("autoc-selected"); 
-        } 
-        
+            $("#auto1").toggleClass("autoc-selected");
+            $("#auto0").val($("#auto1").text());
+        }
     }
-    else if(e.keyCode == 38){
-    if($(".autoc-selected")[0])
+    else if (e.keyCode == 38)
+    {
+        if ($(".autoc-selected")[0])
         {
             var id = $(".autoc-selected").first().attr("id");
             var int = id.replace("auto", "");
-            if((int>1)&&(int<5))
+            if ((int > 1) && (int < 5))
             {
-                $("#auto"+int).toggleClass("autoc-selected");
-                int = parseInt(int)-1;
-                $("#auto"+int).toggleClass("autoc-selected");
+                $("#auto" + int).toggleClass("autoc-selected");
+                int = parseInt(int) - 1;
+                $("#auto" + int).toggleClass("autoc-selected");
+                $("#auto0").val($("#auto" + int).text());
             }
             else
             {
-                $("#auto"+int).toggleClass("autoc-selected");
+                $("#auto" + int).toggleClass("autoc-selected");
+                $("#auto0").val($("#auto" + int).text());
             }
         }
         else
         {
             $("#auto4").toggleClass("autoc-selected");
-        } 
-        
+            $("#auto0").val($("#auto4").text());
+
+        }
     }
-    else if(e.keyCode==13) {
-        if($(".autoc-selected")[0])
+    else if (e.keyCode == 13) {
+        if ($(".autoc-selected")[0])
         {
             var id = $(".autoc-selected").first().attr("id");
-            var daInviare = ($("#"+id)).text().toString();
-            $("#auto0").val(daInviare); 
+            var daInviare = ($("#" + id)).text().toString();
+            $("#auto0").val(daInviare);
         }
-    }    
+    }
 }
 
 

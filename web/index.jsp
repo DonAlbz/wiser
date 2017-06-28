@@ -77,7 +77,7 @@
 
                                         <form class="navbar-form   hidden-xs" role="search" action="ActionServlet" method="GET">
                                             <div id="nav-centrata" class="input-group" >
-                                                <input id="auto0" name="search" type="text" class="form-control center-block height-40" placeholder="search..." onkeydown="arrowEnable(event)" onkeyup="autocompl(this.value);" 
+                                                <input id="auto0" name="search" type="text" class="form-control center-block height-40" placeholder="search..." onkeydown="arrowEnable(event)" onkeyup="autocompl(this.value, event);" 
                                                        autocomplete="off">
                                                 <input name="op"  type="text" value="getList" hidden>
                                                 <span class="input-group-btn">
@@ -202,8 +202,9 @@
                                 </li>
                             </ul>
                         </div><br>
+                        <div id="divOrd" class="col-lg-12">
                         <div id="ord" class="label label-success" role="alert">${ordinamento}</div>
-                      
+                        </div>
 
                         <%
                             ArrayList<DataService> services = (ArrayList<DataService>) request.getAttribute("list");
