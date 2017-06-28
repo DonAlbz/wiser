@@ -1,0 +1,51 @@
+
+/* ==========================================================================
+   Sara's custom styles
+   ========================================================================== */
+.modal-header {background: #009900;color: white;}
+
+#feedback { font-size: 1em; }
+#selectable .ui-selecting { background: #31708f; }
+#selectable .ui-selected { background: #31708f; color: white; }
+#selectable { list-style-type: none; margin: 0; padding: 0; width: 100%; }
+#selectable li { margin: 3px; padding: 0.4em; font-size: 1em; height: 32px; margin-left: 10pt;}
+
+/* voto nella casellina*/
+label {font-weight: 400;}
+.label {-webkit-border-radius: 3px;-moz-border-radius: 3px;border-radius: 3px;}
+.label{display: inline-block;padding: 2px 4px;font-size: 11.844px;
+       font-weight: bold;line-height: 14px;color: #ffffff;vertical-align: baseline;white-space: nowrap;
+       text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);background-color: #31708f; float: right;}
+#confirm{ margin-left: 40%;
+
+}
+
+ol .ui-selecting {
+    background: #31708f;
+}
+ol .ui-selected { 
+    background: #31708f;
+    color: white; 
+}
+ol { list-style-type: none; margin: 0; padding: 0; width: 100%; }
+ol li { margin: 3px; padding: 0.4em; font-size: 1em; height: 32px; margin-left: 10pt;}
+
+.btn a{
+    color:white;
+}
+.btn a:hover{
+    color:white;
+}
+
+.btn a:hover {
+    text-decoration: none;
+}
+
+#feedbackVoto{
+    background: transparent !important;
+    color: #1aa51c;
+    border-style: solid;    
+    border-color: #dcecdc;
+    border-width: 2px;
+    border-spacing: 5px;
+}
