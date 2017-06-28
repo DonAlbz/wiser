@@ -21,6 +21,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.ServletConfig;
+import javax.servlet.http.HttpSession;
 import org.hibernate.sql.ordering.antlr.OrderingSpecification;
 import org.json.JSONObject;
 
@@ -33,13 +34,15 @@ public class ActionServlet extends HttpServlet {
 
     //initiate the DAOclass to get the access to the DB
     DAOclass hibernate;
+    HttpSession sess;
+    Session session;
 
     //initiate the servlet 
     public void init(ServletConfig conf) throws ServletException {
         super.init(conf);
         Configuration configuration = new Configuration();
         SessionFactory sf = configuration.configure().buildSessionFactory();
-        Session session = sf.openSession();
+        session = sf.openSession();
         hibernate = new DAOclass(session);
     }
 
@@ -49,24 +52,43 @@ public class ActionServlet extends HttpServlet {
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String op = req.getParameter("op");
 
+        String nomeU = req.getParameter("nomeU");
+        String index_DS = req.getParameter("votaS");
+        String index_voto = req.getParameter("Si");
+
         if (op.equalsIgnoreCase("getList")) {
             doGetList(req, resp);
+        }
+        if (op.equalsIgnoreCase("getList2") && nomeU != null) {
+
+            doGetList2(req, resp, nomeU);
         }
 
         if (op.equalsIgnoreCase("login")) {
             doPostLogin(req, resp);
         }
+        if (op.equalsIgnoreCase("logout")) {
+            doGetLogout(req, resp);
+        }
 
         if (op.equalsIgnoreCase("registrazione")) {
             doPostRegistrazione(req, resp);
         }
-        
+
         if (op.equalsIgnoreCase("controlloUsername")) {
             doPostControlloUsername(req, resp);
         }
-        
+
         if (op.equalsIgnoreCase("autoc")) {
             doGetAutoc(req, resp);
+        }
+
+        if (index_DS != null && index_voto != null) {
+
+            doGetAddVoto(req, resp, index_DS, index_voto);
+        }
+        if (op.equalsIgnoreCase("aggregationByDS")) {
+            doGetAggregationByDS(req, resp);
         }
     }
 
@@ -98,46 +120,41 @@ public class ActionServlet extends HttpServlet {
                 isReady = true;
             }
         }
-            if ((tagFilter != null) && (!tagFilter.equalsIgnoreCase("") && (!tagFilter.equalsIgnoreCase("null")))) {
-                if (!isReady) {
-                    servicesFiltered = getTagDS(tagFilter);
-                    req.setAttribute("tag", tagFilter);
-                    isReady = true;
-                }
-            } else {
-                if (!isReady) {
-                    servicesFiltered = hibernate.readDataServices();
-                    isReady = true;
-                }
-            }        
+        if ((tagFilter != null) && (!tagFilter.equalsIgnoreCase("") && (!tagFilter.equalsIgnoreCase("null")))) {
+            if (!isReady) {
+                servicesFiltered = getTagDS(tagFilter);
+                req.setAttribute("tag", tagFilter);
+                isReady = true;
+            }
+        } else {
+            if (!isReady) {
+                servicesFiltered = hibernate.readDataServices();
+                isReady = true;
+            }
+        }
         String richiesta = req.getParameter("orderBy");
-        if (richiesta==null)
-            servicesFiltered.sort((t1,t2) -> t1.getNome().compareTo(t2.getNome()));
-        else{
-        if(richiesta.equalsIgnoreCase("nome")) {
-            servicesFiltered.sort((t1,t2) -> t1.getNome().compareTo(t2.getNome()));
-            req.setAttribute("ordinamento", "Ordinamento per nome");
-        }
-        else if (richiesta.equalsIgnoreCase("utilizziMax")) {   
-           servicesFiltered.sort((t1,t2) -> Integer.compare(t1.getNumeroUtilizzi(), t2.getNumeroUtilizzi()));
-           Collections.reverse(servicesFiltered); 
-           req.setAttribute("ordinamento", "Dai pi&ugrave; ai meno utilizzati");    
-        }
-        else if (richiesta.equalsIgnoreCase("utilizziMin")) {   
-           servicesFiltered.sort((t1,t2) -> Integer.compare(t1.getNumeroUtilizzi(), t2.getNumeroUtilizzi())); 
-           req.setAttribute("ordinamento", "Dai meno ai pi&ugrave; utilizzati");    
-        }
-        else if (richiesta.equalsIgnoreCase("votoMax")) {   
-           servicesFiltered.sort((t1,t2) -> Double.compare(t1.getMediaVoti(), t2.getMediaVoti()));
-           Collections.reverse(servicesFiltered);
-           req.setAttribute("ordinamento", "Dai pi&ugrave; ai meno votati");    
-        }
-        else if (richiesta.equalsIgnoreCase("votoMin")) {   
-           servicesFiltered.sort((t1,t2) -> Double.compare(t1.getMediaVoti(), t2.getMediaVoti()));
-           req.setAttribute("ordinamento", "Dai meno ai pi&ugrave; votati");    
-        }
-  
-        
+        if (richiesta == null) {
+            servicesFiltered.sort((t1, t2) -> t1.getNome().compareTo(t2.getNome()));
+        } else {
+            if (richiesta.equalsIgnoreCase("nome")) {
+                servicesFiltered.sort((t1, t2) -> t1.getNome().compareTo(t2.getNome()));
+                req.setAttribute("ordinamento", "Ordinamento per nome");
+            } else if (richiesta.equalsIgnoreCase("utilizziMax")) {
+                servicesFiltered.sort((t1, t2) -> Integer.compare(t1.getNumeroUtilizzi(), t2.getNumeroUtilizzi()));
+                Collections.reverse(servicesFiltered);
+                req.setAttribute("ordinamento", "Dai pi&ugrave; ai meno utilizzati");
+            } else if (richiesta.equalsIgnoreCase("utilizziMin")) {
+                servicesFiltered.sort((t1, t2) -> Integer.compare(t1.getNumeroUtilizzi(), t2.getNumeroUtilizzi()));
+                req.setAttribute("ordinamento", "Dai meno ai pi&ugrave; utilizzati");
+            } else if (richiesta.equalsIgnoreCase("votoMax")) {
+                servicesFiltered.sort((t1, t2) -> Double.compare(t1.getMediaVoti(), t2.getMediaVoti()));
+                Collections.reverse(servicesFiltered);
+                req.setAttribute("ordinamento", "Dai pi&ugrave; ai meno votati");
+            } else if (richiesta.equalsIgnoreCase("votoMin")) {
+                servicesFiltered.sort((t1, t2) -> Double.compare(t1.getMediaVoti(), t2.getMediaVoti()));
+                req.setAttribute("ordinamento", "Dai meno ai pi&ugrave; votati");
+            }
+
         }
         servicesParsed = Functions.parseDSList(servicesFiltered, start);
         req.setAttribute("servicesDim", servicesFiltered.size());
@@ -149,6 +166,19 @@ public class ActionServlet extends HttpServlet {
         rd.forward(req, resp);
     }
 
+    // da aggiornare come doGetList, quindi anche indexUtente da cambiare
+    private void doGetList2(HttpServletRequest req, HttpServletResponse resp, String nomeU)
+            throws ServletException, IOException {
+
+        ArrayList<DataService> services = hibernate.readDataServices();
+        ArrayList<Tag> tags = hibernate.readTags();
+        RequestDispatcher rd = this.getServletContext().getRequestDispatcher("/indexUtente.jsp");
+        req.setAttribute("list", services);
+        req.setAttribute("tags", tags);
+        req.setAttribute("nomeU", nomeU);
+        rd.forward(req, resp);
+    }
+
     protected void doPostLogin(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         resp.setContentType("text/html;charset=UTF-8");
         PrintWriter out = resp.getWriter();
@@ -157,7 +187,15 @@ public class ActionServlet extends HttpServlet {
         String pass = req.getParameter("password");
 
         if (validaUtente(nome, pass)) {
-            out.println("loggato " + nome);
+            //out.println("loggato " + nome);
+            req.setAttribute("nome", nome);
+            req.getRequestDispatcher("/firstpage2.jsp").forward(req, resp);
+
+            sess = req.getSession(true);
+            sess.setAttribute("name", nome);
+
+            sess.setAttribute("logged", "uno");
+
         } else {
             req.setAttribute("error", "Attenzione! non sei registrato!");
             req.getRequestDispatcher("/login.jsp").forward(req, resp);
@@ -189,6 +227,22 @@ public class ActionServlet extends HttpServlet {
         }
 
         return stato;
+    }
+
+    protected void doGetLogout(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+
+        response.setContentType("text/html");
+        PrintWriter out = response.getWriter();
+
+        sess = request.getSession();
+        sess.setAttribute("logged", "zero");
+
+        response.sendRedirect("firstpage.jsp");
+
+        //request.getRequestDispatcher("/login.jsp").forward(request, response);
+        //out.print("You are successfully logged out!");
+        out.close();
     }
 
     public boolean cercaUtente(String name) {
@@ -240,9 +294,9 @@ public class ActionServlet extends HttpServlet {
                 obj.put("nome", name);
                 list.add(obj);
             }
-        }     
+        }
         Iterator iterCat = categs.iterator();
-        while(iterCat.hasNext()) {
+        while (iterCat.hasNext()) {
             JSONObject obj = new JSONObject();
             Category catSel = (Category) iterCat.next();
             String name = catSel.getNome();
@@ -313,6 +367,73 @@ public class ActionServlet extends HttpServlet {
         ArrayList<DataService> services = hibernate.readDataServices();
         ArrayList<DataService> toRet = Functions.filterTagDSList(services, tagName);
         return toRet;
+    }
+
+    //Sara
+    protected void doGetAddVoto(HttpServletRequest request, HttpServletResponse response, String index_DS, String voto)
+            throws ServletException, IOException {
+        PrintWriter out = response.getWriter();
+        String nomeUtente = sess.getAttribute("name").toString();
+
+        //double[] voti = {0.0, 0.125, 0.25, 0.375, 0.5, 0.625, 0.75, 0.875, 1.0};
+        //out.print("ciao hai mandato id DS: " + index_DS + " id voto:" + index_voto);
+        int v = (int) Math.ceil((Double.parseDouble(voto) * 100));  //indice array 
+        //out.print(" indice array:"+id_voto);
+        //int v = (int) Math.ceil(voti[id_voto] * 100);
+        //out.print(" valore array:"+v);
+        long idDS = Long.parseLong(index_DS);
+        //getService byname  e add voto e upload voti
+        DataService addVote = hibernate.readDataService(idDS);
+
+        Sviluppatore s = readDeveloperByName(nomeUtente);
+        long id_AggrNulla = 1;
+        Aggregazione a = hibernate.readAggregation(id_AggrNulla);
+        addVote.assegnaVoto(session, v, s, a);
+        //ArrayList<Voto> votiDB = hibernate.readVoti(s.getId());
+        out.print(" nome U " + nomeUtente + "  " + v);
+    }
+
+    //Sara
+    public Sviluppatore readDeveloperByName(String nomeS) {
+
+        Sviluppatore find = null;
+        Set<Sviluppatore> s = hibernate.readDevelopers();
+        String nome = nomeS.toLowerCase();
+        for (Sviluppatore sviluppatore : s) {
+            if (nome.equals(sviluppatore.getNome().toLowerCase())) {
+                find = sviluppatore;
+            }
+        }
+        return find;
+    }
+
+    private void doGetAggregationByDS(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
+
+        String idDS = req.getParameter("idDS");
+        Long idDSLong = Long.parseLong(idDS);
+        DataService s = hibernate.readDataService(idDSLong);
+        ArrayList<Aggregazione> aggregationList = hibernate.readAggregation(s);
+
+        Iterator iterAggr = aggregationList.iterator();
+        ArrayList<JSONObject> list = new ArrayList<>();
+
+        while (iterAggr.hasNext()) {
+            JSONObject obj = new JSONObject();
+            Aggregazione aggregazione = (Aggregazione) iterAggr.next();
+            String name = aggregazione.getNome();
+
+            obj.put("nome", name);
+
+            list.add(obj);
+
+        }
+        //String cioa=Integer.toString(aggregationList.size());
+        JSONObject toRet = new JSONObject();
+        //toRet.put("aggregazioni", list);
+        toRet.put("aggregazioni", list);
+        PrintWriter out = resp.getWriter();
+        out.print(toRet);
     }
 
 }
