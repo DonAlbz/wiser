@@ -159,7 +159,55 @@ function arrowEnable(e)
             var daInviare = ($("#" + id)).text().toString();
             $("#auto0").val(daInviare);
         }
+        parseSend();
     }
 }
+
+function parseSend()
+{
+    var key =$("#auto0").val();
+    var send = false;
+    if((key != null)&&(key != "")&&(key != "null"))
+    {
+        var parser = /[\s]+/;
+        var array = key.split(parser);
+        var index = 1;
+        while(index > -1)
+        {
+            index = array.indexOf("");
+            if(index != -1)
+            {
+              array.splice(index, 1);  
+            }
+        }
+        if(array.length >0)
+        {
+            var joString = createJSONString(array);
+            console.log(joString);
+            send = true;
+            window.location.replace("ActionServlet?op=getList&search="+joString);
+        }
+    }
+    if(!send)
+    {
+        $("#auto0").val("");
+    }
+}
+
+function createJSONString(array)
+{
+    var jo = [];
+    for(var i=0; i<array.length; i++)
+    {
+        jo.push({
+           nome: array[i]
+        });
+    }
+    var toRet = {};
+    toRet.keys = jo;
+    return JSON.stringify(toRet);
+}
+
+
 
 

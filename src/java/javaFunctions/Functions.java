@@ -6,6 +6,7 @@
 package javaFunctions;
 
 import java.util.*;
+import javax.servlet.http.HttpServletRequest;
 import wiser.dao.*;
 
 /**
@@ -61,16 +62,16 @@ public class Functions {
         }
         return services;
     }
-    
+
     public static ArrayList<DataService> filterTagDSList(ArrayList<DataService> list, String filter) {
         ArrayList<DataService> services = new ArrayList<>();
-        for(int i=0; i<list.size(); i++) {
+        for (int i = 0; i < list.size(); i++) {
             DataService service = list.get(i);
             Set<Tag> taglist = service.getTag();
             Object[] listaDiArray = taglist.toArray();
-            for(int j=0; j<listaDiArray.length; j++) {
-                Tag tag= (Tag) listaDiArray[j];
-                if(filter.equalsIgnoreCase(tag.getNome())) {
+            for (int j = 0; j < listaDiArray.length; j++) {
+                Tag tag = (Tag) listaDiArray[j];
+                if (filter.equalsIgnoreCase(tag.getNome())) {
                     services.add(list.get(i));
                 }
             }
@@ -78,5 +79,29 @@ public class Functions {
         return services;
     }
 
-
+    public static ArrayList<DataService> orderDSList(ArrayList<DataService> list, String filter, HttpServletRequest req) {
+        if (filter != null) {
+            if (filter.equalsIgnoreCase("nome")) {
+                list.sort((t1, t2) -> t1.getNome().compareTo(t2.getNome()));
+                req.setAttribute("ordinamento", "Ordinamento per nome");
+            } else if (filter.equalsIgnoreCase("utilizziMax")) {
+                list.sort((t1, t2) -> Integer.compare(t1.getNumeroUtilizzi(), t2.getNumeroUtilizzi()));
+                Collections.reverse(list);
+                req.setAttribute("ordinamento", "Dai pi&ugrave; ai meno utilizzati");
+            } else if (filter.equalsIgnoreCase("utilizziMin")) {
+                list.sort((t1, t2) -> Integer.compare(t1.getNumeroUtilizzi(), t2.getNumeroUtilizzi()));
+                req.setAttribute("ordinamento", "Dai meno ai pi&ugrave; utilizzati");
+            } else if (filter.equalsIgnoreCase("votoMax")) {
+                list.sort((t1, t2) -> Double.compare(t1.getMediaVoti(), t2.getMediaVoti()));
+                Collections.reverse(list);
+                req.setAttribute("ordinamento", "Dai pi&ugrave; ai meno votati");
+            } else if (filter.equalsIgnoreCase("votoMin")) {
+                list.sort((t1, t2) -> Double.compare(t1.getMediaVoti(), t2.getMediaVoti()));
+                req.setAttribute("ordinamento", "Dai meno ai pi&ugrave; votati");
+            }
+        } else {
+            list.sort((t1, t2) -> t1.getNome().compareTo(t2.getNome()));
+        }
+        return list;
+    }
 }
