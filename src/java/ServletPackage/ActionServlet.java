@@ -110,26 +110,22 @@ public class ActionServlet extends HttpServlet {
         String tagFilter = req.getParameter("tag");
         Integer start = Functions.parseInteger(req.getParameter("start"));
         String catFilter = req.getParameter("filtro");
+        String searchBar = "";
         boolean isReady = false;
         if ((jsonString != null) && (!jsonString.equalsIgnoreCase("null"))) {
             JSONObject jo = new JSONObject(jsonString);
             HashSet<DataService> list = new HashSet<>();
             for (int i = 0; i < jo.getJSONArray("keys").length(); i++) {
                 String key = jo.getJSONArray("keys").getJSONObject(i).getString("nome");
+                searchBar = searchBar + key + " ";
                 containsCategory(list, key);
                 containsDS(list, key);
                 containsTag(list, key);
             }
             servicesFiltered = toArrayList(list);
             req.setAttribute("search", jsonString);
+            req.setAttribute("ricerca", searchBar);
             isReady = true;
-        }
-        if ((catFilter != null) && (!catFilter.equalsIgnoreCase("") && (!catFilter.equalsIgnoreCase("null")))) {
-            if (!isReady) {
-                servicesFiltered = getCategoryDS(catFilter);
-                req.setAttribute("filtro", catFilter);
-                isReady = true;
-            }
         }
         if ((tagFilter != null) && (!tagFilter.equalsIgnoreCase("") && (!tagFilter.equalsIgnoreCase("null")))) {
             if (!isReady) {
@@ -142,6 +138,10 @@ public class ActionServlet extends HttpServlet {
                 servicesFiltered = hibernate.readDataServices();
                 isReady = true;
             }
+        }
+        if ((catFilter != null) && (!catFilter.equalsIgnoreCase("") && (!catFilter.equalsIgnoreCase("null")))) {
+            servicesFiltered = getCategoryDS(catFilter, servicesFiltered);
+            req.setAttribute("filtro", catFilter);
         }
         String order = req.getParameter("orderBy");
         servicesOrdered = Functions.orderDSList(servicesFiltered, order, req);
@@ -318,6 +318,11 @@ public class ActionServlet extends HttpServlet {
         return toRet;
     }
 
+    private ArrayList<DataService> getCategoryDS(String catName, ArrayList<DataService> services) {
+        ArrayList<DataService> toRet = Functions.filterCategoryDSList(services, catName);
+        return toRet;
+    }
+
     /*
      private ArrayList<DataService> getSearchDS(String key) {
      ArrayList<DataService> services = hibernate.readDataServices();
@@ -463,14 +468,12 @@ public class ActionServlet extends HttpServlet {
         PrintWriter out = resp.getWriter();
         out.print(toRet);
     }
-    
-    private ArrayList<DataService> toArrayList(Set<DataService> set)
-    {
+
+    private ArrayList<DataService> toArrayList(Set<DataService> set) {
         ArrayList<DataService> arrlist = new ArrayList<>();
         Iterator iterSet = set.iterator();
-        while(iterSet.hasNext())
-        {
-            DataService service = (DataService)iterSet.next();
+        while (iterSet.hasNext()) {
+            DataService service = (DataService) iterSet.next();
             arrlist.add(service);
         }
         return arrlist;

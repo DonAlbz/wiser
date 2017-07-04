@@ -86,9 +86,17 @@
                                              </span>
                                              <div>
                                              </form>-->
+
+                                        <%
+                                            String searchBar = (String)request.getAttribute("ricerca");
+                                            if(searchBar == null)
+                                            {
+                                                searchBar = "";
+                                            }
+                                        %>
                                         <form class="navbar-form   hidden-xs" role="search">
                                             <div id="nav-centrata" class="input-group" >
-                                                <input id="auto0" name="search" type="text" class="form-control center-block height-40" placeholder="search..." onkeydown="arrowEnable(event)" onkeyup="autocompl(this.value, event);" 
+                                                <input id="auto0" name="search" type="text" value='<%=searchBar%>' class="form-control center-block height-40" placeholder="search..." onkeydown="arrowEnable(event)" onkeyup="autocompl(this.value, event);" 
                                                        autocomplete="off">
 
                                               
@@ -150,13 +158,21 @@
                 <div class="sidebar-nav">
                     <h3> Filter by Categories </h3>
                     <div class="list-group">
-                        <%
+                        <%                            int servicesDim = (Integer) request.getAttribute("servicesDim");
+                            int numPages = Functions.numberOfPages(servicesDim);
+                            String filter = (String) request.getAttribute("filtro");
+                            String key = (String) request.getAttribute("search");
+                            if (key != null) {
+                                key = key.replace("\"", "\'");
+                            }
+                            String tag = (String) request.getAttribute("tag");
+                            String ordinamento = (String) request.getAttribute("orderBy");
                             ArrayList<Category> categories = (ArrayList<Category>) request.getAttribute("cats");
                             Iterator<Category> iterCat = categories.iterator();
                             while (iterCat.hasNext()) {
                                 Category selCat = (Category) iterCat.next();
                         %>        
-                        <a href="ActionServlet?op=getList&filtro=<%=selCat.getNome()%>" class="list-group-item"> <%=selCat.getNome()%></a>
+                        <a href="ActionServlet?op=getList&filtro=<%=selCat.getNome()%>&search=<%=key%>&tag=<%=tag%>" class="list-group-item"> <%=selCat.getNome()%></a>
                         <%
                             }
                         %>
@@ -172,15 +188,6 @@
                 <!--Paginazione schermo piccolo-->
                 <ul class="pagination  hidden-sm hidden-lg hidden-md" style="float:right; margin: 0px;" >
                     <%
-                        int servicesDim = (Integer) request.getAttribute("servicesDim");
-                        int numPages = Functions.numberOfPages(servicesDim);
-                        String filter = (String) request.getAttribute("filtro");
-                        String key = (String) request.getAttribute("search");
-                        if (key != null) {
-                            key = key.replace("\"", "\'");
-                        }
-                        String tag = (String) request.getAttribute("tag");
-                        String ordinamento = (String) request.getAttribute("orderBy");
                         if (numPages > 1) {
                             for (int i = 0; i < numPages; i++) {
 
@@ -249,7 +256,9 @@
                                             while (iterTag.hasNext()) {
                                                 Tag selTag = (Tag) iterTag.next();
                                         %>
-                                        <a href="#"><%= selTag.getNome()%> </a>
+
+                                        <a href="ActionServlet?op=getList&tag=<%=selTag.getNome()%>"> <%= selTag.getNome()%> </a>
+
                                         <%
                                             }
                                         %>
