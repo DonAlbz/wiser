@@ -1049,8 +1049,8 @@ public class DAOclass {
 
         toReturn = a.removeDS(s);    
 
-        //incremento utilizzi data service
-        updateDataService(s.getId(), 1);
+        //decremento utilizzi data service
+        updateDataService(s.getId(), -1);
 
         this.session.save(a);
 
