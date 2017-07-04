@@ -80,7 +80,9 @@ public class Functions {
     }
 
     public static ArrayList<DataService> orderDSList(ArrayList<DataService> list, String filter, HttpServletRequest req) {
-        if (filter != null) {
+        if ((filter == null) || (filter.equalsIgnoreCase("null"))) {
+            list.sort((t1, t2) -> t1.getNome().compareTo(t2.getNome()));
+        } else {
             if (filter.equalsIgnoreCase("nome")) {
                 list.sort((t1, t2) -> t1.getNome().compareTo(t2.getNome()));
                 req.setAttribute("ordinamento", "Ordinamento per nome");
@@ -99,8 +101,10 @@ public class Functions {
                 list.sort((t1, t2) -> Double.compare(t1.getMediaVoti(), t2.getMediaVoti()));
                 req.setAttribute("ordinamento", "Dai meno ai pi&ugrave; votati");
             }
-        } else {
-            list.sort((t1, t2) -> t1.getNome().compareTo(t2.getNome()));
+            else
+            {
+                 list.sort((t1, t2) -> t1.getNome().compareTo(t2.getNome()));
+            }
         }
         return list;
     }
