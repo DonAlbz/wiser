@@ -2,7 +2,7 @@
     Document   : index
     Created on : 19-giu-2017, 15.03.52
     Author     : Sara
---%>
+--%> 
 
 <%@page import="java.util.*"%>
 <%@page import="wiser.dao.*"%>
@@ -35,17 +35,19 @@
 
         <link rel="apple-touch-icon" href="apple-touch-icon.png">
         <link rel="stylesheet" href="css/sidebar.css">
+        <link rel="stylesheet" href="css/main.css">
 
-        
+
+        <script type="text/javascript" src="./js/gestione_voti.js"></script>
         <link rel="stylesheet" href="css/sara_css.css">
 
     </head>
     <body id="body">
         <%
             session = request.getSession();
-            out.print(session.getAttribute("logged"));
+            //out.print(session.getAttribute("logged"));
             if (session.getAttribute("logged").toString().equalsIgnoreCase("zero")) {
-                out.print(session.getAttribute("logged"));
+                //out.print(session.getAttribute("logged"));
                 session.invalidate();
 
             } else {
@@ -59,50 +61,89 @@
         <nav class="navbar navbar-default">
             <div class="container-fluid" id="container-nav">
                 <div class="row">      
-                    <div>
+                    <div class="navbar-header col-lg-7 col-md-7 col-sm-7">
                         <a class="navbar-brand" href="#">Wiser</a>
-                    </div>
-                    <div class="col-lg-10 col-md-10 col-sm-10">
-                        <div class="container-fluid">
-                            <div class="row">    
-                                <div class="collapse navbar-collapse" id="menu">
-                                    <div class="col-lg-3 col-md-3 col-sm-3">
-                                        <ul class="nav navbar-nav">
-                                            <li><a href="#"><b>My MashUp</b></a></li>
-                                            <li class="dropdown">
-                                                <a href="#" class="dropdown-toggle pulsante-dropdown" data-toggle="dropdown" role="button"><b>Order by</b><span class="caret"></span></a>
-                                                <ul class="dropdown-menu" role="menu">
-                                                    <li><a href="#">Top Scored</a></li>
-                                                    <li><a href="#">Most Used</a></li>
-                                                    <li><a href="#">Most Recent</a></li>
-                                                </ul>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                    <div class="col-lg-1 col-md-1 col-sm-1">
-                                    </div>
-                                    <div>
-                                        <form class="navbar-form   hidden-xs" role="search" action="/" method="GET">
-                                            <div id="nav-centrata" class="input-group" >
-                                                <input type="text" class="form-control center-block" placeholder="looking for something?"/>
-                                                <span class="input-group-btn">
-                                                    <button class="btn btn-success" type="button">Search</button>
-                                                </span>
-                                            </div>
-
-                                        </form>
-                                    </div>
+                        <div class="collapse navbar-collapse col-lg-6 col-md-6 col-sm-6" id="menu">
+                            <!--    <div class="col-lg-5 col-md-5 col-sm-5">   -->
+                            <ul class="nav navbar-nav">
+                                <li><a href="#"><b>My MashUp</b></a></li>
+                                <li class="dropdown">
+                                    <a href="#" class="dropdown-toggle pulsante-dropdown" data-toggle="dropdown" role="button"><b>Order by</b><span class="caret"></span></a>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li><a href="#">Top Scored</a></li>
+                                        <li><a href="#">Most Used</a></li>
+                                        <li><a href="#">Most Recent</a></li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6">
+                            <form class="navbar-form hidden-sm hidden-xs" role="search" action="/" method="GET">
+                                <div class="input-group" >
+                                    <input type="text" class="form-control center-block" placeholder="looking for something?"/>
+                                    <span class="input-group-btn">
+                                        <button class="btn btn-success" type="button">Search</button>
+                                    </span>
                                 </div>
-                            </div>
+
+                            </form>
                         </div>
                     </div>
-
-                    <div>
+                    <div class="navbar-header col-lg-5 col-md-5 col-sm-5">
                         <% String nome_utente = (String) request.getAttribute("nomeU");
                             session = request.getSession();
                             String nomeSes = session.getAttribute("name").toString();
                         %>
+
+
+
+
+
+
+
+
+
                         <ul class="nav navbar-nav navbar-right">
+                            <!-- Trigger the modal with a button -->
+                            <li><a href="#"><button type="button" class="btn btn-warning margine" data-toggle="modal" data-target="#meshup-modal">Crea una nuova meshup! </button></a></li>
+                            <!-- Modal -->
+                            <div id="meshup-modal" class="modal fade" role="dialog">
+                                <div class="modal-dialog">
+
+                                    <!-- Modal content-->
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                            <h4 class="modal-title">Crea il tuo mesh-up</h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="formAggr">
+                                                <!--       <form action="ActionServlet" method="post">         -->
+                                                <p>Nome Mesh-Up: <input id="nameAgg" type="text" placeholder="nome.."></p>
+                                                <p>Descrizione: <textarea id="descrizioneAgg" placeholder="inserisci una descrizione del tuo mesh-up.."></textarea></p>
+                                                <!--           <input type="text" name="op" value="meshup" hidden="hidden">  -->
+                                                <!--      </form> -->
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" onclick="creaAggregazione()" class="btn btn-success" data-dismiss="modal"> Conferma</button> 
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+
+
+
+
+
+
+
+
+
+
+
                             <li><a href="#"><span class="glyphicon glyphicon-user"></span><%=nomeSes%></a></li>
                             <li><a href="ActionServlet?op=logout"><span class="glyphicon glyphicon-log-out"></span>Logout</a></li>
                         </ul>
@@ -121,17 +162,18 @@
 
                             </div><!-- /.navbar-collapse #search -->
                         </form>
-
                     </div><!-- /.container -->
                 </div>
-            </div>
+            </div> 
         </nav> 
 
         <!-- Sidebar -->
         <!-- il div wrapper serve per comprimere la navbar e comprende tutto il contenuto della pagina-->
+
         <div id="wrapper"> 
-            <div id="sidebar-wrapper" style="margin-top: 30px"> 
+            <div id="sidebar-wrapper" style="margin-top: 30px">                
                 <div class="sidebar-nav">
+
                     <h3> Filter by Categories </h3>
                     <div class="list-group" href="ActionServlet?op=getList2">
                         <%
@@ -156,14 +198,16 @@
                 <div id="page-content-wrapper">
                     <div class="container-fluid" href="ActionServlet?op=getList2">
 
+
                         <%
                             ArrayList<DataService> services = (ArrayList<DataService>) request.getAttribute("list");
                             Iterator<DataService> iterServ = services.iterator();
+                           // Aggregazione aggrCreate = (Aggregazione) request.getAttribute("newAggregazione");
                             while (iterServ.hasNext()) {
                                 DataService service = (DataService) iterServ.next();
                                 Set<Tag> taglist = service.getTag();
                                 Iterator iterTag = taglist.iterator();
-                                
+
                         %>
 
                         <div class="col-lg-12 well" id="DIV'<%= service.getId()%>'">
@@ -181,7 +225,7 @@
                                         <%
                                             while (iterTag.hasNext()) {
                                                 Tag selTag = (Tag) iterTag.next();
-                                              
+
                                         %>
                                         <a href="#"> <%= selTag.getNome()%> </a>
                                         <%
@@ -191,16 +235,19 @@
                                 </div>
 
 
-                                <div class="col-sm-12 col-md-2 col-lg-2" style="margin-top: 30px">
+                                <div class="col-sm-12 col-md-2 col-lg-2" > <!--style="margin-top: 30px"-->
                                     <button onclick="selezione('<%=service.getId()%>')" type="button" data-toggle="modal" data-target="#myModal<%=service.getId()%>"><span class="glyphicon glyphicon-pencil"></span>   Vota</button>
                                     <br>
                                     <br>
                                     <button type="button"><span class="glyphicon glyphicon-tag"></span>   Tag</button>
-                                    <!-- Modal -->
+                                    <div>
+                                        <a type="button" class="aggr hidden btn btn-warning" data-toggle="modal"><!--<span class="glyphicon glyphicon-plus"></span>-->+</a>
+                                    </div>  <!--href="ActionServlet?op=addDs&aggreg=<%//=aggrCreate.getNome()%>&ds=<%//=service.getNome()%>"-->
                                     
+                                    <!-- Modal -->
+
                                     <div class="modal fade modalToClose" id="myModal<%=service.getId()%>" role="dialog" >
                                         <div class="modal-dialog">
-
                                             <!-- Modal content-->
                                             <div class="modal-content" style="height: 400pt;width: 500pt;">
                                                 <div class="modal-header">
@@ -244,54 +291,57 @@
                                                         </div>
                                                         <br>
                                                     </div>
-                                                        
-                                                        <div class="listaAggregazioni" style="width:300px;height:300px;">
-                                                            
-                                                        </div>
-                                                
-                                                    
-                                                        <div id="feedbackVoto"  class="jumbotron hidden">
+
+                                                    <div class="listaAggregazioni" style="width:300px;height:300px;">
+
+                                                    </div>
+
+
+                                                    <div id="feedbackVoto"  class="jumbotron hidden">
                                                         <h3> Il tuo voto &egrave; stato registrato con successo!</h3>
-                                                        </div>
-                                                   
-                                                <div class="modal-footer">
-                                                    <button type="button" class="btn btn-primary hidden disabled confermaButton" onclick="confermaVoto('<%=service.getId()%>')"><a>Conferma Voto</a></button>                                                               
-                                                    <button  type="button" class="btn btn-danger closeButton" data-dismiss="modal">Close</button>
+                                                    </div>
+
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-primary hidden disabled confermaButton" onclick="confermaVoto('<%=service.getId()%>')"><a>Conferma Voto</a></button>                                                               
+                                                        <button  type="button" class="btn btn-danger closeButton" data-dismiss="modal">Close</button>
+                                                    </div>
                                                 </div>
                                             </div>
-                                            </div>
-
+                                        </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
 
+                            <%
+                                }
+                            %>
                         </div>
-
-                        <%
-                            }
-                        %>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <footer class="container-fluid text-right" style="color: black; padding: 15px;">
-            <p>Beschi Chiari Tiberti Vivenzi</p>
-        </footer>
+            <footer class="container-fluid text-right" style="color: black; padding: 15px;">
+                <p>Beschi Chiari Tiberti Vivenzi</p>
+            </footer>
 
-        <!-- script per comprimere sidebar -->
-        <script>
-            $("#menu-toggle").click(function (e) {
-                e.preventDefault();
-                $("#wrapper").toggleClass("toggled");
-            });
-        </script>
-         <script src="js/gestione_voti.js"></script>
+            <!-- script per comprimere sidebar -->
+            <script>
+                $("#menu-toggle").click(function (e) {
+                    e.preventDefault();
+                    $("#wrapper").toggleClass("toggled");
+                });
+            </script>
+            <script src="js/gestione_voti.js"></script>
 
-        <%
-            }
-        %>
+            <%
+                }
+            %>
+
+
+            <script type="text/javascript" src="./js/main.js"></script>
+            <script type="text/javascript" src="./js/gestione_voti.js"></script>
+            <script type="text/javascript" src="./js/Tibi.js"></script>
 
     </body>
 </html>
