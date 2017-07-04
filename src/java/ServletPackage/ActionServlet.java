@@ -67,6 +67,7 @@ public class ActionServlet extends HttpServlet {
         if (op.equalsIgnoreCase("login")) {
             doPostLogin(req, resp);
         }
+
         if (op.equalsIgnoreCase("logout")) {
             doGetLogout(req, resp);
         }
@@ -87,9 +88,18 @@ public class ActionServlet extends HttpServlet {
 
             doGetAddVoto(req, resp, index_DS, index_voto);
         }
+
         if (op.equalsIgnoreCase("aggregationByDS")) {
             doGetAggregationByDS(req, resp);
         }
+
+        if (op.equalsIgnoreCase("meshup")) {
+            doGetCreaAggregazione(req, resp);
+        }
+
+  /*      if (op.equalsIgnoreCase("addDs")) {
+            doGetAddDS(req, resp);
+        }  */
     }
 
     private void doGetList(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -466,4 +476,27 @@ public class ActionServlet extends HttpServlet {
         return arrlist;
     }
 
+    public void doGetCreaAggregazione(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        Boolean creaAgg = false;
+        String nomeAggr = req.getParameter("nameAgg");
+        String descrizioneAggr = req.getParameter("descrizioneAgg");
+        String nomeDev = sess.getAttribute("name").toString();
+        Sviluppatore s = readDeveloperByName(nomeDev);
+        Set<DataService> list = new HashSet<>();
+        long nuovaAggregazioneId = hibernate.createAggregation(nomeAggr, descrizioneAggr, s, list);
+        Aggregazione nuovaAggregazione = hibernate.readAggregation(nuovaAggregazioneId);
+        ArrayList<DataService> services = hibernate.readDataServices();
+        ArrayList<Tag> tags = hibernate.readTags();
+        ArrayList<Category> categs = hibernate.readCategories();
+        Boolean aggregCreata = true;
+        //bisognera aggiungere il metodo che ritorna un booleano dopo aver controllato se esistono già meshup con stesso nome e descrizione a quella che si vuole creare
+        resp.getWriter().println(aggregCreata);
+        req.setAttribute("newAggregazione", nuovaAggregazione);
+        //resp.getWriter().println(nuovaAggregazione.getNome());
+    }
+
+  /*  public void doGetAddDs(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String
+    } */
+    
 }

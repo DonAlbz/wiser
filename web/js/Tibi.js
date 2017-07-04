@@ -37,3 +37,64 @@ function riempiSearch(id) {
         $("#auto0").val($("#auto4").text());
     }
 }
+
+function modalAggregazioniPag2() {
+    $(".modalScegliDS").removeClass("hidden");
+    $(".formAggr").addClass("hidden");
+}
+
+
+
+var xhr;
+function creaAggregazione()
+{
+    var nameAgg = ($("#nameAgg").val());
+    var nomeDesc = ($("#descrizioneAgg").val());
+    //var url = "ActionServlet?op=meshup&nameAgg="+nameAgg+"&descrizioneAgg="+nomeDesc;
+    $.get("ActionServlet", {"op": "meshup", "nameAgg": nameAgg, "descrizioneAgg": nomeDesc},
+    function (response) {
+        console.log(response);
+        if (response.trim() === "true") {
+            $(".aggr").removeClass("hidden");
+            //$("#form-user").addClass("has-success");
+            //$("#user-text").html("Username accettable");
+        }
+        else {
+            //aggregazione già presente
+        }
+    }, "text");
+
+
+
+}
+
+
+function myGetXmlHttpRequest()
+{
+    var XmlHttpReq = false;
+    var activeXopt = new Array("Microsoft.XmlHttp", "MSXML4.XmlHttp", "MSXML3.XmlHttp", "MSXML2.XmlHttp", "MSXML.XmlHttp");
+    // prima come oggetto nativo
+    try
+    {
+        XmlHttpReq = new XMLHttpRequest();
+    }
+    catch (e)
+    {
+        // poi come oggetto ActiveX dal pi? al meno recente
+        var created = false;
+        for (var i = 0; i < activeXopt.length && !created; i++)
+        {
+            try
+            {
+                XmlHttpReq = new ActiveXObject(activeXopt[i]);
+                created = true;
+            }
+            catch (eActXobj)
+            {
+                alert("Il tuo browser non supporta AJAX!");
+            }
+        }
+    }
+    return XmlHttpReq;
+}
+
