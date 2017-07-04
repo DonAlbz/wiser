@@ -75,13 +75,28 @@
                                     </div>
                                     <div class="col-lg-8 col-md-8 col-sm-8">
 
-                                        <form class="navbar-form   hidden-xs" role="search" action="ActionServlet" method="GET">
+                                        <!--search bar-->
+                                        <!-- <form class="navbar-form   hidden-xs" role="search" action="ActionServlet" method="GET">
+                                             <div id="nav-centrata" class="input-group" >
+                                             <input id="auto0" name="search" type="text" class="form-control center-block height-40" placeholder="search..." onkeydown="arrowEnable(event)" onkeyup="autocompl(this.value, event);" 
+                                                   autocomplete="off">
+                                             <input name="op"  type="text" value="getList" hidden>
+                                             <span class="input-group-btn">
+                                             <button class="btn btn-success height-40" type="submit">Search</button>
+                                             </span>
+                                             <div>
+                                             </form>-->
+                                        <form class="navbar-form   hidden-xs" role="search">
                                             <div id="nav-centrata" class="input-group" >
                                                 <input id="auto0" name="search" type="text" class="form-control center-block height-40" placeholder="search..." onkeydown="arrowEnable(event)" onkeyup="autocompl(this.value, event);" 
                                                        autocomplete="off">
-                                                <input name="op" type="text" value="getList" hidden>
+
+                                              
+
+                                                <input id="op"  type="text" value="getList" hidden>
+
                                                 <span class="input-group-btn">
-                                                    <button class="btn btn-success height-40" type="submit">Search</button>
+                                                    <button class="btn btn-success height-40" type="button" onclick="parseSend()">Search</button>
                                                 </span>
                                             </div>
                                         </form>
@@ -120,7 +135,7 @@
                 </div>
             </div>
         </nav> 
-   
+
         <div id="autocompl" style="display:none">
             <div id="auto1" class="autoc" style="display: none" onmouseover="riempiSearch(id.valueOf())"></div>
             <div id="auto2" class="autoc" onmouseover="riempiSearch(id.valueOf())"></div>
@@ -150,7 +165,7 @@
             </div>
 
             <!-- Pagina centrale -->
-           <div>
+            <div>
                 <!-- Tasto per comprimere sidebar -->
                 <a href="#menu-toggle" class="btn hidden-sm btn-default hidden-lg hidden-md" id="menu-toggle">Toggle Menu</a>
 
@@ -161,6 +176,9 @@
                         int numPages = Functions.numberOfPages(servicesDim);
                         String filter = (String) request.getAttribute("filtro");
                         String key = (String) request.getAttribute("search");
+                        if (key != null) {
+                            key = key.replace("\"", "\'");
+                        }
                         String tag = (String) request.getAttribute("tag");
                         String ordinamento = (String) request.getAttribute("orderBy");
                         if (numPages > 1) {
@@ -175,7 +193,7 @@
                         %>
                 </ul>
             </div>
-                
+
             <!-- Page Content -->
             <div class="container" style="margin: 0 auto"> 
                 <div id="page-content-wrapper">
@@ -203,7 +221,7 @@
                             </ul>
                         </div><br>
                         <div id="divOrd" class="col-lg-12">
-                        <div id="ord" class="label label-success" role="alert">${ordinamento}</div>
+                            <div id="ord" class="label label-success" role="alert">${ordinamento}</div>
                         </div>
 
                         <%
@@ -251,18 +269,18 @@
                                         <%      for (k = 0; k < parteIntera; k++) {                                        %>           
                                         <span class="glyphicon glyphicon-star"></span>
                                         <%          count++;
-                                                        }                   %>     
+                                            }                   %>     
 
 
                                         <%      if (parteDecimale < 0.5) {       %>          
                                         <span class="glyphicon glyphicon-star-empty"></span> 
                                         <%          count++;
 
-                                                    } else {                %>
+                                        } else {                %>
                                         <span class="glyphicon glyphicon-star half"></span> 
                                         <%              count++;
-                                                        }
-                                                        for (i = count; i < 5; i++) {                 %>                                                                                                                                                
+                                            }
+                                            for (i = count; i < 5; i++) {                 %>                                                                                                                                                
 
                                         <span class="glyphicon glyphicon-star-empty"></span>
                                         <%      }%>
@@ -279,8 +297,8 @@
                     </div>
                 </div>
             </div>
-          
-           <ul class="pagination hidden-xs">
+
+            <ul class="pagination hidden-xs">
                 <%
                     if (numPages > 1) {
                         for (int i = 0; i < numPages; i++) {
@@ -288,11 +306,11 @@
                 %>
 
                 <li><a href="ActionServlet?op=getList&start=<%=i * 8%>&filtro=<%=filter%>&search=<%=key%>&tag=<%=tag%>&orderBy=<%=ordinamento%>"><%=i + 1%></a></li>
-          
-                    <%
-                            }
+
+                <%
                         }
-                    %>
+                    }
+                %>
             </ul>
         </div>
 
@@ -310,10 +328,10 @@
 
         <!-- script per comprimere sidebar -->
         <script>
-                                                    $("#menu-toggle").click(function (e) {
-                                                        e.preventDefault();
-                                                        $("#wrapper").toggleClass("toggled");
-                                                    });
+                $("#menu-toggle").click(function (e) {
+                    e.preventDefault();
+                    $("#wrapper").toggleClass("toggled");
+                });
         </script>
     </body>
 </html>
