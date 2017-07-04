@@ -79,7 +79,7 @@
                                             <div id="nav-centrata" class="input-group" >
                                                 <input id="auto0" name="search" type="text" class="form-control center-block height-40" placeholder="search..." onkeydown="arrowEnable(event)" onkeyup="autocompl(this.value, event);" 
                                                        autocomplete="off">
-                                                <input name="op"  type="text" value="getList" hidden>
+                                                <input name="op" type="text" value="getList" hidden>
                                                 <span class="input-group-btn">
                                                     <button class="btn btn-success height-40" type="submit">Search</button>
                                                 </span>
@@ -231,7 +231,7 @@
                                             while (iterTag.hasNext()) {
                                                 Tag selTag = (Tag) iterTag.next();
                                         %>
-                                        <a href="#"> <%= selTag.getNome()%> </a>
+                                        <a href="#"><%= selTag.getNome()%> </a>
                                         <%
                                             }
                                         %>
