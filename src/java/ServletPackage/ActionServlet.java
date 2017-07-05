@@ -97,9 +97,9 @@ public class ActionServlet extends HttpServlet {
             doGetCreaAggregazione(req, resp);
         }
 
-  /*      if (op.equalsIgnoreCase("addDs")) {
+        if (op.equalsIgnoreCase("addDStoMeshUp")) {
             doGetAddDS(req, resp);
-        }  */
+        }  
     }
 
     private void doGetList(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -480,7 +480,7 @@ public class ActionServlet extends HttpServlet {
     }
 
     public void doGetCreaAggregazione(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Boolean creaAgg = false;
+        //Boolean creaAgg = false;
         String nomeAggr = req.getParameter("nameAgg");
         String descrizioneAggr = req.getParameter("descrizioneAgg");
         String nomeDev = sess.getAttribute("name").toString();
@@ -491,15 +491,26 @@ public class ActionServlet extends HttpServlet {
         ArrayList<DataService> services = hibernate.readDataServices();
         ArrayList<Tag> tags = hibernate.readTags();
         ArrayList<Category> categs = hibernate.readCategories();
-        Boolean aggregCreata = true;
+        //creaAgg = true;
         //bisognera aggiungere il metodo che ritorna un booleano dopo aver controllato se esistono già meshup con stesso nome e descrizione a quella che si vuole creare
-        resp.getWriter().println(aggregCreata);
         req.setAttribute("newAggregazione", nuovaAggregazione);
-        //resp.getWriter().println(nuovaAggregazione.getNome());
+        resp.getWriter().println(nuovaAggregazioneId);
     }
-
-  /*  public void doGetAddDs(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String
-    } */
     
+    public void doGetAddDS(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String idAggr = req.getParameter("idAggr");
+        Long idAgg = Long.parseLong(idAggr);
+        String[] list = req.getParameter("idDataService").split(",");
+        long[] list2 = new long[list.length];
+        for(int i=0; i<list.length; i++){
+            list2[i]=Long.parseLong(list[i]);
+        }
+        Boolean bool=false;
+        for(int k=0; k<list2.length; k++) {
+            DataService service = hibernate.readDataService(list2[k]);
+            bool  = hibernate.addDsToAggregation(idAgg, service);
+            
+        }
+        resp.getWriter().println(bool);
+    }
 }

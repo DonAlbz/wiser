@@ -46,26 +46,32 @@ function modalAggregazioniPag2() {
 
 
 var xhr;
-function creaAggregazione()
+function creaAggregazione(param)
 {
     var nameAgg = ($("#nameAgg").val());
     var nomeDesc = ($("#descrizioneAgg").val());
-    //var url = "ActionServlet?op=meshup&nameAgg="+nameAgg+"&descrizioneAgg="+nomeDesc;
     $.get("ActionServlet", {"op": "meshup", "nameAgg": nameAgg, "descrizioneAgg": nomeDesc},
     function (response) {
         console.log(response);
-        if (response.trim() === "true") {
+        if (param === "si") {
+            window.alert(response.toString());
             $(".aggr").removeClass("hidden");
+            $("#btnCreaMeshup").attr("disabled", true);
+            $("#confirmMeshup").removeClass("hidden");
+
+            $("#confirmMeshup").click(function () {
+                aggiungiArrayDS(response.toString());
+            })
             //$("#form-user").addClass("has-success");
             //$("#user-text").html("Username accettable");
         }
         else {
-            //aggregazione già presente
+            $("#confirmMeshup").click(function () {
+                aggiungiArrayDS(response.toString());
+                alert("Hai creato un mesh-up vuoto");
+            })
         }
     }, "text");
-
-
-
 }
 
 
@@ -98,3 +104,66 @@ function myGetXmlHttpRequest()
     return XmlHttpReq;
 }
 
+
+function paginaConferma() {
+    if ($("#nameAgg").val() === "") {
+        alert("nome mancante");
+        $("#inputAgg").addClass("has-error");
+    } else {
+
+        //$("#descrizioneAgg")
+        $(".mostra").toggleClass("hidden");
+    }
+}
+
+
+function apriWizard() {
+    div = $("#creazioneAggr");
+    if (div.hasClass("hidden")) {
+        $(".mostra").toggleClass("hidden");
+    }
+    $("#nameAgg").val("");
+    $("#descrizioneAgg").val("");
+    $("#meshup-modal").modal("show");
+}
+
+var dataService = [];
+var idAggregazione;
+
+function aggiungiDS(idDataService) {
+    $("#delAggr" + idDataService).removeClass("hidden");
+    $("#addAggr" + idDataService).addClass("hidden");
+    dataService.push(idDataService);
+}
+
+function aggiungiArrayDS(idAggregazione) {
+    alert(dataService.toString());
+    $("#btnCreaMeshup").attr("enabled", true);
+    if (dataService.length === 0) {
+        alert("Non hai inserito alcun data service");
+    }
+    else {
+        var url = "ActionServlet?op=addDStoMeshUp&idDataService=" + dataService + "&idAggr=" + idAggregazione;
+        window.location.replace(url);
+    }
+
+
+
+    //$.get("ActionServlet", {"op": "addDStoMeshUp", "idDataService": dataService, "idAggr" : idAggregazione},
+    /*   function (response) {
+     if (response.toString()!=""){
+     window.alert(response.toString());
+     }
+     else{
+     window.alert("niente");
+     }
+     console.log(response);
+     }, "text");
+     }*/
+}
+
+function rimuoviDS(idDataService) {
+    $("#delAggr" + idDataService).addClass("hidden");
+    $("#addAggr" + idDataService).removeClass("hidden");
+    dataService.pop(idDataService);
+}

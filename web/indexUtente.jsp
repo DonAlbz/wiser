@@ -20,16 +20,17 @@
 
         <link rel="stylesheet" href="css/bootstrap.min.css">
         <link rel="stylesheet" href="css/bootstrap-theme.min.css">
-        <script type="text/javascript" src="./js/bootstrap.js"></script>
 
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
+        <script type="text/javascript" src="./js/bootstrap.js"></script>
+
         <link rel="stylesheet" href="jquery-ui/jquery-ui.css">
         <link rel="stylesheet" href="/resources/demos/style.css">
 
-        <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+        <!--<script src="https://code.jquery.com/jquery-1.12.4.js"></script>-->
         <script src="jquery-ui/jquery-ui.js"></script>
         <link rel="stylesheet" href="css/sara_css.css">
 
@@ -96,16 +97,11 @@
                         %>
 
 
-
-
-
-
-
-
-
                         <ul class="nav navbar-nav navbar-right">
                             <!-- Trigger the modal with a button -->
-                            <li><a href="#"><button type="button" class="btn btn-warning margine" data-toggle="modal" data-target="#meshup-modal">Crea una nuova meshup! </button></a></li>
+                            <li><a href="#"><button id="btnCreaMeshup" type="button" class="btn btn-warning margine" onclick="apriWizard()">Crea una nuova meshup! </button></a></li>
+                            <li><a href="#"><button id="confirmMeshup" type="button" class="btn btn-warning margine hidden">Conferma</button></a></li>
+                
                             <!-- Modal -->
                             <div id="meshup-modal" class="modal fade" role="dialog">
                                 <div class="modal-dialog">
@@ -117,32 +113,32 @@
                                             <h4 class="modal-title">Crea il tuo mesh-up</h4>
                                         </div>
                                         <div class="modal-body">
-                                            <div class="formAggr">
-                                                <!--       <form action="ActionServlet" method="post">         -->
-                                                <p>Nome Mesh-Up: <input id="nameAgg" type="text" placeholder="nome.."></p>
-                                                <p>Descrizione: <textarea id="descrizioneAgg" placeholder="inserisci una descrizione del tuo mesh-up.."></textarea></p>
-                                                <!--           <input type="text" name="op" value="meshup" hidden="hidden">  -->
-                                                <!--      </form> -->
+                                            <div id="creazioneAggr" class="mostra">
+                                                <div id="inputAgg" class="form-group has-feedback"> 
+                                                    <div class="controls">
+                                                        <p class="control-label">Nome Mesh-Up: <input id="nameAgg" type="text" placeholder="nome.."></p>
+                                                        <p class="control-label">Descrizione: <textarea id="descrizioneAgg" placeholder="inserisci una descrizione del tuo mesh-up.."></textarea></p>                                            
+                                                    </div>
+                                                </div>
                                             </div>
+
+                                            <div id="confermaAggr" class="hidden mostra">
+                                                <div class="formAggr">
+                                                    Vuoi aggiungere Data Services al tuo nuovo mesh-up ?
+                                                </div>
+                                            </div>
+
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="button" onclick="creaAggregazione()" class="btn btn-success" data-dismiss="modal"> Conferma</button> 
-                                        </div>
+                                            <button type="button" onclick="paginaConferma()" class="btn btn-success mostra"> Conferma</button>                                            
+                                            <button type="button" onclick="creaAggregazione('si')" class="btn btn-success hidden mostra" data-dismiss="modal"> Si</button>                                            
+                                            <button type="button" onclick="creaAggregazione('no')" class="btn btn-success hidden mostra" data-dismiss="modal"> No</button>
+                                        </div>                     
+
                                     </div>
 
                                 </div>
                             </div>
-
-
-
-
-
-
-
-
-
-
-
 
                             <li><a href="#"><span class="glyphicon glyphicon-user"></span><%=nomeSes%></a></li>
                             <li><a href="ActionServlet?op=logout"><span class="glyphicon glyphicon-log-out"></span>Logout</a></li>
@@ -198,11 +194,10 @@
                 <div id="page-content-wrapper">
                     <div class="container-fluid" href="ActionServlet?op=getList2">
 
-
                         <%
                             ArrayList<DataService> services = (ArrayList<DataService>) request.getAttribute("list");
                             Iterator<DataService> iterServ = services.iterator();
-                           // Aggregazione aggrCreate = (Aggregazione) request.getAttribute("newAggregazione");
+
                             while (iterServ.hasNext()) {
                                 DataService service = (DataService) iterServ.next();
                                 Set<Tag> taglist = service.getTag();
@@ -240,10 +235,13 @@
                                     <br>
                                     <br>
                                     <button type="button"><span class="glyphicon glyphicon-tag"></span>   Tag</button>
+
                                     <div>
-                                        <a type="button" class="aggr hidden btn btn-warning" data-toggle="modal"><!--<span class="glyphicon glyphicon-plus"></span>-->+</a>
-                                    </div>  <!--href="ActionServlet?op=addDs&aggreg=<%//=aggrCreate.getNome()%>&ds=<%//=service.getNome()%>"-->
-                                    
+                                        <a type="button" id="addAggr<%=service.getId()%>" onclick="aggiungiDS('<%=service.getId()%>')" class="aggr hidden btn btn-warning">+</a>
+                                        <a type="button" id="delAggr<%=service.getId()%>" onclick="rimuoviDS('<%=service.getId()%>')" class="delAggr hidden btn btn-danger">-</a>
+
+                                    </div>
+
                                     <!-- Modal -->
 
                                     <div class="modal fade modalToClose" id="myModal<%=service.getId()%>" role="dialog" >
@@ -308,40 +306,40 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
-
-                            <%
-                                }
-                            %>
                         </div>
+
+                        <%
+                            }
+                        %>
                     </div>
                 </div>
             </div>
+        </div>
 
-            <footer class="container-fluid text-right" style="color: black; padding: 15px;">
-                <p>Beschi Chiari Tiberti Vivenzi</p>
-            </footer>
+        <footer class="container-fluid text-right" style="color: black; padding: 15px;">
+            <p>Beschi Chiari Tiberti Vivenzi</p>
+        </footer>
 
-            <!-- script per comprimere sidebar -->
-            <script>
-                $("#menu-toggle").click(function (e) {
-                    e.preventDefault();
-                    $("#wrapper").toggleClass("toggled");
-                });
-            </script>
-            <script src="js/gestione_voti.js"></script>
+        <!-- script per comprimere sidebar -->
+        <script>
+            $("#menu-toggle").click(function (e) {
+                e.preventDefault();
+                $("#wrapper").toggleClass("toggled");
+            });
+        </script>
+        <script src="js/gestione_voti.js"></script>
 
-            <%
-                }
-            %>
+        <%
+            }
+        %>
 
 
-            <script type="text/javascript" src="./js/main.js"></script>
-            <script type="text/javascript" src="./js/gestione_voti.js"></script>
-            <script type="text/javascript" src="./js/Tibi.js"></script>
+        <script type="text/javascript" src="./js/main.js"></script>
+        <script type="text/javascript" src="./js/gestione_voti.js"></script>
+        <script type="text/javascript" src="./js/Tibi.js"></script>
 
     </body>
 </html>
