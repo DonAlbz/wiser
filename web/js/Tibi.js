@@ -44,35 +44,48 @@ function modalAggregazioniPag2() {
 }
 
 
-
+var nomeAggregazCreata;
 var xhr;
-function creaAggregazione(param)
+function creaAggregazione()
 {
-    var nameAgg = ($("#nameAgg").val());
-    var nomeDesc = ($("#descrizioneAgg").val());
-    $.get("ActionServlet", {"op": "meshup", "nameAgg": nameAgg, "descrizioneAgg": nomeDesc},
-    function (response) {
-        console.log(response);
-        if (param === "si") {
-            window.alert(response.toString());
-            $(".aggr").removeClass("hidden");
-            $("#btnCreaMeshup").attr("disabled", true);
-            $("#confirmMeshup").removeClass("hidden");
-
-            $("#confirmMeshup").click(function () {
-                aggiungiArrayDS(response.toString());
-            })
-            //$("#form-user").addClass("has-success");
-            //$("#user-text").html("Username accettable");
-        }
-        else {
-            $("#confirmMeshup").click(function () {
-                aggiungiArrayDS(response.toString());
-                alert("Hai creato un mesh-up vuoto");
-            })
-        }
-    }, "text");
+    if ($("#nameAgg").val() === "") {
+        alert("nome mancante");
+        $("#inputAgg").addClass("has-error");
+    } else {
+        var nameAgg = ($("#nameAgg").val());
+        var nomeDesc = ($("#descrizioneAgg").val());
+       // var url = "ActionServlet?op=meshup&nameAgg=" + nameAgg + "&descrizioneAgg=" + nomeDesc; //+ "&param=" + param;
+       // window.location.replace(url);
+       // nomeAggregazCreata = response.toString();
+         $.post("ActionServlet", {"op":"meshup", "nameAgg": nameAgg, "descrizioneAgg": nomeDesc},
+        function(response){
+           nomeAggregazCreata = response.toString();
+           location.reload();
+        }, "text");
+        
+        
+        
+        /* $.get("ActionServlet", {"op": "meshup", "nameAgg": nameAgg, "descrizioneAgg": nomeDesc},
+         function (response) {
+         console.log(response);
+         if (param === "si") {
+         window.alert(response.toString());
+         $(".aggr").removeClass("hidden");
+         $("#btnCreaMeshup").attr("disabled", true);
+         /*    $("#confirmMeshup").removeClass("hidden");
+         $("#confirmMeshup").click(function () {
+         aggiungiArrayDS(response.toString());
+         });
+         }
+         else {
+         $("#confirmMeshup").click(function () {
+         aggiungiArrayDS(response.toString());
+         alert("Hai creato un mesh-up vuoto");
+         });   */
+    }
 }
+//}, "text");
+//}
 
 
 function myGetXmlHttpRequest()
@@ -86,7 +99,7 @@ function myGetXmlHttpRequest()
     }
     catch (e)
     {
-        // poi come oggetto ActiveX dal pi? al meno recente
+// poi come oggetto ActiveX dal pi? al meno recente
         var created = false;
         for (var i = 0; i < activeXopt.length && !created; i++)
         {
@@ -104,17 +117,18 @@ function myGetXmlHttpRequest()
     return XmlHttpReq;
 }
 
-
-function paginaConferma() {
-    if ($("#nameAgg").val() === "") {
-        alert("nome mancante");
-        $("#inputAgg").addClass("has-error");
-    } else {
-
-        //$("#descrizioneAgg")
-        $(".mostra").toggleClass("hidden");
-    }
-}
+/*
+ function paginaConferma() {
+ if ($("#nameAgg").val() === "") {
+ alert("nome mancante");
+ $("#inputAgg").addClass("has-error");
+ } else {
+ 
+ //$("#descrizioneAgg")
+ $(".mostra").toggleClass("hidden");
+ }
+ }
+ */
 
 
 function apriWizard() {
@@ -127,43 +141,69 @@ function apriWizard() {
     $("#meshup-modal").modal("show");
 }
 
-var dataService = [];
-var idAggregazione;
 
-function aggiungiDS(idDataService) {
+
+
+/*
+ var dataService = [];
+ var idAggregazione;
+ 
+ function aggiungiDS(idDataService) {
+ $("#delAggr" + idDataService).removeClass("hidden");
+ $("#addAggr" + idDataService).addClass("hidden");
+ dataService.push(idDataService);
+ }
+ */
+
+
+function aggiungiArrayDS(idDataService, idAggregazione) {
     $("#delAggr" + idDataService).removeClass("hidden");
     $("#addAggr" + idDataService).addClass("hidden");
-    dataService.push(idDataService);
-}
-
-function aggiungiArrayDS(idAggregazione) {
-    alert(dataService.toString());
     $("#btnCreaMeshup").attr("enabled", true);
-    if (dataService.length === 0) {
-        alert("Non hai inserito alcun data service");
-    }
-    else {
-        var url = "ActionServlet?op=addDStoMeshUp&idDataService=" + dataService + "&idAggr=" + idAggregazione;
-        window.location.replace(url);
-    }
-
-
-
-    //$.get("ActionServlet", {"op": "addDStoMeshUp", "idDataService": dataService, "idAggr" : idAggregazione},
-    /*   function (response) {
-     if (response.toString()!=""){
-     window.alert(response.toString());
-     }
-     else{
-     window.alert("niente");
-     }
-     console.log(response);
-     }, "text");
-     }*/
+    var url = "ActionServlet?op=addDStoMeshUp&idDataService=" + idDataService + "&idAggr=" + idAggregazione;
+    window.location.replace(url);
 }
 
-function rimuoviDS(idDataService) {
+function rimuoviArrayDS(idDataService, idAggregazione) {
     $("#delAggr" + idDataService).addClass("hidden");
     $("#addAggr" + idDataService).removeClass("hidden");
-    dataService.pop(idDataService);
+    $("#btnCreaMeshup").attr("enabled", true);
+    var url = "ActionServlet?op=deleteDStoMeshUp&idDataService=" + idDataService + "&idAggr=" + idAggregazione;
+    window.location.replace(url);
 }
+
+
+
+
+//$.get("ActionServlet", {"op": "addDStoMeshUp", "idDataService": dataService, "idAggr" : idAggregazione},
+/*   function (response) {
+ if (response.toString()!=""){
+ window.alert(response.toString());
+ }
+ else{
+ window.alert("niente");
+ }
+ console.log(response);
+ }, "text");
+ }
+ }
+ */
+
+/*
+ function rimuoviArrayDS(idDataService, idAggregazione) {
+ $("#delAggr" + idDataService).addClass("hidden");
+ $("#addAggr" + idDataService).removeClass("hidden");
+ dataService.pop(idDataService);
+ }*/
+
+
+function selezionaMashUp(nome) {
+    var MashDaSel = [];
+    MashDaSel = $(".mashDaSelezionare");
+    MashDaSel.each(function () {
+        if (($(this).text()) === nome.trim()) {
+            $(this).addClass("active");
+        }
+    });
+}
+$(document).ready(selezionaMashUp(nomeAggregazCreata));
