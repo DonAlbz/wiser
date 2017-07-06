@@ -25,7 +25,7 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-        <script type="text/javascript" src="./js/bootstrap.js"></script>
+      <!--  <script type="text/javascript" src="./js/bootstrap.js"></script>  -->
 
         <link rel="stylesheet" href="jquery-ui/jquery-ui.css">
         <link rel="stylesheet" href="/resources/demos/style.css">
@@ -99,7 +99,7 @@
 
                         <ul class="nav navbar-nav navbar-right">
                             <!-- Trigger the modal with a button -->
-                            <li><a href="#"><button id="btnCreaMeshup" type="button" class="btn btn-warning margine" onclick="apriWizard()">Crea una nuova meshup! </button></a></li>
+                            <li><a href="#"><button id="btnCreaMeshup" type="button" class="btn btn-warning margine" onclick="apriWizard()">New Mash-Up! </button></a></li>
                             <!--         <li><a href="#"><button id="confirmMeshup" type="button" class="btn btn-warning margine hidden">Conferma</button></a></li>  -->
 
                             <!-- Modal -->
@@ -110,15 +110,15 @@
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                            <h4 class="modal-title">Crea il tuo Mash-Up</h4>
+                                            <h4 class="modal-title">Create Mash-Up</h4>
                                         </div>
                                         <div class="modal-body">
-                                            <div id="creazioneAggr" class="mostra">
+                                            <div id="creazioneAggr">
                                                 <div id="inputAgg" class="form-group has-feedback"> 
                                                     <div class="controls">
-                                                        <label class="control-label" for="nameAgg">Nome Mash-Up: </label><input id="nameAgg" type="text" placeholder="nome.." class="form-control">
+                                                        <label class="control-label" for="nameAgg">Name: </label><input id="nameAgg" type="text" placeholder="insert name" class="form-control">
                                                         <br>
-                                                        <label class="control-label" for="descrizioneAgg">Descrizione: </label><textarea class="form-control" id="descrizioneAgg" placeholder="inserisci una descrizione del tuo mesh-up.."></textarea>                                           
+                                                        <label class="control-label" for="descrizioneAgg">Description: </label><textarea class="form-control" id="descrizioneAgg" placeholder="insert description"></textarea>                                           
                                                     </div>
                                                 </div>
                                             </div>
@@ -131,19 +131,9 @@
 
                                         </div>
                                         <div class="modal-footer">
-
-
-
-                                            <button type="button" onclick="creaAggregazione()" class="btn btn-success mostra" data-dismiss="modal"> Conferma</button>                                            
-                                            <!--         <button type="button" onclick="creaAggregazione('si')" class="btn btn-success hidden mostra" data-dismiss="modal"> Si</button>                                            
-                                                     <button type="button" onclick="creaAggregazione('no')" class="btn btn-success hidden mostra" data-dismiss="modal"> No</button>   -->
+                                            <button type="button" onclick="creaAggregazione()" class="btn btn-success mostra" data-dismiss="modal"> Confirm</button>                                                                                    
                                         </div>                     
-
-
-
-
                                     </div>
-
                                 </div>
                             </div>
 
@@ -214,7 +204,7 @@
 
                             %>
 
-                            <div class="col-lg-12 well" id="DIV'<%= service.getId()%>'">
+                            <div class="col-lg-12 well" id="DIV<%= service.getId()%>">
                                 <div class="row">
                                     <div class="hidden-xs hidden-sm col-md-2 col-lg-2">
                                         <img class="img-circle img-responsive center-block" src="data:image/png;base64,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" alt="" width="150" height="150">
@@ -245,29 +235,10 @@
                                         <br>
                                         <button type="button"><span class="glyphicon glyphicon-tag"></span>   Tag</button>
 
-
-
-
-
-
-                                        <%
-                                                                    String parametro = (String) request.getAttribute("param");
-                                                                    if ((aggregazione != null) && (parametro != null) && (parametro.equalsIgnoreCase(" "))) {
-                                              %>
-                                                        <div>
-                                                            <a type="button" id="addAggr<%=service.getId()%>" onclick="aggiungiArrayDS('<%=service.getId()%>', '<%=aggregazione.getId()%>')" class="aggr btn btn-warning">+</a>
-                                                            <a type="button" id="delAggr<%=service.getId()%>" onclick="rimuoviArrayDS('<%=service.getId()%>', '<%=aggregazione.getId()%>')" class="delAggr hidden btn btn-danger">-</a>                   
-                                                        </div>
-                                        <%
-                                               }
-                                        %>                
-
-
-
-
-
-
-
+                                        <div>
+                                            <a type="button" id="addAggr<%=service.getId()%>"  class="aggr hidden btn btn-warning">+</a>
+                                            <a type="button" id="delAggr<%=service.getId()%>"  class="delAggr hidden btn btn-danger">-</a>                   
+                                        </div>
                                         <!-- Modal -->
 
                                         <div class="modal fade modalToClose" id="myModal<%=service.getId()%>" role="dialog" >
@@ -362,28 +333,65 @@
                                 <div class="panel-heading">
                                     <h4 class="panel-title">
                                         <a data-toggle="collapse" href="#collapse<%=nome%>"><%=nome%></a>
-                                        <button class="glyphicon glyphicon-trash pull-right"></button>
-                                        <button onclick="creaAggregazione('si')" class="glyphicon glyphicon-cog pull-right"></button> 
-                                        
+                                        <button id="<%=nome%>elimina" class="glyphicon glyphicon-trash pull-right" data-toggle="modal" data-target="#deleteMashup"></button>
+                                        <button id="<%=nome%>conferma" onclick="confermaMashUp('<%=nome%>')" class="hidden confermaMash glyphicon glyphicon-ok pull-right"></button>
+                                        <button id="<%=nome%>modifica" onclick="modificaMashUp('<%=nome%>')" class="glyphicon modificaMash glyphicon-cog pull-right"></button> 
+
+
+                                        <div id="deleteMashup" class="modal fade" role="dialog">
+                                            <div class="modal-dialog">
+
+                                                <!-- Modal content-->
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                        <h4 class="modal-title">Delete Mash-Up</h4>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <div id="creazioneAggr">
+                                                            <div id="inputAgg" class="form-group has-feedback"> 
+                                                                <div class="controls">
+                                                                    Sei sicuro di voler eliminare <b><%=nome%></b> ?
+                                                                    <br>
+                                                                    Attenzione, una volta cancellato non può più essere recuperato!
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" onclick="eliminaAggregazione('<%=nome%>')" class="btn btn-danger mostra" data-dismiss="modal"> Cancella</button> 
+                                                            <button type="button" class="btn btn-primary mostra" data-dismiss="modal"> Annulla</button> 
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+
+
+
+
+
+
+
                                     </h4>
                                 </div>
                                 <div id="collapse<%=nome%>" class="panel-collapse collapse">
-                                    <ul class="list-group">
+                                    <ul id="<%=nome%>list" class="list-group">
                                         <%
-                                        if(dataServiceByAggr.size() == 0) {
-                                            
-                                      } else {
-                                            
-                                        Iterator iteratoreDS = dataServiceByAggr.iterator();
-                                        while(iteratoreDS.hasNext()) {
-                                            DataService ds = (DataService) iteratoreDS.next();
-                                            String nomeDS = ds.getNome();
+                                            if (dataServiceByAggr.size() == 0) {
+
+                                            } else {
+
+                                                Iterator iteratoreDS = dataServiceByAggr.iterator();
+                                                while (iteratoreDS.hasNext()) {
+                                                    DataService ds = (DataService) iteratoreDS.next();
+                                                    String nomeDS = ds.getNome();
                                         %>
-                                        <li class="list-group-item"><%=nomeDS%></li>   
-                                        <% 
-                                            }
-                                        }
-                                        %>
+                                        <li id="<%=nome%>+<%=ds.getId()%>" class="list-group-item"><%=nomeDS%></li>   
+                                            <%
+                                                    }
+                                                }
+                                            %>
                                     </ul>
                                 </div>
                             </div>
@@ -394,8 +402,6 @@
                         %>
                     </div>
                 </div>
-
-
             </div>
         </div>
 

@@ -117,19 +117,6 @@ function myGetXmlHttpRequest()
     return XmlHttpReq;
 }
 
-/*
- function paginaConferma() {
- if ($("#nameAgg").val() === "") {
- alert("nome mancante");
- $("#inputAgg").addClass("has-error");
- } else {
- 
- //$("#descrizioneAgg")
- $(".mostra").toggleClass("hidden");
- }
- }
- */
-
 
 function apriWizard() {
     div = $("#creazioneAggr");
@@ -140,20 +127,6 @@ function apriWizard() {
     $("#descrizioneAgg").val("");
     $("#meshup-modal").modal("show");
 }
-
-
-
-
-/*
- var dataService = [];
- var idAggregazione;
- 
- function aggiungiDS(idDataService) {
- $("#delAggr" + idDataService).removeClass("hidden");
- $("#addAggr" + idDataService).addClass("hidden");
- dataService.push(idDataService);
- }
- */
 
 
 function aggiungiArrayDS(idDataService, idAggregazione) {
@@ -207,3 +180,33 @@ function selezionaMashUp(nome) {
     });
 }
 $(document).ready(selezionaMashUp(nomeAggregazCreata));
+
+
+
+function modificaMashUp(nomeMU) {
+    var figli = $("#"+nomeMU+"list").children();
+    $(".aggr").removeClass("hidden");
+    $(".confermaMash").addClass("hidden");
+    $(".modificaMash").removeClass("hidden");
+    $("#"+nomeMU+"conferma").removeClass("hidden");
+    $("#"+nomeMU+"modifica").addClass("hidden");
+    figli.each(function() {
+        var id = $(this).attr("id");
+        id = id.replace(nomeMU+"+","");
+        $("#DIV"+id).find(".delAggr").removeClass("hidden");
+        $("#DIV"+id).find(".aggr").addClass("hidden");
+        
+    });
+}
+
+function confermaMashUp(nomeMU) {
+    $("#"+nomeMU+"conferma").addClass("hidden");
+    $("#"+nomeMU+"modifica").removeClass("hidden");
+    $(".delAggr").addClass("hidden");
+    $(".aggr").addClass("hidden");
+}
+
+function eliminaAggregazione(nomeMU) {
+
+}
+
