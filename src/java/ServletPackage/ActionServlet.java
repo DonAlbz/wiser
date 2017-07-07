@@ -94,12 +94,16 @@ public class ActionServlet extends HttpServlet {
         }
 
         if (op.equalsIgnoreCase("meshup")) {
-            doGetCreaAggregazione(req, resp);
+            doPostCreaAggregazione(req, resp);
         }
 
-  /*      if (op.equalsIgnoreCase("addDs")) {
-            doGetAddDS(req, resp);
-        }  */
+        if (op.equalsIgnoreCase("addDStoMeshUp")) {
+            doPostAddDS(req, resp);
+        }
+
+        if (op.equalsIgnoreCase("deleteDStoMeshUp")) {
+            doPostDeleteDS(req, resp);
+        }
     }
 
     private void doGetList(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -174,15 +178,24 @@ public class ActionServlet extends HttpServlet {
 
         String nome = req.getParameter("username");
         String pass = req.getParameter("password");
+        ArrayList<Aggregazione> mashup = new ArrayList<>();
 
         if (validaUtente(nome, pass)) {
-            //out.println("loggato " + nome);
+
             req.setAttribute("nome", nome);
+            Sviluppatore svil = readDeveloperByName(nome);
+            if (svil != null) {
+                HashSet<Aggregazione> set = (HashSet<Aggregazione>) hibernate.readAggregation(svil);
+                List<Aggregazione> list = new ArrayList<Aggregazione>(set);
+                mashup = (ArrayList<Aggregazione>) list;
+            } else {
+                mashup = null;
+            }
             req.getRequestDispatcher("/firstpage2.jsp").forward(req, resp);
 
             sess = req.getSession(true);
             sess.setAttribute("name", nome);
-
+            sess.setAttribute("mashup", mashup);
             sess.setAttribute("logged", "uno");
 
         } else {
@@ -479,11 +492,12 @@ public class ActionServlet extends HttpServlet {
         return arrlist;
     }
 
-    public void doGetCreaAggregazione(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Boolean creaAgg = false;
+    public void doPostCreaAggregazione(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        //Boolean creaAgg = false;
         String nomeAggr = req.getParameter("nameAgg");
         String descrizioneAggr = req.getParameter("descrizioneAgg");
         String nomeDev = sess.getAttribute("name").toString();
+   //     String parametro = req.getParameter("param");
         Sviluppatore s = readDeveloperByName(nomeDev);
         Set<DataService> list = new HashSet<>();
         long nuovaAggregazioneId = hibernate.createAggregation(nomeAggr, descrizioneAggr, s, list);
@@ -491,15 +505,45 @@ public class ActionServlet extends HttpServlet {
         ArrayList<DataService> services = hibernate.readDataServices();
         ArrayList<Tag> tags = hibernate.readTags();
         ArrayList<Category> categs = hibernate.readCategories();
-        Boolean aggregCreata = true;
-        //bisognera aggiungere il metodo che ritorna un booleano dopo aver controllato se esistono già meshup con stesso nome e descrizione a quella che si vuole creare
-        resp.getWriter().println(aggregCreata);
         req.setAttribute("newAggregazione", nuovaAggregazione);
-        //resp.getWriter().println(nuovaAggregazione.getNome());
+        ArrayList<Aggregazione> mashlist = (ArrayList<Aggregazione>) req.getSession().getAttribute("mashup");
+        mashlist.add(nuovaAggregazione);
+        req.getSession().setAttribute("mashup", mashlist);
+        resp.getWriter().println(nuovaAggregazione.getNome());
+        doGetList2(req, resp, nomeDev);      
     }
 
-  /*  public void doGetAddDs(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        String
-    } */
-    
+    public void doPostAddDS(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String nomeDev = sess.getAttribute("name").toString();
+        String idAggr = req.getParameter("idAggr");
+        Long idAgg = Long.parseLong(idAggr);
+        String idDataS = req.getParameter("idDataService");
+        Long idDataService = Long.parseLong(idDataS);
+        DataService service = hibernate.readDataService(idDataService);
+        Aggregazione aggregazione =  hibernate.readAggregation(idAgg);
+        //HashSet<DataService> dsByaggregazione = (HashSet<DataService>) aggregazione.getElencoDS();
+        //dsByaggregazione.add(service);
+        aggregazione.addDS(service);
+        //doGetList2(req, resp, nomeDev); 
+        resp.getWriter().println(service.getNome() + " "+ service.getId().toString() + " " + aggregazione.getNome());
+        //hibernate.addDsToAggregation(idAgg, service);
+        //req.getSession().setAttribute("dsAggiunto", dsByaggregazione);
+    }
+
+    public void doPostDeleteDS(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String nomeDev = sess.getAttribute("name").toString();
+        String idAggr = req.getParameter("idAggr");
+        Long idAgg = Long.parseLong(idAggr);
+        String idDataS = req.getParameter("idDataService");
+        Long idDataService = Long.parseLong(idDataS);
+        DataService service = hibernate.readDataService(idDataService);
+        Aggregazione aggregazione =  hibernate.readAggregation(idAgg);
+        //HashSet<DataService> dsByaggregazione = (HashSet<DataService>) aggregazione.getElencoDS();
+        //dsByaggregazione.add(service);
+        aggregazione.removeDS(service);
+        resp.getWriter().println(service.getId().toString() + " " + aggregazione.getNome());
+        //doGetList2(req, resp, nomeDev); 
+        //hibernate.addDsToAggregation(idAgg, service);
+        //req.getSession().setAttribute("dsAggiunto", dsByaggregazione);
+    }
 }

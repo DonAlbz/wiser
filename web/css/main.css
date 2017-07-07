@@ -129,6 +129,15 @@ html, body {
 }
 
 
+
+.delAggr {
+    position: relative !important;
+    margin-left: 77px !important;
+    margin-top: -94px !important;
+    font-size: 43px !important;
+}
+
+
 /* ==========================================================================
    Alb's custom styles
    ========================================================================== */
