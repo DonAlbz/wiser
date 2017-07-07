@@ -122,13 +122,6 @@
                                                     </div>
                                                 </div>
                                             </div>
-
-                                            <div id="confermaAggr" class="hidden mostra">
-                                                <div class="formAggr">
-                                                    Vuoi aggiungere Data Services al tuo nuovo mesh-up ?
-                                                </div>
-                                            </div>
-
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" onclick="creaAggregazione()" class="btn btn-success mostra" data-dismiss="modal"> Confirm</button>                                                                                    
@@ -236,8 +229,7 @@
                                         <button type="button"><span class="glyphicon glyphicon-tag"></span>   Tag</button>
 
                                         <div>
-                                            <a type="button" id="addAggr<%=service.getId()%>"  class="aggr hidden btn btn-warning">+</a>
-                                            <a type="button" id="delAggr<%=service.getId()%>"  class="delAggr hidden btn btn-danger">-</a>                   
+                                            <a type="button" id="addAggr<%=service.getId()%>" onclick="aggiungiDataService('<%=service.getId()%>')" class="aggr hidden btn btn-warning">+</a>                   
                                         </div>
                                         <!-- Modal -->
 
@@ -335,7 +327,7 @@
                                         <a data-toggle="collapse" href="#collapse<%=nome%>"><%=nome%></a>
                                         <button id="<%=nome%>elimina" class="glyphicon glyphicon-trash pull-right" data-toggle="modal" data-target="#deleteMashup"></button>
                                         <button id="<%=nome%>conferma" onclick="confermaMashUp('<%=nome%>')" class="hidden confermaMash glyphicon glyphicon-ok pull-right"></button>
-                                        <button id="<%=nome%>modifica" onclick="modificaMashUp('<%=nome%>')" class="glyphicon modificaMash glyphicon-cog pull-right"></button> 
+                                        <button id="<%=nome%>modifica" onclick="modificaMashUp('<%=nome%>','<%=aggr.getId()%>')" class="glyphicon modificaMash glyphicon-cog pull-right"></button> 
 
 
                                         <div id="deleteMashup" class="modal fade" role="dialog">
@@ -387,7 +379,7 @@
                                                     DataService ds = (DataService) iteratoreDS.next();
                                                     String nomeDS = ds.getNome();
                                         %>
-                                        <li id="<%=nome%>+<%=ds.getId()%>" class="list-group-item"><%=nomeDS%></li>   
+                                        <li id="<%=nome%>_<%=ds.getId()%>" class="list-group-item"><%=nomeDS%> <button type="button" id="delAggr<%=ds.getId()%>" onclick="rimuoviDataService('<%=ds.getId()%>')" class="delAggr btn-xs btn-danger hidden">-</button></li>   
                                             <%
                                                     }
                                                 }

@@ -98,11 +98,11 @@ public class ActionServlet extends HttpServlet {
         }
 
         if (op.equalsIgnoreCase("addDStoMeshUp")) {
-            doGetAddDS(req, resp);
+            doPostAddDS(req, resp);
         }
 
         if (op.equalsIgnoreCase("deleteDStoMeshUp")) {
-            doGetDeleteDS(req, resp);
+            doPostDeleteDS(req, resp);
         }
     }
 
@@ -513,25 +513,37 @@ public class ActionServlet extends HttpServlet {
         doGetList2(req, resp, nomeDev);      
     }
 
-    public void doGetAddDS(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    public void doPostAddDS(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String nomeDev = sess.getAttribute("name").toString();
         String idAggr = req.getParameter("idAggr");
         Long idAgg = Long.parseLong(idAggr);
         String idDataS = req.getParameter("idDataService");
         Long idDataService = Long.parseLong(idDataS);
         DataService service = hibernate.readDataService(idDataService);
-        Boolean bool = false;
-        bool = hibernate.addDsToAggregation(idAgg, service);
-        
+        Aggregazione aggregazione =  hibernate.readAggregation(idAgg);
+        //HashSet<DataService> dsByaggregazione = (HashSet<DataService>) aggregazione.getElencoDS();
+        //dsByaggregazione.add(service);
+        aggregazione.addDS(service);
+        //doGetList2(req, resp, nomeDev); 
+        resp.getWriter().println(service.getNome() + " "+ service.getId().toString() + " " + aggregazione.getNome());
+        //hibernate.addDsToAggregation(idAgg, service);
+        //req.getSession().setAttribute("dsAggiunto", dsByaggregazione);
     }
 
-    public void doGetDeleteDS(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    public void doPostDeleteDS(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String nomeDev = sess.getAttribute("name").toString();
         String idAggr = req.getParameter("idAggr");
         Long idAgg = Long.parseLong(idAggr);
         String idDataS = req.getParameter("idDataService");
         Long idDataService = Long.parseLong(idDataS);
         DataService service = hibernate.readDataService(idDataService);
-        Boolean bool = false;
-        bool = hibernate.removeDsToAggregation(idAgg, service);
-        resp.getWriter().println(bool);
+        Aggregazione aggregazione =  hibernate.readAggregation(idAgg);
+        //HashSet<DataService> dsByaggregazione = (HashSet<DataService>) aggregazione.getElencoDS();
+        //dsByaggregazione.add(service);
+        aggregazione.removeDS(service);
+        resp.getWriter().println(service.getId().toString() + " " + aggregazione.getNome());
+        //doGetList2(req, resp, nomeDev); 
+        //hibernate.addDsToAggregation(idAgg, service);
+        //req.getSession().setAttribute("dsAggiunto", dsByaggregazione);
     }
 }
