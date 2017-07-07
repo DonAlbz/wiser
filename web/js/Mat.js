@@ -1,7 +1,16 @@
-/* 
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+function selezionaCategoria(filtro){
+    var $filter=filtro.trim();
+    var $ciao;
+    $(".categorie").each(function(){
+        $ciao= $(this).text().trim();
+        if( $ciao === $filter){
+            
+            $(this).css("background","#2d2f2d");
+            $(this).css("color","white");
+            
+        }
+
+    });      
+};
 
 

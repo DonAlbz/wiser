@@ -163,11 +163,55 @@ public class ActionServlet extends HttpServlet {
     private void doGetList2(HttpServletRequest req, HttpServletResponse resp, String nomeU)
             throws ServletException, IOException {
 
-        ArrayList<DataService> services = hibernate.readDataServices();
-        ArrayList<Tag> tags = hibernate.readTags();
-        RequestDispatcher rd = this.getServletContext().getRequestDispatcher("/indexUtente.jsp");
-        req.setAttribute("list", services);
-        req.setAttribute("tags", tags);
+      String jsonString = (String) req.getParameter("search");
+        ArrayList<DataService> servicesFiltered = new ArrayList<>();
+        ArrayList<DataService> servicesOrdered = new ArrayList<>();
+        ArrayList<DataService> servicesParsed = new ArrayList<>();
+        String tagFilter = req.getParameter("tag");
+        Integer start = Functions.parseInteger(req.getParameter("start"));
+        String catFilter = req.getParameter("filtro");
+        String searchBar = "";
+        boolean isReady = false;
+        if ((jsonString != null) && (!jsonString.equalsIgnoreCase("null"))) {
+            JSONObject jo = new JSONObject(jsonString);
+            HashSet<DataService> list = new HashSet<>();
+            for (int i = 0; i < jo.getJSONArray("keys").length(); i++) {
+                String key = jo.getJSONArray("keys").getJSONObject(i).getString("nome");
+                searchBar = searchBar + key + " ";
+                containsCategory(list, key);
+                containsDS(list, key);
+                containsTag(list, key);
+            }
+            servicesFiltered = toArrayList(list);
+            req.setAttribute("search", jsonString);
+            req.setAttribute("ricerca", searchBar);
+            isReady = true;
+        }
+        if ((tagFilter != null) && (!tagFilter.equalsIgnoreCase("") && (!tagFilter.equalsIgnoreCase("null")))) {
+            if (!isReady) {
+                servicesFiltered = getTagDS(tagFilter);
+                req.setAttribute("tag", tagFilter);
+                isReady = true;
+            }
+        } else {
+            if (!isReady) {
+                servicesFiltered = hibernate.readDataServices();
+                isReady = true;
+            }
+        }
+        if ((catFilter != null) && (!catFilter.equalsIgnoreCase("") && (!catFilter.equalsIgnoreCase("null")))) {
+            servicesFiltered = getCategoryDS(catFilter, servicesFiltered);
+            req.setAttribute("filtro", catFilter);
+        }
+        String order = req.getParameter("orderBy");
+        servicesOrdered = Functions.orderDSList(servicesFiltered, order, req);
+        servicesParsed = Functions.parseDSList(servicesOrdered, start);
+        req.setAttribute("servicesDim", servicesFiltered.size());
+        ArrayList<Category> categories = hibernate.readCategories();
+        RequestDispatcher rd = this.getServletContext().getRequestDispatcher("/indexUt.jsp");
+        req.setAttribute("list", servicesParsed);
+        req.setAttribute("cats", categories);
+        req.setAttribute("orderBy", order);
         req.setAttribute("nomeU", nomeU);
         rd.forward(req, resp);
     }
