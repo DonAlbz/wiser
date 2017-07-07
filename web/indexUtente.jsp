@@ -25,7 +25,7 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-      <!--  <script type="text/javascript" src="./js/bootstrap.js"></script>  -->
+        <!--  <script type="text/javascript" src="./js/bootstrap.js"></script>  -->
 
         <link rel="stylesheet" href="jquery-ui/jquery-ui.css">
         <link rel="stylesheet" href="/resources/demos/style.css">
@@ -223,10 +223,10 @@
 
 
                                     <div class="col-sm-12 col-md-2 col-lg-2" > <!--style="margin-top: 30px"-->
-                                        <button onclick="selezione('<%=service.getId()%>')" type="button" data-toggle="modal" data-target="#myModal<%=service.getId()%>"><span class="glyphicon glyphicon-pencil"></span>   Vota</button>
+                                        <button onclick="selezione('<%=service.getId()%>')" type="button" data-toggle="modal" class="dimension" data-target="#myModal<%=service.getId()%>"><span class="glyphicon glyphicon-pencil"></span>   Vota</button>
                                         <br>
                                         <br>
-                                        <button type="button"><span class="glyphicon glyphicon-tag"></span>   Tag</button>
+                                        <button type="button" class="dimension"><span class="glyphicon glyphicon-tag"></span>   Tag</button>
 
                                         <div>
                                             <a type="button" id="addAggr<%=service.getId()%>" onclick="aggiungiDataService('<%=service.getId()%>')" class="aggr hidden btn btn-warning">+</a>                   
@@ -325,12 +325,12 @@
                                 <div class="panel-heading">
                                     <h4 class="panel-title">
                                         <a data-toggle="collapse" href="#collapse<%=nome%>"><%=nome%></a>
-                                        <button id="<%=nome%>elimina" class="glyphicon glyphicon-trash pull-right" data-toggle="modal" data-target="#deleteMashup"></button>
+                                        <button id="<%=nome%>elimina" class="glyphicon glyphicon-trash pull-right" data-toggle="modal" data-target="#deleteMashup<%=nome%>"></button>
                                         <button id="<%=nome%>conferma" onclick="confermaMashUp('<%=nome%>')" class="hidden confermaMash glyphicon glyphicon-ok pull-right"></button>
-                                        <button id="<%=nome%>modifica" onclick="modificaMashUp('<%=nome%>','<%=aggr.getId()%>')" class="glyphicon modificaMash glyphicon-cog pull-right"></button> 
+                                        <button id="<%=nome%>modifica" onclick="modificaMashUp('<%=nome%>', '<%=aggr.getId()%>')" class="glyphicon modificaMash glyphicon glyphicon-edit pull-right"></button> 
 
 
-                                        <div id="deleteMashup" class="modal fade" role="dialog">
+                                        <div id="deleteMashup<%=nome%>" class="modal fade" role="dialog">
                                             <div class="modal-dialog">
 
                                                 <!-- Modal content-->
@@ -357,29 +357,24 @@
                                                 </div>
                                             </div>
 
-
-
-
-
-
-
-
-
                                     </h4>
                                 </div>
                                 <div id="collapse<%=nome%>" class="panel-collapse collapse">
                                     <ul id="<%=nome%>list" class="list-group">
                                         <%
                                             if (dataServiceByAggr.size() == 0) {
-
-                                            } else {
-
+                                        %>
+                                        <li class="list-group-item" id="no<%=nome%>" > No Data Services </li> 
+                                            <% } else {
+                                            %>
+                                        <li class="list-group-item hidden" id="no<%=nome%>" > No Data Services </li>
+                                            <%
                                                 Iterator iteratoreDS = dataServiceByAggr.iterator();
                                                 while (iteratoreDS.hasNext()) {
                                                     DataService ds = (DataService) iteratoreDS.next();
                                                     String nomeDS = ds.getNome();
-                                        %>
-                                        <li id="<%=nome%>_<%=ds.getId()%>" class="list-group-item"><%=nomeDS%> <button type="button" id="delAggr<%=ds.getId()%>" onclick="rimuoviDataService('<%=ds.getId()%>')" class="delAggr btn-xs btn-danger hidden">-</button></li>   
+                                            %>
+                                        <li id="<%=nome%>_<%=ds.getId()%>" class="list-group-item"><%=nomeDS%> <button type="button" id="delAggr<%=ds.getId()%>" onclick="rimuoviDataService('<%=ds.getId()%>')" class="delAggr pull-right glyphicon glyphicon-remove glyphicon-minus btn-xs btn-danger hidden"></button></li>   
                                             <%
                                                     }
                                                 }

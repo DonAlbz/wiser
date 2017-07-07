@@ -541,7 +541,11 @@ public class ActionServlet extends HttpServlet {
         //HashSet<DataService> dsByaggregazione = (HashSet<DataService>) aggregazione.getElencoDS();
         //dsByaggregazione.add(service);
         aggregazione.removeDS(service);
-        resp.getWriter().println(service.getId().toString() + " " + aggregazione.getNome());
+        String no = null;
+        if(0 == aggregazione.getElencoDS().size()) {
+            no = "empty";
+        }
+        resp.getWriter().println(service.getId().toString() + " " + aggregazione.getNome() +" " + no);
         //doGetList2(req, resp, nomeDev); 
         //hibernate.addDsToAggregation(idAgg, service);
         //req.getSession().setAttribute("dsAggiunto", dsByaggregazione);

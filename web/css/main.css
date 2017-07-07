@@ -128,9 +128,11 @@ html, body {
 
 .delAggr {
     position: relative !important;
-    margin-left: 77px !important;
-    margin-top: -94px !important;
-    font-size: 43px !important;
+}
+
+.dimension {
+    height: 33.56px !important;
+    width: 79.93px !important;
 }
 
 /* ==========================================================================
