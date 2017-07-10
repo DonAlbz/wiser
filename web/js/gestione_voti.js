@@ -114,7 +114,7 @@ function insertRadioButton(name) {
 
     //$(".listaAggregazioni").append('<ul class="ui-widget-content ui-selectee"><input type="checkbox" class="checkbox checkbox-primary">'+name+'</ul>');
     //$(".listaAggregazioni").append('<ul class="ui-widget-content ui-selectee "><li class="checkbox  checkbox-default"><input name="inputCk" class="checkInput checkbox-primary" type="checkbox"> <label>' + name + '</label></ul></li>');
-    $(".listaAggregazioni").append('<li class="list-group-item" name=inputCk>'+name+'</li>');
+    $(".listaAggregazioni").append('<li class="list-group-item checkListModal" name=inputCk>'+name+'</li>');
 
 }
 

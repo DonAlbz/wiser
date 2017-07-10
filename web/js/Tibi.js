@@ -78,9 +78,7 @@ function creaAggregazione()
 
 
 function chiudiModalAggregazione() {
-    setTimeout(() => {
-        location.reload();
-    }, 1000);
+    setTimeout(function(){location.reload();}, 1000);
 }
 
 
@@ -144,7 +142,7 @@ function modificaMashUp(nomeMU, idMU) {
     $("#collapse" + nomeMU).collapse("show");
     $("#" + nomeMU.trim() + "list").find(".delAggr").removeClass("hidden");
     var figli = $("#" + nomeMU + "list").children();
-    $(".aggr").attr("disabled", false).css("background-color", "orange");
+    $(".aggr").attr("disabled", false).removeClass("btn-default").addClass("btn-primary");
     $(".aggr").removeClass("hidden");
     $(".confermaMash").addClass("hidden");
     $(".modificaMash").removeClass("hidden");
@@ -153,7 +151,7 @@ function modificaMashUp(nomeMU, idMU) {
     figli.each(function () {
         var id = $(this).attr("id");
         id = id.replace(nomeMU + "_", "");
-        $("#DIV" + id).find(".aggr").attr("disabled", true).css("background-color", "grey");
+        $("#DIV" + id).find(".aggr").attr("disabled", true).removeClass("btn-primary").addClass("btn-default");
     });
 }
 
@@ -184,7 +182,7 @@ function confermaMashUp(nomeMU) {
 function aggiungiDataService(idDataService) {
     idAggregazione = mashSel;
     //$("#delAggr" + idDataService).removeClass("hidden");
-    $("#addAggr" + idDataService).attr("disabled", true).css("background-color", "grey");
+    $("#addAggr" + idDataService).attr("disabled", true).removeClass("btn-primary").addClass("btn-default");
     $.post("ActionServlet", {"op": "addDStoMeshUp", "idDataService": idDataService, "idAggr": idAggregazione},
             function (response) {
                 vett = [];
@@ -201,7 +199,7 @@ function aggiungiDataService(idDataService) {
 
 function rimuoviDataService(idDataService) {
     idAggregazione = mashSel;
-    $("#addAggr" + idDataService).attr("disabled", false).css("background-color", "orange");
+    $("#addAggr" + idDataService).attr("disabled", false).removeClass("btn-default").addClass("btn-primary");
     $.post("ActionServlet", {"op": "deleteDStoMeshUp", "idDataService": idDataService, "idAggr": idAggregazione},
             function (response) {
                 vett = [];
