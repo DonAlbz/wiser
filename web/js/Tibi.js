@@ -54,13 +54,12 @@ function creaAggregazione()
     } else {
         var nameAgg = ($("#nameAgg").val());
         var nomeDesc = ($("#descrizioneAgg").val());
-        // var url = "ActionServlet?op=meshup&nameAgg=" + nameAgg + "&descrizioneAgg=" + nomeDesc; //+ "&param=" + param;
-        // window.location.replace(url);
-        // nomeAggregazCreata = response.toString();
         $.post("ActionServlet", {"op": "meshup", "nameAgg": nameAgg, "descrizioneAgg": nomeDesc},
         function (response) {
             nomeAggregazCreata = response.toString();
             location.reload();
+            window.alert(nomeAggregazCreata);
+
         }, "text");
     }
 }
@@ -109,18 +108,18 @@ function apriWizard() {
 
 
 
-
-function selezionaMashUp(nome) {
-    var MashDaSel = [];
-    MashDaSel = $(".mashDaSelezionare");
-    MashDaSel.each(function () {
-        if (($(this).text()) === nome.trim()) {
-            $(this).addClass("active");
-        }
-    });
-}
-$(document).ready(selezionaMashUp(nomeAggregazCreata));
-
+/*
+ function selezionaMashUp(nome) {
+ var MashDaSel = [];
+ MashDaSel = $(".mashDaSelezionare");
+ MashDaSel.each(function () {
+ if (($(this).text()) === nome.trim()) {
+ $(this).addClass("active");
+ }
+ });
+ }
+ $(document).ready(selezionaMashUp(nomeAggregazCreata));
+ */
 
 var mashSel;
 function modificaMashUp(nomeMU, idMU) {
@@ -150,18 +149,20 @@ function confermaMashUp(nomeMU) {
     $(".aggr").addClass("hidden");
 }
 
-function eliminaAggregazione(nomeMU) {
-        var nameAgg = ($("#nameAgg").val());
-        var nomeDesc = ($("#descrizioneAgg").val());
-        // var url = "ActionServlet?op=meshup&nameAgg=" + nameAgg + "&descrizioneAgg=" + nomeDesc; //+ "&param=" + param;
-        // window.location.replace(url);
-        // nomeAggregazCreata = response.toString();
-        $.post("ActionServlet", {"op": "meshup", "nameAgg": nameAgg, "descrizioneAgg": nomeDesc},
-        function (response) {
-            nomeAggregazCreata = response.toString();
-            location.reload();
-        }, "text");
-}
+
+/*
+ function eliminaAggregazione(nomeMU) {
+ var nameAgg = ($("#nameAgg").val());
+ var nomeDesc = ($("#descrizioneAgg").val());
+ // var url = "ActionServlet?op=meshup&nameAgg=" + nameAgg + "&descrizioneAgg=" + nomeDesc; //+ "&param=" + param;
+ // window.location.replace(url);
+ // nomeAggregazCreata = response.toString();
+ $.post("ActionServlet", {"op": "meshup", "nameAgg": nameAgg, "descrizioneAgg": nomeDesc},
+ function (response) {
+ nomeAggregazCreata = response.toString();
+ location.reload();
+ }, "text");
+ }*/
 
 
 function aggiungiDataService(idDataService) {
@@ -198,3 +199,14 @@ function rimuoviDataService(idDataService) {
         }
     }, "text");
 }
+
+
+
+/*
+ function aggiungiTag(iddataservice) {
+ $.post("ActionServlet", {"op": "addTag", "idDataService": iddataservice},
+ function (response) {
+ }
+ }, "text");
+ }
+ */

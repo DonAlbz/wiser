@@ -119,7 +119,7 @@
                                                         <label class="control-label" for="nameAgg">Name: </label><input id="nameAgg" type="text" placeholder="insert name" class="form-control">
                                                         <br>
                                                         <label class="control-label" for="descrizioneAgg">Description: </label><textarea class="form-control" id="descrizioneAgg" placeholder="insert description"></textarea>                                           
-                                                    </div>
+                                                </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -196,7 +196,6 @@
                                     Iterator iterTag = taglist.iterator();
 
                             %>
-
                             <div class="col-lg-12 well" id="DIV<%= service.getId()%>">
                                 <div class="row">
                                     <div class="hidden-xs hidden-sm col-md-2 col-lg-2">
@@ -221,12 +220,41 @@
                                         </p>
                                     </div>
 
-
                                     <div class="col-sm-12 col-md-2 col-lg-2" > <!--style="margin-top: 30px"-->
                                         <button onclick="selezione('<%=service.getId()%>')" type="button" data-toggle="modal" class="dimension" data-target="#myModal<%=service.getId()%>"><span class="glyphicon glyphicon-pencil"></span>   Vota</button>
                                         <br>
                                         <br>
-                                        <button type="button" class="dimension"><span class="glyphicon glyphicon-tag"></span>   Tag</button>
+                                        <button type="button" data-toggle="modal" class="dimension" data-target="#myModalTag<%=service.getId()%>"> <span class="glyphicon glyphicon-tag"></span>   Tag</button>
+
+
+
+                                        <div id="myModalTag<%=service.getId()%>" class="modal fade" role="dialog">
+                                            <div class="modal-dialog">
+
+                                                <!-- Modal content-->
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                                        <h4 class="modal-title">Add Tag</h4>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        <div id="creazioneAggr">
+                                                            <div id="inputAgg" class="form-group has-feedback"> 
+                                                                <div class="controls">
+                                                                    <label class="control-label" for="nameTag">Tag name: </label><input id="nameAgg" type="text" placeholder="insert name" class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" onclick="aggiungiTag('<%=service.getId()%>')" class="btn btn-primary mostra" data-dismiss="modal"> Confirm</button> 
+                                                            <button type="button" class="btn btn-danger mostra" data-dismiss="modal"> Annulla</button> 
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
 
                                         <div>
                                             <a type="button" id="addAggr<%=service.getId()%>" onclick="aggiungiDataService('<%=service.getId()%>')" class="aggr hidden btn btn-warning">+</a>                   
@@ -299,7 +327,6 @@
                                     </div>
                                 </div>
                             </div>
-
                             <%
                                 }
                             %>
@@ -311,7 +338,7 @@
                             ArrayList<Aggregazione> mashup = (ArrayList<Aggregazione>) session.getAttribute("mashup");
                             if (mashup.size() == 0) {
                         %>
-                        <div>Nessun mash-up</div>
+                        <div>No mash-up</div>
                         <%
                         } else {
                             Iterator iterMash = mashup.iterator();
@@ -350,13 +377,13 @@
                                                             </div>
                                                         </div>
                                                         <div class="modal-footer">
-                                                            <button type="button" onclick="eliminaAggregazione('<%=nome%>')" class="btn btn-danger mostra" data-dismiss="modal"> Cancella</button> 
-                                                            <button type="button" class="btn btn-primary mostra" data-dismiss="modal"> Annulla</button> 
+                                                            <button type="button" onclick="eliminaAggregazione('<%=nome%>')" class="btn btn-primary mostra" data-dismiss="modal"> Cancella</button> 
+                                                            <button type="button" class="btn btn-danger mostra" data-dismiss="modal"> Annulla</button> 
                                                         </div>
                                                     </div>
                                                 </div>
                                             </div>
-
+                                        </div>
                                     </h4>
                                 </div>
                                 <div id="collapse<%=nome%>" class="panel-collapse collapse">
@@ -408,7 +435,6 @@
         <%
             }
         %>
-
 
         <script type="text/javascript" src="./js/main.js"></script>
         <script type="text/javascript" src="./js/gestione_voti.js"></script>
