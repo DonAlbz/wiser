@@ -497,20 +497,35 @@ public class ActionServlet extends HttpServlet {
         String nomeAggr = req.getParameter("nameAgg");
         String descrizioneAggr = req.getParameter("descrizioneAgg");
         String nomeDev = sess.getAttribute("name").toString();
-   //     String parametro = req.getParameter("param");
-        Sviluppatore s = readDeveloperByName(nomeDev);
-        Set<DataService> list = new HashSet<>();
-        long nuovaAggregazioneId = hibernate.createAggregation(nomeAggr, descrizioneAggr, s, list);
-        Aggregazione nuovaAggregazione = hibernate.readAggregation(nuovaAggregazioneId);
-        ArrayList<DataService> services = hibernate.readDataServices();
-        ArrayList<Tag> tags = hibernate.readTags();
-        ArrayList<Category> categs = hibernate.readCategories();
-        req.setAttribute("newAggregazione", nuovaAggregazione);
         ArrayList<Aggregazione> mashlist = (ArrayList<Aggregazione>) req.getSession().getAttribute("mashup");
-        mashlist.add(nuovaAggregazione);
-        req.getSession().setAttribute("mashup", mashlist);
-        resp.getWriter().println(nuovaAggregazione.getNome());
-        doGetList2(req, resp, nomeDev);      
+
+        Boolean bool = false;
+
+        for (Aggregazione mashlist1 : mashlist) {
+            if (mashlist1.getNome().equalsIgnoreCase(nomeAggr)) {
+                bool = true;
+            }
+        }
+
+        if (bool) {
+            resp.getWriter().println("mashup gia' presente!");
+        } else {
+
+            Sviluppatore s = readDeveloperByName(nomeDev);
+            Set<DataService> list = new HashSet<>();
+            long nuovaAggregazioneId = hibernate.createAggregation(nomeAggr, descrizioneAggr, s, list);
+            Aggregazione nuovaAggregazione = hibernate.readAggregation(nuovaAggregazioneId);
+            ArrayList<DataService> services = hibernate.readDataServices();
+            ArrayList<Tag> tags = hibernate.readTags();
+            ArrayList<Category> categs = hibernate.readCategories();
+            req.setAttribute("newAggregazione", nuovaAggregazione);
+      //  ArrayList<Aggregazione> mashlist = (ArrayList<Aggregazione>) req.getSession().getAttribute("mashup");
+            mashlist.add(nuovaAggregazione);
+            req.getSession().setAttribute("mashup", mashlist);
+            resp.getWriter().println(nuovaAggregazione.getNome());
+            //doGetList2(req, resp, nomeDev);
+        }
+
     }
 
     public void doPostAddDS(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -520,12 +535,12 @@ public class ActionServlet extends HttpServlet {
         String idDataS = req.getParameter("idDataService");
         Long idDataService = Long.parseLong(idDataS);
         DataService service = hibernate.readDataService(idDataService);
-        Aggregazione aggregazione =  hibernate.readAggregation(idAgg);
+        Aggregazione aggregazione = hibernate.readAggregation(idAgg);
         //HashSet<DataService> dsByaggregazione = (HashSet<DataService>) aggregazione.getElencoDS();
         //dsByaggregazione.add(service);
         aggregazione.addDS(service);
         //doGetList2(req, resp, nomeDev); 
-        resp.getWriter().println(service.getNome() + " "+ service.getId().toString() + " " + aggregazione.getNome());
+        resp.getWriter().println(service.getNome() + " " + service.getId().toString() + " " + aggregazione.getNome());
         //hibernate.addDsToAggregation(idAgg, service);
         //req.getSession().setAttribute("dsAggiunto", dsByaggregazione);
     }
@@ -537,15 +552,15 @@ public class ActionServlet extends HttpServlet {
         String idDataS = req.getParameter("idDataService");
         Long idDataService = Long.parseLong(idDataS);
         DataService service = hibernate.readDataService(idDataService);
-        Aggregazione aggregazione =  hibernate.readAggregation(idAgg);
+        Aggregazione aggregazione = hibernate.readAggregation(idAgg);
         //HashSet<DataService> dsByaggregazione = (HashSet<DataService>) aggregazione.getElencoDS();
         //dsByaggregazione.add(service);
         aggregazione.removeDS(service);
         String no = null;
-        if(0 == aggregazione.getElencoDS().size()) {
+        if (0 == aggregazione.getElencoDS().size()) {
             no = "empty";
         }
-        resp.getWriter().println(service.getId().toString() + " " + aggregazione.getNome() +" " + no);
+        resp.getWriter().println(service.getId().toString() + " " + aggregazione.getNome() + " " + no);
         //doGetList2(req, resp, nomeDev); 
         //hibernate.addDsToAggregation(idAgg, service);
         //req.getSession().setAttribute("dsAggiunto", dsByaggregazione);
