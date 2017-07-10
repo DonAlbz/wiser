@@ -54,13 +54,12 @@ function creaAggregazione()
     } else {
         var nameAgg = ($("#nameAgg").val());
         var nomeDesc = ($("#descrizioneAgg").val());
-       // var url = "ActionServlet?op=meshup&nameAgg=" + nameAgg + "&descrizioneAgg=" + nomeDesc; //+ "&param=" + param;
-       // window.location.replace(url);
-       // nomeAggregazCreata = response.toString();
-         $.post("ActionServlet", {"op":"meshup", "nameAgg": nameAgg, "descrizioneAgg": nomeDesc},
-        function(response){
-           nomeAggregazCreata = response.toString();
-           location.reload();
+        $.post("ActionServlet", {"op": "meshup", "nameAgg": nameAgg, "descrizioneAgg": nomeDesc},
+        function (response) {
+            nomeAggregazCreata = response.toString();
+            location.reload();
+            window.alert(nomeAggregazCreata);
+
         }, "text");
     }
 }
@@ -109,77 +108,105 @@ function apriWizard() {
 
 
 
-
-function selezionaMashUp(nome) {
-    var MashDaSel = [];
-    MashDaSel = $(".mashDaSelezionare");
-    MashDaSel.each(function () {
-        if (($(this).text()) === nome.trim()) {
-            $(this).addClass("active");
-        }
-    });
-}
-$(document).ready(selezionaMashUp(nomeAggregazCreata));
-
+/*
+ function selezionaMashUp(nome) {
+ var MashDaSel = [];
+ MashDaSel = $(".mashDaSelezionare");
+ MashDaSel.each(function () {
+ if (($(this).text()) === nome.trim()) {
+ $(this).addClass("active");
+ }
+ });
+ }
+ $(document).ready(selezionaMashUp(nomeAggregazCreata));
+ */
 
 var mashSel;
 function modificaMashUp(nomeMU, idMU) {
     mashSel = idMU;
-    $("#"+nomeMU.trim()+"list").find(".delAggr").removeClass("hidden");
-    var figli = $("#"+nomeMU+"list").children();
-    $(".aggr").attr("disabled",false).css("background-color","orange");
+    $(".delAggr").addClass("hidden");
+    $("#collapse" + nomeMU).collapse("show");
+    $("#" + nomeMU.trim() + "list").find(".delAggr").removeClass("hidden");
+    var figli = $("#" + nomeMU + "list").children();
+    $(".aggr").attr("disabled", false).css("background-color", "orange");
     $(".aggr").removeClass("hidden");
     $(".confermaMash").addClass("hidden");
     $(".modificaMash").removeClass("hidden");
-    $("#"+nomeMU+"conferma").removeClass("hidden");
-    $("#"+nomeMU+"modifica").addClass("hidden");
-    figli.each(function() {
+    $("#" + nomeMU + "conferma").removeClass("hidden");
+    $("#" + nomeMU + "modifica").addClass("hidden");
+    figli.each(function () {
         var id = $(this).attr("id");
-        id = id.replace(nomeMU+"_","");
-        $("#DIV"+id).find(".aggr").attr("disabled", true).css("background-color","grey");
+        id = id.replace(nomeMU + "_", "");
+        $("#DIV" + id).find(".aggr").attr("disabled", true).css("background-color", "grey");
     });
 }
 
 function confermaMashUp(nomeMU) {
-    $("#"+nomeMU+"conferma").addClass("hidden");
-    $("#"+nomeMU+"modifica").removeClass("hidden");
+    $("#collapse" + nomeMU).collapse("hide");
+    $("#" + nomeMU + "conferma").addClass("hidden");
+    $("#" + nomeMU + "modifica").removeClass("hidden");
     $(".delAggr").addClass("hidden");
     $(".aggr").addClass("hidden");
 }
 
-function eliminaAggregazione(nomeMU) {
 
-}
+/*
+ function eliminaAggregazione(nomeMU) {
+ var nameAgg = ($("#nameAgg").val());
+ var nomeDesc = ($("#descrizioneAgg").val());
+ // var url = "ActionServlet?op=meshup&nameAgg=" + nameAgg + "&descrizioneAgg=" + nomeDesc; //+ "&param=" + param;
+ // window.location.replace(url);
+ // nomeAggregazCreata = response.toString();
+ $.post("ActionServlet", {"op": "meshup", "nameAgg": nameAgg, "descrizioneAgg": nomeDesc},
+ function (response) {
+ nomeAggregazCreata = response.toString();
+ location.reload();
+ }, "text");
+ }*/
 
 
 function aggiungiDataService(idDataService) {
     idAggregazione = mashSel;
     //$("#delAggr" + idDataService).removeClass("hidden");
-    $("#addAggr" + idDataService).attr("disabled", true).css("background-color","grey");
-    $.post("ActionServlet", {"op":"addDStoMeshUp", "idDataService": idDataService, "idAggr": idAggregazione},
-        function(response){
-           vett = [];
-           vett = response.toString().split(" ");
-           tag = "<li id="+vett[2].trim()+"_"+ vett[1].trim()+ " class=list-group-item>"+vett[0].trim()+"</li>";
-           $("#"+vett[2].trim()+"list").append(tag);
-           html = "<button type='button' id='delAggr"+idDataService+"' onclick='rimuoviDataService("+idDataService+")' class='delAggr btn-xs btn-danger'>-</button>";
-           $("#"+vett[2].trim()+"_"+ vett[1].trim()).append(html);
-           
-        }, "text");
+    $("#addAggr" + idDataService).attr("disabled", true).css("background-color", "grey");
+    $.post("ActionServlet", {"op": "addDStoMeshUp", "idDataService": idDataService, "idAggr": idAggregazione},
+    function (response) {
+        vett = [];
+        vett = response.toString().split(" ");
+        tag = "<li id=" + vett[2].trim() + "_" + vett[1].trim() + " class=list-group-item>" + vett[0].trim() + "</li>";
+        $("#" + vett[2].trim() + "list").append(tag);
+        html = "<button type='button' id='delAggr" + idDataService + "' onclick='rimuoviDataService(" + idDataService + ")' class='delAggr glyphicon glyphicon-remove pull-right btn-xs btn-danger'></button>";
+        $("#" + vett[2].trim() + "_" + vett[1].trim()).append(html);
+        $("#no" + vett[2].trim()).addClass("hidden");
+
+    }, "text");
 }
 
 
 function rimuoviDataService(idDataService) {
     idAggregazione = mashSel;
-    $("#addAggr" + idDataService).attr("disabled", false).css("background-color","orange");
-    $.post("ActionServlet", {"op":"deleteDStoMeshUp", "idDataService": idDataService, "idAggr": idAggregazione},
-        function(response){
-           vett = [];
-           vett = response.toString().split(" ");
-         // window.alert("#"+vett[1].trim()+"+"+vett[0].trim());
-           console.log("#"+vett[1].trim()+"_"+vett[0].trim());
-           $("#"+vett[1].trim()+"_"+vett[0].trim()).remove();
-           //window.alert("eliminato");
-        }, "text");
+    $("#addAggr" + idDataService).attr("disabled", false).css("background-color", "orange");
+    $.post("ActionServlet", {"op": "deleteDStoMeshUp", "idDataService": idDataService, "idAggr": idAggregazione},
+    function (response) {
+        vett = [];
+        vett = response.toString().split(" ");
+        // window.alert("#"+vett[1].trim()+"+"+vett[0].trim());
+        console.log("#" + vett[1].trim() + "_" + vett[0].trim());
+        $("#" + vett[1].trim() + "_" + vett[0].trim()).remove();
+        console.log(response.toString());
+        if (vett[2].trim() === "empty") {
+            $("#no" + vett[1].trim()).removeClass("hidden");
+        }
+    }, "text");
 }
 
+
+
+/*
+ function aggiungiTag(iddataservice) {
+ $.post("ActionServlet", {"op": "addTag", "idDataService": iddataservice},
+ function (response) {
+ }
+ }, "text");
+ }
+ */

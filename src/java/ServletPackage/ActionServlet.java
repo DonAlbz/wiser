@@ -84,11 +84,6 @@ public class ActionServlet extends HttpServlet {
             doGetAutoc(req, resp);
         }
 
-        if (index_DS != null && index_voto != null) {
-
-            doGetAddVoto(req, resp, index_DS, index_voto);
-        }
-
         if (op.equalsIgnoreCase("aggregationByDS")) {
             doGetAggregationByDS(req, resp);
         }
@@ -103,6 +98,10 @@ public class ActionServlet extends HttpServlet {
 
         if (op.equalsIgnoreCase("deleteDStoMeshUp")) {
             doPostDeleteDS(req, resp);
+        }
+        if(op.equalsIgnoreCase("addVoto"))
+        {
+            doGetAddVoto(req, resp);
         }
     }
 
@@ -163,7 +162,7 @@ public class ActionServlet extends HttpServlet {
     private void doGetList2(HttpServletRequest req, HttpServletResponse resp, String nomeU)
             throws ServletException, IOException {
 
-      String jsonString = (String) req.getParameter("search");
+        String jsonString = (String) req.getParameter("search");
         ArrayList<DataService> servicesFiltered = new ArrayList<>();
         ArrayList<DataService> servicesOrdered = new ArrayList<>();
         ArrayList<DataService> servicesParsed = new ArrayList<>();
@@ -460,30 +459,6 @@ public class ActionServlet extends HttpServlet {
     }
 
     //Sara
-    protected void doGetAddVoto(HttpServletRequest request, HttpServletResponse response, String index_DS, String voto)
-            throws ServletException, IOException {
-        PrintWriter out = response.getWriter();
-        String nomeUtente = sess.getAttribute("name").toString();
-
-        //double[] voti = {0.0, 0.125, 0.25, 0.375, 0.5, 0.625, 0.75, 0.875, 1.0};
-        //out.print("ciao hai mandato id DS: " + index_DS + " id voto:" + index_voto);
-        int v = (int) Math.ceil((Double.parseDouble(voto) * 100));  //indice array 
-        //out.print(" indice array:"+id_voto);
-        //int v = (int) Math.ceil(voti[id_voto] * 100);
-        //out.print(" valore array:"+v);
-        long idDS = Long.parseLong(index_DS);
-        //getService byname  e add voto e upload voti
-        DataService addVote = hibernate.readDataService(idDS);
-
-        Sviluppatore s = readDeveloperByName(nomeUtente);
-        long id_AggrNulla = 1;
-        Aggregazione a = hibernate.readAggregation(id_AggrNulla);
-        addVote.assegnaVoto(session, v, s, a);
-        //ArrayList<Voto> votiDB = hibernate.readVoti(s.getId());
-        out.print(" nome U " + nomeUtente + "  " + v);
-    }
-
-    //Sara
     public Sviluppatore readDeveloperByName(String nomeS) {
 
         Sviluppatore find = null;
@@ -536,25 +511,40 @@ public class ActionServlet extends HttpServlet {
         return arrlist;
     }
 
-    public void doPostCreaAggregazione(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+     public void doPostCreaAggregazione(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         //Boolean creaAgg = false;
         String nomeAggr = req.getParameter("nameAgg");
         String descrizioneAggr = req.getParameter("descrizioneAgg");
         String nomeDev = sess.getAttribute("name").toString();
-   //     String parametro = req.getParameter("param");
-        Sviluppatore s = readDeveloperByName(nomeDev);
-        Set<DataService> list = new HashSet<>();
-        long nuovaAggregazioneId = hibernate.createAggregation(nomeAggr, descrizioneAggr, s, list);
-        Aggregazione nuovaAggregazione = hibernate.readAggregation(nuovaAggregazioneId);
-        ArrayList<DataService> services = hibernate.readDataServices();
-        ArrayList<Tag> tags = hibernate.readTags();
-        ArrayList<Category> categs = hibernate.readCategories();
-        req.setAttribute("newAggregazione", nuovaAggregazione);
         ArrayList<Aggregazione> mashlist = (ArrayList<Aggregazione>) req.getSession().getAttribute("mashup");
-        mashlist.add(nuovaAggregazione);
-        req.getSession().setAttribute("mashup", mashlist);
-        resp.getWriter().println(nuovaAggregazione.getNome());
-        doGetList2(req, resp, nomeDev);      
+
+        Boolean bool = false;
+
+        for (Aggregazione mashlist1 : mashlist) {
+            if (mashlist1.getNome().equalsIgnoreCase(nomeAggr)) {
+                bool = true;
+            }
+        }
+
+        if (bool) {
+            resp.getWriter().println("mashup gia' presente!");
+        } else {
+
+            Sviluppatore s = readDeveloperByName(nomeDev);
+            Set<DataService> list = new HashSet<>();
+            long nuovaAggregazioneId = hibernate.createAggregation(nomeAggr, descrizioneAggr, s, list);
+            Aggregazione nuovaAggregazione = hibernate.readAggregation(nuovaAggregazioneId);
+            ArrayList<DataService> services = hibernate.readDataServices();
+            ArrayList<Tag> tags = hibernate.readTags();
+            ArrayList<Category> categs = hibernate.readCategories();
+            req.setAttribute("newAggregazione", nuovaAggregazione);
+      //  ArrayList<Aggregazione> mashlist = (ArrayList<Aggregazione>) req.getSession().getAttribute("mashup");
+            mashlist.add(nuovaAggregazione);
+            req.getSession().setAttribute("mashup", mashlist);
+            resp.getWriter().println(nuovaAggregazione.getNome());
+            //doGetList2(req, resp, nomeDev);
+        }
+
     }
 
     public void doPostAddDS(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -564,12 +554,12 @@ public class ActionServlet extends HttpServlet {
         String idDataS = req.getParameter("idDataService");
         Long idDataService = Long.parseLong(idDataS);
         DataService service = hibernate.readDataService(idDataService);
-        Aggregazione aggregazione =  hibernate.readAggregation(idAgg);
+        Aggregazione aggregazione = hibernate.readAggregation(idAgg);
         //HashSet<DataService> dsByaggregazione = (HashSet<DataService>) aggregazione.getElencoDS();
         //dsByaggregazione.add(service);
         aggregazione.addDS(service);
         //doGetList2(req, resp, nomeDev); 
-        resp.getWriter().println(service.getNome() + " "+ service.getId().toString() + " " + aggregazione.getNome());
+        resp.getWriter().println(service.getNome() + " " + service.getId().toString() + " " + aggregazione.getNome());
         //hibernate.addDsToAggregation(idAgg, service);
         //req.getSession().setAttribute("dsAggiunto", dsByaggregazione);
     }
@@ -581,13 +571,69 @@ public class ActionServlet extends HttpServlet {
         String idDataS = req.getParameter("idDataService");
         Long idDataService = Long.parseLong(idDataS);
         DataService service = hibernate.readDataService(idDataService);
-        Aggregazione aggregazione =  hibernate.readAggregation(idAgg);
+        Aggregazione aggregazione = hibernate.readAggregation(idAgg);
         //HashSet<DataService> dsByaggregazione = (HashSet<DataService>) aggregazione.getElencoDS();
         //dsByaggregazione.add(service);
         aggregazione.removeDS(service);
-        resp.getWriter().println(service.getId().toString() + " " + aggregazione.getNome());
+        String no = null;
+        if (0 == aggregazione.getElencoDS().size()) {
+            no = "empty";
+        }
+        resp.getWriter().println(service.getId().toString() + " " + aggregazione.getNome() + " " + no);
         //doGetList2(req, resp, nomeDev); 
         //hibernate.addDsToAggregation(idAgg, service);
         //req.getSession().setAttribute("dsAggiunto", dsByaggregazione);
     }
+
+    //Sara
+    protected void doGetAddVoto(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
+
+        PrintWriter out = resp.getWriter();
+        String nomeUtente = sess.getAttribute("name").toString();
+        String index_DS = req.getParameter("votaS");
+        String voto = req.getParameter("voto");
+        String aggr = req.getParameter("aggregazioni");
+
+        int v = (int) Math.ceil((Double.parseDouble(voto) * 100));  //voto int
+        long idDS = Long.parseLong(index_DS);  //indice DS da votare long
+        Sviluppatore s = readDeveloperByName(nomeUtente);
+        DataService addVote = hibernate.readDataService(idDS);
+
+        if (aggr.isEmpty()) {
+            //getService byname  e add voto e upload voti
+            long id_AggrNulla = 1;
+            Aggregazione a = hibernate.readAggregation(id_AggrNulla);
+            addVote.assegnaVoto(session, v, s, a);
+            out.print("true");
+
+        } else {
+            JSONObject root = new JSONObject(aggr);
+            ArrayList<String> arr = new ArrayList();
+            for (int i = 0; i < root.getJSONArray("aggregazioni").length(); i++) {
+                String a = root.getJSONArray("aggregazioni").getJSONObject(i).getString("nome");
+                Aggregazione aggrToVote = readAggregazioneByName(a);
+                addVote.assegnaVoto(session, v, s, aggrToVote);
+                arr.add(a);
+            }
+            out.print("okAggr");
+        }
+
+    }
+
+    //Sara
+
+    public Aggregazione readAggregazioneByName(String nomeA) {
+
+        Aggregazione find = null;
+        ArrayList<Aggregazione> a = hibernate.readAggregation();
+        String nome = nomeA.toLowerCase();
+        for (Aggregazione aggregazione : a) {
+            if (nome.equals(aggregazione.getNome().toLowerCase())) {
+                find = aggregazione;
+            }
+        }
+        return find;
+    }
+    
 }

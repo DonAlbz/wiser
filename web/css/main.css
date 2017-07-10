@@ -29,7 +29,7 @@ html, body {
 }
 
 /* ==========================================================================
-   Tibi's custom styles
+Tibi's custom styles
    ========================================================================== */
 
 .well{
@@ -119,18 +119,24 @@ html, body {
     padding-right: 3%;
 }
 
+
 .aggr {
     position: relative !important;
-    margin-left: 77px !important;
-    margin-top: -94px !important;
-    font-size: 43px !important;
+    margin-top: 33px !important;
+    font-size: 20px !important;
+    border-radius: 60%;
+    width: 42px;
 }
+
+
 
 .delAggr {
     position: relative !important;
-    margin-left: 77px !important;
-    margin-top: -94px !important;
-    font-size: 43px !important;
+}
+
+.dimension {
+    height: 33.56px !important;
+    width: 79.93px !important;
 }
 
 /* ==========================================================================
