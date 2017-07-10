@@ -26,14 +26,11 @@ $(document).ready(function () {
 function riempiSearch(id) {
     if (id.valueOf() == "auto1") {
         $("#auto0").val($("#auto1").text());
-    }
-    else if (id.valueOf() == "auto2") {
+    } else if (id.valueOf() == "auto2") {
         $("#auto0").val($("#auto2").text());
-    }
-    else if (id.valueOf() == "auto3") {
+    } else if (id.valueOf() == "auto3") {
         $("#auto0").val($("#auto3").text());
-    }
-    else if (id.valueOf() == "auto4") {
+    } else if (id.valueOf() == "auto4") {
         $("#auto0").val($("#auto4").text());
     }
 }
@@ -48,22 +45,43 @@ var nomeAggregazCreata;
 var xhr;
 function creaAggregazione()
 {
-    if ($("#nameAgg").val() === "") {
-        alert("nome mancante");
-        $("#inputAgg").addClass("has-error");
-    } else {
-        var nameAgg = ($("#nameAgg").val());
-        var nomeDesc = ($("#descrizioneAgg").val());
-        $.post("ActionServlet", {"op": "meshup", "nameAgg": nameAgg, "descrizioneAgg": nomeDesc},
-        function (response) {
-            nomeAggregazCreata = response.toString();
-            location.reload();
-            window.alert(nomeAggregazCreata);
+    var nameAgg = ($("#nameAgg").val());
+    var nomeDesc = ($("#descrizioneAgg").val());
+    patt1=/^[A-Za-z]/ig;
+    patt2=/[^A-Za-z0-9]/gi;
+    if(patt1.test(nameAgg)&& !patt2.test(nameAgg)){
+         $.post("ActionServlet", {"op": "meshup", "nameAgg": nameAgg, "descrizioneAgg": nomeDesc},
+                 function (response) {
+                     nomeAggregazCreata = response.trim().toString().trim();
+                     if (nomeAggregazCreata === "false") {
+                         $("#inputAgg").addClass("has-error");
+                         $("#mashup-err").toggleClass("hidden");
+                         $("#mashup-text").toggleClass("hidden");
+                     } else {
+                         $("#inputAgg").removeClass("has-error");
+                         $("#creazioneAggr").toggleClass("hidden");
+                         $("#msg-conf-aggr").toggleClass("hidden");
+                         $("#btn-crea-aggregazione").toggleClass("hidden");
+                     }
+                     //window.alert(nomeAggregazCreata);
 
-        }, "text");
-    }
+                 }, "text");
+     }
+     else{
+         $("#inputAgg").addClass("has-error");
+         if($("#mashup-text").hasClass("hidden")){
+            $("#mashup-err").toggleClass("hidden");
+            $("#mashup-text").toggleClass("hidden");
+        }         
+     }
 }
 
+
+function chiudiModalAggregazione() {
+    setTimeout(() => {
+        location.reload();
+    }, 1000);
+}
 
 
 function myGetXmlHttpRequest()
@@ -74,8 +92,7 @@ function myGetXmlHttpRequest()
     try
     {
         XmlHttpReq = new XMLHttpRequest();
-    }
-    catch (e)
+    } catch (e)
     {
 // poi come oggetto ActiveX dal pi? al meno recente
         var created = false;
@@ -85,8 +102,7 @@ function myGetXmlHttpRequest()
             {
                 XmlHttpReq = new ActiveXObject(activeXopt[i]);
                 created = true;
-            }
-            catch (eActXobj)
+            } catch (eActXobj)
             {
                 alert("Il tuo browser non supporta AJAX!");
             }
@@ -170,16 +186,16 @@ function aggiungiDataService(idDataService) {
     //$("#delAggr" + idDataService).removeClass("hidden");
     $("#addAggr" + idDataService).attr("disabled", true).css("background-color", "grey");
     $.post("ActionServlet", {"op": "addDStoMeshUp", "idDataService": idDataService, "idAggr": idAggregazione},
-    function (response) {
-        vett = [];
-        vett = response.toString().split(" ");
-        tag = "<li id=" + vett[2].trim() + "_" + vett[1].trim() + " class=list-group-item>" + vett[0].trim() + "</li>";
-        $("#" + vett[2].trim() + "list").append(tag);
-        html = "<button type='button' id='delAggr" + idDataService + "' onclick='rimuoviDataService(" + idDataService + ")' class='delAggr glyphicon glyphicon-remove pull-right btn-xs btn-danger'></button>";
-        $("#" + vett[2].trim() + "_" + vett[1].trim()).append(html);
-        $("#no" + vett[2].trim()).addClass("hidden");
+            function (response) {
+                vett = [];
+                vett = response.toString().split(" ");
+                tag = "<li id=" + vett[2].trim() + "_" + vett[1].trim() + " class=list-group-item>" + vett[0].trim() + "</li>";
+                $("#" + vett[2].trim() + "list").append(tag);
+                html = "<button type='button' id='delAggr" + idDataService + "' onclick='rimuoviDataService(" + idDataService + ")' class='delAggr glyphicon glyphicon-remove pull-right btn-xs btn-danger'></button>";
+                $("#" + vett[2].trim() + "_" + vett[1].trim()).append(html);
+                $("#no" + vett[2].trim()).addClass("hidden");
 
-    }, "text");
+            }, "text");
 }
 
 
@@ -187,17 +203,17 @@ function rimuoviDataService(idDataService) {
     idAggregazione = mashSel;
     $("#addAggr" + idDataService).attr("disabled", false).css("background-color", "orange");
     $.post("ActionServlet", {"op": "deleteDStoMeshUp", "idDataService": idDataService, "idAggr": idAggregazione},
-    function (response) {
-        vett = [];
-        vett = response.toString().split(" ");
-        // window.alert("#"+vett[1].trim()+"+"+vett[0].trim());
-        console.log("#" + vett[1].trim() + "_" + vett[0].trim());
-        $("#" + vett[1].trim() + "_" + vett[0].trim()).remove();
-        console.log(response.toString());
-        if (vett[2].trim() === "empty") {
-            $("#no" + vett[1].trim()).removeClass("hidden");
-        }
-    }, "text");
+            function (response) {
+                vett = [];
+                vett = response.toString().split(" ");
+                // window.alert("#"+vett[1].trim()+"+"+vett[0].trim());
+                console.log("#" + vett[1].trim() + "_" + vett[0].trim());
+                $("#" + vett[1].trim() + "_" + vett[0].trim()).remove();
+                console.log(response.toString());
+                if (vett[2].trim() === "empty") {
+                    $("#no" + vett[1].trim()).removeClass("hidden");
+                }
+            }, "text");
 }
 
 

@@ -518,16 +518,16 @@ public class ActionServlet extends HttpServlet {
         String nomeDev = sess.getAttribute("name").toString();
         ArrayList<Aggregazione> mashlist = (ArrayList<Aggregazione>) req.getSession().getAttribute("mashup");
 
-        Boolean bool = false;
+        Boolean bool = true;
 
         for (Aggregazione mashlist1 : mashlist) {
             if (mashlist1.getNome().equalsIgnoreCase(nomeAggr)) {
-                bool = true;
+                bool = false;
             }
         }
 
-        if (bool) {
-            resp.getWriter().println("mashup gia' presente!");
+        if (!bool) {
+            resp.getWriter().println(bool);
         } else {
 
             Sviluppatore s = readDeveloperByName(nomeDev);
@@ -541,7 +541,7 @@ public class ActionServlet extends HttpServlet {
       //  ArrayList<Aggregazione> mashlist = (ArrayList<Aggregazione>) req.getSession().getAttribute("mashup");
             mashlist.add(nuovaAggregazione);
             req.getSession().setAttribute("mashup", mashlist);
-            resp.getWriter().println(nuovaAggregazione.getNome());
+            resp.getWriter().println(bool);
             //doGetList2(req, resp, nomeDev);
         }
 
