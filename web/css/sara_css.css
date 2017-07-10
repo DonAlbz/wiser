@@ -7,7 +7,7 @@
 
 /* voto nello span*/
 
-.label {
+.labelVoto {
     -webkit-border-radius: 3px;
     -moz-border-radius: 3px;
     border-radius: 3px;
@@ -29,30 +29,30 @@
 }
 
 
-ol .ui-selected { 
+.listVotiOl .ui-selected { 
     background:#286090;
     color: white; 
 }
-ol { 
+.listVotiOl { 
     list-style-type: none; 
     margin: 0; 
     padding: 0; 
     width: 100%;
 }
-ol li { 
+.listVotiOl li { 
     margin: 3px;
     padding: 0.65em; 
     font-size: 1em;
     height: 40px;
     margin-left: 10pt;
 }
-ul { 
+.listaAggregazioni { 
     list-style-type: none; 
     margin: 0; 
     padding: 0; 
     width: 100%;
 }
-ul li{ 
+.listaAggregazioni li{ 
     margin-top: 4pt;
     padding: 0.65em; 
     font-size: 1em;
@@ -102,19 +102,19 @@ ul li{
     left: -5px;
 }
 
-.list-group-item:first-child {
+.checkListModal:first-child {
     border-top-left-radius: 0px !important; 
     border-top-right-radius: 0px !important; 
 
 }
-.list-group-item:last-child {
+.checkListModal:last-child {
   
     border-bottom-right-radius: 0px !important; 
     border-bottom-left-radius: 0px !important;
 }
 
 
-.list-group-item:active, .list-group-item:active:focus, .list-group-item:active:hover, .list-group-item.active,
+.checkListModal:active, .checkListModal:active:focus, .checkListModal:active:hover, .checkListModal.active,
 .check-list-box li:active{
     z-index: 0 !important;
     color: #fff !important;
@@ -123,7 +123,7 @@ ul li{
 
 }
 
-.list-group-item.active, .list-group-item.active:hover, .list-group-item.active:focus {
+.checkListModal.active, .checkListModal.active:hover, .checkListModal.active:focus {
     text-shadow: 0 -1px 0 #286090 !important;
     background-image: -webkit-linear-gradient(top,#286090 0,#286090 0%) !important;
     background-image: -o-linear-gradient(top,#286090 0,#286090 0%) !important;
@@ -134,4 +134,12 @@ ul li{
     
     
  
+}
+
+.contentVota{
+    width:500pt;
+}
+
+.glyphicon-unchecked{
+    color:steelblue !important;
 }

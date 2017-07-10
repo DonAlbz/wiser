@@ -5,7 +5,7 @@ function selezionaCategoria(filtro){
         $ciao= $(this).text().trim();
         if( $ciao === $filter){
             
-            $(this).css("background","#2d2f2d");
+            $(this).css("background","#286090");
             $(this).css("color","white");
             
         }
