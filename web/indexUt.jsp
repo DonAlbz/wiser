@@ -48,13 +48,13 @@
         <nav class="navbar navbar-default">
             <div class="container-fluid" id="container-nav">
                 <div class="row">      
-                    <div class="navbar-header col-lg-1 col-md-1 col-sm-1">
+                    <div class="navbar-header col-xs-1 col-lg-1 col-md-1 col-sm-1 ">
                         <a class="navbar-brand" href="#">Wiser</a>
                     </div>
                     <div class="navbar-header col-sm-2 col-md-2 col-lg-2  ">
 
                     </div>
-                    <div class="navbar-header col-sm-6 col-lg-6 col-md-6">
+                    <div class="navbar-header col-xs-11 col-sm-11  col-lg-6 col-md-6">
                         <!--- <div class="collapse navbar-collapse col-lg-6 col-md-6 col-sm-6" id="menu">
                         <!--    <div class="col-lg-5 col-md-5 col-sm-5">   -->
                         <!--<ul class="nav navbar-nav">
@@ -79,7 +79,7 @@
                                 searchBar = "";
                             }
                         %>
-                        <form class="navbar-form   hidden-xs" role="search">
+                        <form class="navbar-form " role="search">
                             <div id="nav-centrata" class="input-group" >
                                 <input id="auto0" name="search" type="text" value='<%=searchBar%>' class="form-control center-block height-40" placeholder="search..." onkeydown="arrowEnable(event)" onkeyup="autocompl(this.value, event);" 
                                        autocomplete="off">
@@ -96,7 +96,7 @@
                             </div>
                         </form>
                     </div>
-                    <div class="navbar-header col-lg-3 col-md-3 col-sm-3">
+                    <div class="navbar-header col-xs-12 col-lg-3 col-md-3 col-sm-6">
 
                         <ul class="nav navbar-nav navbar-right">
                             <!-- Trigger the modal with a button -->
@@ -211,12 +211,13 @@
 
 
             <!-- Pagina centrale -->
-            <div>
+            <div class="hidden-sm hidden-lg hidden-md">
                 <!-- Tasto per comprimere sidebar -->
-                <a href="#menu-toggle" class="btn hidden-sm btn-default hidden-lg hidden-md" id="menu-toggle">Toggle Menu</a>
+                <!---<a href="#menu-toggle" class="btn btn-default" id="menu-toggle">Toggle Menu</a>-->
 
                 <!--Paginazione schermo piccolo-->
-                <ul class="pagination  hidden-sm hidden-lg hidden-md" style="float:right; margin: 0px;" >
+                <div class="pull-right">
+                <ul class="pagination  hidden-sm hidden-lg hidden-md" >
                     <%
                         if (numPages > 1) {
                             for (int i = 0; i < numPages; i++) {
@@ -229,6 +230,7 @@
                             }
                         %>
                 </ul>
+                </div>
             </div>
 
             <!-- Page Content -->
@@ -408,7 +410,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-lg-2 list-group listGroupMashUp">
+            <div class="hidden-xs col-sm-2 col-md-2 col-lg-2 list-group listGroupMashUp">
                 <legend class="center-block">MY MASH-UP</legend>
                 <%
                     ArrayList<Aggregazione> mashup = (ArrayList<Aggregazione>) session.getAttribute("mashup");
@@ -497,8 +499,8 @@
 
         </div>
         <div class="row">
-            <div class="hidden-xs col-md-2 col-md-offset-5 ">
-                <ul class=" pagination">
+            <div class="hidden-xs col-sm-2 col-sm-offset-5 col-md-2 col-md-offset-5 col-lg-2 col-lg-offset-5 ">
+                <ul class="pagination">
                     <%
                         if (numPages > 1) {
                             for (int i = 0; i < numPages; i++) {
