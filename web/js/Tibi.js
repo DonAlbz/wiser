@@ -49,7 +49,7 @@ var xhr;
 function creaAggregazione()
 {
     if ($("#nameAgg").val() === "") {
-        alert("nome mancante");
+        //alert("nome mancante");
         $("#inputAgg").addClass("has-error");
     } else {
         var nameAgg = ($("#nameAgg").val());
