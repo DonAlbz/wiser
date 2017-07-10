@@ -185,7 +185,18 @@ function parseSend()
             var joString = createJSONString(array);
             console.log(joString);
             send = true;
-            window.location.replace("ActionServlet?op=getList&search="+joString);
+            var userMode = $("#userModeSearch").val();
+            console.log(userMode);
+            if((userMode != null)||(userMode == "true"))
+            {
+                var nomeUt = $("#userSearch").val();
+                window.location.replace("ActionServlet?op=getList2&search="+joString+"&nomeU="+nomeUt);
+            }
+            else
+            {
+                 window.location.replace("ActionServlet?op=getList&search="+joString);
+            }
+           
         }
     }
     if(!send)

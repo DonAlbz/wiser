@@ -84,11 +84,6 @@ public class ActionServlet extends HttpServlet {
             doGetAutoc(req, resp);
         }
 
-        if (index_DS != null && index_voto != null) {
-
-            doGetAddVoto(req, resp, index_DS, index_voto);
-        }
-
         if (op.equalsIgnoreCase("aggregationByDS")) {
             doGetAggregationByDS(req, resp);
         }
@@ -103,6 +98,10 @@ public class ActionServlet extends HttpServlet {
 
         if (op.equalsIgnoreCase("deleteDStoMeshUp")) {
             doPostDeleteDS(req, resp);
+        }
+        if(op.equalsIgnoreCase("addVoto"))
+        {
+            doGetAddVoto(req, resp);
         }
     }
 
@@ -163,11 +162,55 @@ public class ActionServlet extends HttpServlet {
     private void doGetList2(HttpServletRequest req, HttpServletResponse resp, String nomeU)
             throws ServletException, IOException {
 
-        ArrayList<DataService> services = hibernate.readDataServices();
-        ArrayList<Tag> tags = hibernate.readTags();
-        RequestDispatcher rd = this.getServletContext().getRequestDispatcher("/indexUtente.jsp");
-        req.setAttribute("list", services);
-        req.setAttribute("tags", tags);
+        String jsonString = (String) req.getParameter("search");
+        ArrayList<DataService> servicesFiltered = new ArrayList<>();
+        ArrayList<DataService> servicesOrdered = new ArrayList<>();
+        ArrayList<DataService> servicesParsed = new ArrayList<>();
+        String tagFilter = req.getParameter("tag");
+        Integer start = Functions.parseInteger(req.getParameter("start"));
+        String catFilter = req.getParameter("filtro");
+        String searchBar = "";
+        boolean isReady = false;
+        if ((jsonString != null) && (!jsonString.equalsIgnoreCase("null"))) {
+            JSONObject jo = new JSONObject(jsonString);
+            HashSet<DataService> list = new HashSet<>();
+            for (int i = 0; i < jo.getJSONArray("keys").length(); i++) {
+                String key = jo.getJSONArray("keys").getJSONObject(i).getString("nome");
+                searchBar = searchBar + key + " ";
+                containsCategory(list, key);
+                containsDS(list, key);
+                containsTag(list, key);
+            }
+            servicesFiltered = toArrayList(list);
+            req.setAttribute("search", jsonString);
+            req.setAttribute("ricerca", searchBar);
+            isReady = true;
+        }
+        if ((tagFilter != null) && (!tagFilter.equalsIgnoreCase("") && (!tagFilter.equalsIgnoreCase("null")))) {
+            if (!isReady) {
+                servicesFiltered = getTagDS(tagFilter);
+                req.setAttribute("tag", tagFilter);
+                isReady = true;
+            }
+        } else {
+            if (!isReady) {
+                servicesFiltered = hibernate.readDataServices();
+                isReady = true;
+            }
+        }
+        if ((catFilter != null) && (!catFilter.equalsIgnoreCase("") && (!catFilter.equalsIgnoreCase("null")))) {
+            servicesFiltered = getCategoryDS(catFilter, servicesFiltered);
+            req.setAttribute("filtro", catFilter);
+        }
+        String order = req.getParameter("orderBy");
+        servicesOrdered = Functions.orderDSList(servicesFiltered, order, req);
+        servicesParsed = Functions.parseDSList(servicesOrdered, start);
+        req.setAttribute("servicesDim", servicesFiltered.size());
+        ArrayList<Category> categories = hibernate.readCategories();
+        RequestDispatcher rd = this.getServletContext().getRequestDispatcher("/indexUt.jsp");
+        req.setAttribute("list", servicesParsed);
+        req.setAttribute("cats", categories);
+        req.setAttribute("orderBy", order);
         req.setAttribute("nomeU", nomeU);
         rd.forward(req, resp);
     }
@@ -416,30 +459,6 @@ public class ActionServlet extends HttpServlet {
     }
 
     //Sara
-    protected void doGetAddVoto(HttpServletRequest request, HttpServletResponse response, String index_DS, String voto)
-            throws ServletException, IOException {
-        PrintWriter out = response.getWriter();
-        String nomeUtente = sess.getAttribute("name").toString();
-
-        //double[] voti = {0.0, 0.125, 0.25, 0.375, 0.5, 0.625, 0.75, 0.875, 1.0};
-        //out.print("ciao hai mandato id DS: " + index_DS + " id voto:" + index_voto);
-        int v = (int) Math.ceil((Double.parseDouble(voto) * 100));  //indice array 
-        //out.print(" indice array:"+id_voto);
-        //int v = (int) Math.ceil(voti[id_voto] * 100);
-        //out.print(" valore array:"+v);
-        long idDS = Long.parseLong(index_DS);
-        //getService byname  e add voto e upload voti
-        DataService addVote = hibernate.readDataService(idDS);
-
-        Sviluppatore s = readDeveloperByName(nomeUtente);
-        long id_AggrNulla = 1;
-        Aggregazione a = hibernate.readAggregation(id_AggrNulla);
-        addVote.assegnaVoto(session, v, s, a);
-        //ArrayList<Voto> votiDB = hibernate.readVoti(s.getId());
-        out.print(" nome U " + nomeUtente + "  " + v);
-    }
-
-    //Sara
     public Sviluppatore readDeveloperByName(String nomeS) {
 
         Sviluppatore find = null;
@@ -492,7 +511,7 @@ public class ActionServlet extends HttpServlet {
         return arrlist;
     }
 
-    public void doPostCreaAggregazione(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+     public void doPostCreaAggregazione(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         //Boolean creaAgg = false;
         String nomeAggr = req.getParameter("nameAgg");
         String descrizioneAggr = req.getParameter("descrizioneAgg");
@@ -565,4 +584,56 @@ public class ActionServlet extends HttpServlet {
         //hibernate.addDsToAggregation(idAgg, service);
         //req.getSession().setAttribute("dsAggiunto", dsByaggregazione);
     }
+
+    //Sara
+    protected void doGetAddVoto(HttpServletRequest req, HttpServletResponse resp)
+            throws ServletException, IOException {
+
+        PrintWriter out = resp.getWriter();
+        String nomeUtente = sess.getAttribute("name").toString();
+        String index_DS = req.getParameter("votaS");
+        String voto = req.getParameter("voto");
+        String aggr = req.getParameter("aggregazioni");
+
+        int v = (int) Math.ceil((Double.parseDouble(voto) * 100));  //voto int
+        long idDS = Long.parseLong(index_DS);  //indice DS da votare long
+        Sviluppatore s = readDeveloperByName(nomeUtente);
+        DataService addVote = hibernate.readDataService(idDS);
+
+        if (aggr.isEmpty()) {
+            //getService byname  e add voto e upload voti
+            long id_AggrNulla = 1;
+            Aggregazione a = hibernate.readAggregation(id_AggrNulla);
+            addVote.assegnaVoto(session, v, s, a);
+            out.print("true");
+
+        } else {
+            JSONObject root = new JSONObject(aggr);
+            ArrayList<String> arr = new ArrayList();
+            for (int i = 0; i < root.getJSONArray("aggregazioni").length(); i++) {
+                String a = root.getJSONArray("aggregazioni").getJSONObject(i).getString("nome");
+                Aggregazione aggrToVote = readAggregazioneByName(a);
+                addVote.assegnaVoto(session, v, s, aggrToVote);
+                arr.add(a);
+            }
+            out.print("okAggr");
+        }
+
+    }
+
+    //Sara
+
+    public Aggregazione readAggregazioneByName(String nomeA) {
+
+        Aggregazione find = null;
+        ArrayList<Aggregazione> a = hibernate.readAggregation();
+        String nome = nomeA.toLowerCase();
+        for (Aggregazione aggregazione : a) {
+            if (nome.equals(aggregazione.getNome().toLowerCase())) {
+                find = aggregazione;
+            }
+        }
+        return find;
+    }
+    
 }

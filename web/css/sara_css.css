@@ -2,33 +2,63 @@
 /* ==========================================================================
    Sara's custom styles
    ========================================================================== */
-.modal-header {background: #009900;color: white;}
+.modal-header {background: #5cb85c;color: white;}
 
-#feedback { font-size: 1em; }
-#selectable .ui-selecting { background: #31708f; }
-#selectable .ui-selected { background: #31708f; color: white; }
-#selectable { list-style-type: none; margin: 0; padding: 0; width: 100%; }
-#selectable li { margin: 3px; padding: 0.4em; font-size: 1em; height: 32px; margin-left: 10pt;}
 
-/* voto nella casellina*/
-label {font-weight: 400;}
-.label {-webkit-border-radius: 3px;-moz-border-radius: 3px;border-radius: 3px;}
-.label{display: inline-block;padding: 2px 4px;font-size: 11.844px;
-       font-weight: bold;line-height: 14px;color: #ffffff;vertical-align: baseline;white-space: nowrap;
-       text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);background-color: #31708f; float: right;}
-#confirm{ margin-left: 40%;
+/* voto nello span*/
 
+.label {
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    border-radius: 3px;
+    display: inline-block;
+    padding: 2px 4px;
+    font-size: 11.844px;
+    font-weight: bold;
+    line-height: 14px;
+    color: #ffffff;
+    vertical-align: baseline;white-space: nowrap;
+    text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+    background-color: 	#286090; 
+    float: right;
+    width:30pt;
 }
 
-ol .ui-selecting {
-    background: #31708f;
+#confirm{ 
+    margin-left: 40%;
 }
+
+
 ol .ui-selected { 
-    background: #31708f;
+    background:#286090;
     color: white; 
 }
-ol { list-style-type: none; margin: 0; padding: 0; width: 100%; }
-ol li { margin: 3px; padding: 0.4em; font-size: 1em; height: 32px; margin-left: 10pt;}
+ol { 
+    list-style-type: none; 
+    margin: 0; 
+    padding: 0; 
+    width: 100%;
+}
+ol li { 
+    margin: 3px;
+    padding: 0.65em; 
+    font-size: 1em;
+    height: 40px;
+    margin-left: 10pt;
+}
+ul { 
+    list-style-type: none; 
+    margin: 0; 
+    padding: 0; 
+    width: 100%;
+}
+ul li{ 
+    margin-top: 4pt;
+    padding: 0.65em; 
+    font-size: 1em;
+    height: 40px;
+    margin-left: 10pt;
+}
 
 .btn a{
     color:white;
@@ -41,11 +71,67 @@ ol li { margin: 3px; padding: 0.4em; font-size: 1em; height: 32px; margin-left: 
     text-decoration: none;
 }
 
-#feedbackVoto{
+.feedbackVoto{
     background: transparent !important;
     color: #1aa51c;
     border-style: solid;    
     border-color: #dcecdc;
     border-width: 2px;
     border-spacing: 5px;
+    top: 20%;
+    left: 7%;
+    position: absolute;
+}
+
+.msgModal{
+    height: 300px !important;
+}
+
+
+.listaAggregazioni{    
+
+    width:635px; 
+    height: 280px; 
+    overflow-y: scroll; 
+
+}
+.msgModal{
+    margin-top: 16px;
+}
+.state-icon {
+    left: -5px;
+}
+
+.list-group-item:first-child {
+    border-top-left-radius: 0px !important; 
+    border-top-right-radius: 0px !important; 
+
+}
+.list-group-item:last-child {
+  
+    border-bottom-right-radius: 0px !important; 
+    border-bottom-left-radius: 0px !important;
+}
+
+
+.list-group-item:active, .list-group-item:active:focus, .list-group-item:active:hover, .list-group-item.active,
+.check-list-box li:active{
+    z-index: 0 !important;
+    color: #fff !important;
+    background-color: #286090 !important;
+    background-image: -webkit-linear-gradient(none,428bca 0,428bca 0%) !important;
+
+}
+
+.list-group-item.active, .list-group-item.active:hover, .list-group-item.active:focus {
+    text-shadow: 0 -1px 0 #286090 !important;
+    background-image: -webkit-linear-gradient(top,#286090 0,#286090 0%) !important;
+    background-image: -o-linear-gradient(top,#286090 0,#286090 0%) !important;
+    background-image: -webkit-gradient(linear,left top,left bottom,from(#286090),to(#286090)) !important;
+    background-image: linear-gradient(to bottom,#286090 0,#286090 0%) !important;
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#428bca', endColorstr='#428bca', GradientType=0) !important;
+    background-repeat: no-repeat !important;
+    
+    
+ 
 }

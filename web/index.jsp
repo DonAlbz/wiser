@@ -8,6 +8,8 @@
 <%@page import="java.util.*"%>
 <%@page import="wiser.dao.*"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -30,6 +32,8 @@
         <!--[if lt IE 8]>
             <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
+        <fmt:setBundle basename="indexBundle"/>
+        <fmt:setLocale value="en"/>
         <nav class="navbar navbar-inverse">
             <div class="container-fluid" id="container-nav">
                 <div class="row">      
@@ -88,23 +92,22 @@
                                              </form>-->
 
                                         <%
-                                            String searchBar = (String)request.getAttribute("ricerca");
-                                            if(searchBar == null)
-                                            {
+                                            String searchBar = (String) request.getAttribute("ricerca");
+                                            if (searchBar == null) {
                                                 searchBar = "";
                                             }
                                         %>
                                         <form class="navbar-form   hidden-xs" role="search">
                                             <div id="nav-centrata" class="input-group" >
-                                                <input id="auto0" name="search" type="text" value='<%=searchBar%>' class="form-control center-block height-40" placeholder="search..." onkeydown="arrowEnable(event)" onkeyup="autocompl(this.value, event);" 
+                                                <input id="auto0" name="search" type="text" value='<%=searchBar%>' class="form-control center-block height-40" placeholder=<fmt:message key="searchPlaceHolder"/> onkeydown="arrowEnable(event)" onkeyup="autocompl(this.value, event);" 
                                                        autocomplete="off">
 
-                                              
+
 
                                                 <input id="op"  type="text" value="getList" hidden>
 
                                                 <span class="input-group-btn">
-                                                    <button class="btn btn-success height-40" type="button" onclick="parseSend()">Search</button>
+                                                    <button class="btn btn-success height-40" type="button" onclick="parseSend()"><fmt:message key="searchButton"/></button>
                                                 </span>
                                             </div>
                                         </form>

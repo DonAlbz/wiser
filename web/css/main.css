@@ -29,7 +29,7 @@ html, body {
 }
 
 /* ==========================================================================
-   Tibi's custom styles
+Tibi's custom styles
    ========================================================================== */
 
 .well{
@@ -132,11 +132,13 @@ html, body {
 
 .delAggr {
     position: relative !important;
+
 }
 
 .dimension {
     height: 33.56px !important;
     width: 79.93px !important;
+
 }
 
 
