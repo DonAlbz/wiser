@@ -1063,5 +1063,3 @@ public class DAOclass {
     }
   
 }
-
-
