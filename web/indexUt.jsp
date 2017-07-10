@@ -111,21 +111,35 @@
                                             <h4 class="modal-title">Create Mash-Up</h4>
                                         </div>
                                         <div class="modal-body">
-                                            <div id="creazioneAggr">
+
+                                            <div id="creazioneAggr" class="creazioneAggr">
                                                 <div id="inputAgg" class="form-group has-feedback"> 
-                                                        <label class="control-label" for="nameAgg">Name: </label>
+
+                                                    <label class="control-label" for="nameAgg">Name: </label>
                                                     <div class="controls">
                                                         <input id="nameAgg" type="text" placeholder="insert name" class="form-control">
                                                         <p id="mashup-text" class="help-block">A mash-up can contain any letters (without accent) or numbers, without spaces and can't start with a number</p>
-
+                                                        <p id="mashup-err" class="help-block hidden">This mash-up already exists!</p>
                                                     </div>
-                                                        <br>
-                                                        <label class="control-label" for="descrizioneAgg">Description: </label><textarea class="form-control" id="descrizioneAgg" placeholder="insert description"></textarea>                                           
+                                                </div>
+                                                <br>
+                                                <div class="form-group has-feedback"> 
+                                                    <label class="control-label" for="descrizioneAgg">Description: </label>
+                                                    <textarea class="form-control" id="descrizioneAgg" placeholder="insert description"></textarea>                                           
                                                 </div>
                                             </div>
+                                            <div id="msg-conf-aggr" class="creazioneAggr hidden">
+                                                <div  class="jumbotron feedbackMashup">
+                                                    <h3>
+                                                        Mash-up created!
+                                                    </h3>
+                                                </div>
+                                            </div>
+
                                         </div>
                                         <div class="modal-footer">
-                                            <button type="button" onclick="creaAggregazione()" class="btn btn-success mostra" data-dismiss="modal"> Confirm</button>                                                                                    
+                                            <button id="btn-crea-aggregazione" type="button" onclick="creaAggregazione()" class="btn btn-primary" >Confirm</button>                                                                                    
+                                            <button  type="button" class="btn btn-danger" data-dismiss="modal" onclick="chiudiModalAggregazione();">Close</button>
                                         </div>                     
                                     </div>
                                 </div>
@@ -321,7 +335,7 @@
                                                 <div class="modal-dialog">
 
                                                     <!-- Modal content-->
-                                                    <div class="modal-content" style="width: 500pt;">
+                                                    <div class="modal-content">
                                                         <div class="modal-header">
                                                             <button type="button" class="close closeButtonX" data-dismiss="modal">&times;</button>
                                                             <h4 class="modal-title">Vota <%=service.getNome()%></h4>
@@ -363,7 +377,7 @@
 
                                                             <div class="modal-footer">
                                                                 <button class="btn btnIndietro glyphicon glyphicon-chevron-left pull-left btn-default hidden" onclick="indietro()"></button>
-                                                                <button type="button" class="btn btn-primary hidden disabled confermaButton" onclick="confermaVoto('<%=service.getId()%>')"><a>Conferma Voto</a></button>                                                               
+                                                                <button type="button" class="btn btn-primary hidden disabled confermaButton" onclick="confermaVoto('<%=service.getId()%>')"><a>Confirm</a></button>                                                               
                                                                 <button class="btn btn-primary confermaVoto" disabled="true" onclick="modal2()">Confirm</button>
                                                                 <button  type="button" class="btn btn-danger closeButton" data-dismiss="modal">Close</button>
                                                             </div>
