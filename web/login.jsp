@@ -47,7 +47,7 @@
                             <div class="text-center">
                                 <!-- Button -->
                                 <div class="controls">
-                                    <button class="btn btn-success">Accedi</button>
+                                    <button class="btn btn-success">Access</button>
                                 </div>
                             </div>
                             
