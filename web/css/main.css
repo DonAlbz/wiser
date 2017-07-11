@@ -129,8 +129,7 @@ Tibi's custom styles
 
 
 .aggr {
-    position: relative !important;
-    margin-top: 140% !important;
+    position: relative !important;    
     font-size: 20px !important;
     border-radius: 60%;
     width: 42px;
@@ -203,7 +202,9 @@ Tibi's custom styles
 .pulsante-dropdown{
     width: 134%;
 }
-
+.modal-open{
+    padding-right: 0px !important;
+}
 
 #login-dp{
     min-width: 275px;
@@ -262,6 +263,13 @@ Tibi's custom styles
 .creazioneAggr{
     height: 250px !important;
 }
+.margine-top-30{
+    margin-top: 30px;
+}
+.margine-top-50{
+    margin-top: 50px;
+}
+
 
 #divOrd{
     padding-left: 0px;

@@ -84,9 +84,7 @@ function creaAggregazione()
 
 
 function chiudiModalAggregazione() {
-    setTimeout(function () {
-        location.reload();
-    }, 1000);
+    setTimeout(function(){location.reload();}, 300);
 }
 
 

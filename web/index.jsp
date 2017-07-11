@@ -197,7 +197,7 @@
             </div>
 
             <!-- Page Content -->
-            <div class="container" style="margin: 0 auto"> 
+            <div class="container-fluid" style="margin: 0 auto"> 
                 <div id="page-content-wrapper">
                     <div class="container-fluid">
                         <div class=" btn-group" id="ordinaPer">  
@@ -261,7 +261,7 @@
                                 </div>
 
 
-                                <div class="col-sm-12 col-md-2 col-lg-2" style="margin-top: 50px">
+                                <div class="col-sm-12 col-md-2 col-lg-2 margine-top-50">
                                     <div class="ratings">
 
                                         <%  int parteIntera = service.getParteInteraVoti(service.mediaVoti());
