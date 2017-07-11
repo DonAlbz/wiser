@@ -23,6 +23,17 @@
     z-index: 9999;
 }
 
+.btnHome{
+    color: #9d9d9d !important;
+}
+.pag-top li a{
+    z-index: 1000;
+}
+
+.pag-top{
+    margin-right: 31% !important;
+}
+
 html, body {
     max-width: 100%;
     overflow-x: hidden;

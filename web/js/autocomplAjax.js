@@ -189,8 +189,11 @@ function parseSend()
             console.log(userMode);
             if((userMode != null)||(userMode == "true"))
             {
+                var nomeM = $("#nomeMash").val();
+                var idM = $("#idMash").val();
                 var nomeUt = $("#userSearch").val();
-                window.location.replace("ActionServlet?op=getList2&search="+joString+"&nomeU="+nomeUt);
+                window.location.replace("ActionServlet?op=getList2&search="+joString+"&nomeU="+nomeUt+
+                        "&nomeMash="+nomeM+"&idMash="+idM);
             }
             else
             {
