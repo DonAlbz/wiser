@@ -123,6 +123,9 @@ function apriWizard() {
     }
     $("#nameAgg").val("");
     $("#descrizioneAgg").val("");
+    $("#inputAgg").removeClass("has-error");
+    $("#mashup-text").removeClass("hidden");
+    $("#mashup-err").addClass("hidden");
     $("#meshup-modal").modal("show");
 }
 

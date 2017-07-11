@@ -241,7 +241,7 @@
                         <div class="row">
                             <div class=" btn-group" id="ordinaPer">  
                                 <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
-                                    Ordina per <span class="caret"></span>
+                                    Sort by <span class="caret"></span>
                                 </button>
                                 <ul class="dropdown-menu" role="menu">
                                     <li><a id="1" class="mouseOver" href="ActionServlet?op=getList2&filtro=<%=filter%>&search=<%=key%>&tag=<%=tag%>&orderBy=nome&nomeU=<%=nome_utente%>">Nome</a></li>
@@ -332,7 +332,7 @@
                                                     </div>
                                                     <div class="modal-footer">
                                                         <button type="button" onclick="aggiungiTag('<%=service.getId()%>')" class="btn btn-primary mostra" data-dismiss="modal"> Confirm</button> 
-                                                        <button type="button" class="btn btn-danger mostra" data-dismiss="modal"> Annulla</button> 
+                                                        <button type="button" class="btn btn-danger mostra" data-dismiss="modal"> Close</button> 
                                                     </div>
                                                 </div>
                                             </div>
@@ -451,15 +451,15 @@
                                                 <div id="creazioneAggr">
                                                     <div id="inputAgg" class="form-group has-feedback"> 
                                                         <div class="controls">
-                                                            Sei sicuro di voler eliminare <b><%=nome%></b> ?
+                                                            Are you sure you want to delete <b><%=nome%></b> ?
                                                             <br>
-                                                            Attenzione, una volta cancellato non può più essere recuperato!
+                                                            Attention, if you confirm you can't recover it!
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <button type="button" onclick="eliminaAggregazione('<%=nome%>')" class="btn btn-primary mostra" data-dismiss="modal"> Cancella</button> 
-                                                    <button type="button" class="btn btn-danger mostra" data-dismiss="modal"> Annulla</button> 
+                                                    <button type="button" onclick="eliminaAggregazione('<%=nome%>')" class="btn btn-primary mostra" data-dismiss="modal"> Confirm</button> 
+                                                    <button type="button" class="btn btn-danger mostra" data-dismiss="modal"> Close</button> 
                                                 </div>
                                             </div>
 
@@ -483,7 +483,7 @@
                                             DataService ds = (DataService) iteratoreDS.next();
                                             String nomeDS = ds.getNome();
                                     %>
-                                <li id="<%=nome%>_<%=ds.getId()%>" class="list-group-item"><%=nomeDS%> <button type="button" id="delAggr<%=ds.getId()%>" onclick="rimuoviDataService('<%=ds.getId()%>')" class="delAggr pull-right glyphicon glyphicon-remove glyphicon-minus btn-xs btn-danger hidden"></button></li>   
+                                <li id="<%=nome%>_<%=ds.getId()%>" class="list-group-item"><%=nomeDS%> <button type="button" id="delAggr<%=ds.getId()%>" onclick="rimuoviDataService('<%=ds.getId()%>')" class="delAggr pull-right glyphicon glyphicon-remove btnTransparent hidden"></button></li>   
                                     <%
                                             }
                                         }
