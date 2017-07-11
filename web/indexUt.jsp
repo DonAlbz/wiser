@@ -48,8 +48,10 @@
         <nav class="navbar navbar-default">
             <div class="container-fluid" id="container-nav">
                 <div class="row">      
+
                     <div class="navbar-header col-xs-1 col-lg-1 col-md-1 col-sm-1 ">
-                        <a class="navbar-brand" href="#">Wiser</a>
+                       <%String nomeSessione = session.getAttribute("name").toString();%>                                                           
+                        <a class="navbar-brand" href="ActionServlet?op=getList2&nomeU=<%=nomeSessione%>">Wiser</a>
                     </div>
                     <div class="navbar-header col-sm-2 col-md-2 col-lg-2  ">
 
@@ -83,8 +85,6 @@
                             <div id="nav-centrata" class="input-group" >
                                 <input id="auto0" name="search" type="text" value='<%=searchBar%>' class="form-control center-block height-40" placeholder="search..." onkeydown="arrowEnable(event)" onkeyup="autocompl(this.value, event);" 
                                        autocomplete="off">
-
-
 
                                 <input id="op"  type="text" value="getList2" hidden>
 
@@ -172,12 +172,12 @@
         </div> 
     </nav> 
 
-    <div id="autocompl" style="display:none">
-        <div id="auto1" class="autoc" style="display: none" onmouseover="riempiSearch(id.valueOf())"></div>
-        <div id="auto2" class="autoc" onmouseover="riempiSearch(id.valueOf())"></div>
-        <div id="auto3" class="autoc" onmouseover="riempiSearch(id.valueOf())"></div>
-        <div id="auto4" class="autoc" onmouseover="riempiSearch(id.valueOf())"></div>
-    </div>
+     <div id="autocompl" style="display:none">
+            <div id="auto1" class="autoc" style="display: none" onmouseover="riempiSearch(id.valueOf())" onclick="ricerca(id.valueOf())"></div>
+            <div id="auto2" class="autoc" onmouseover="riempiSearch(id.valueOf())" onclick="ricerca(id.valueOf())"></div>
+            <div id="auto3" class="autoc" onmouseover="riempiSearch(id.valueOf())" onclick="ricerca(id.valueOf())"></div>
+            <div id="auto4" class="autoc" onmouseover="riempiSearch(id.valueOf())" onclick="ricerca(id.valueOf())"></div>
+        </div>
     <div class="container-fluid">
         <div class="row">
             <!-- Sidebar -->
@@ -310,6 +310,7 @@
                                     <br>
                                     <button type="button" data-toggle="modal" class="dimension" data-target="#myModalTag<%=service.getId()%>"> <span class="glyphicon glyphicon-tag"></span>   Tag</button>
 
+
                                     <!-- Modal -->
                                     <div id="myModalTag<%=service.getId()%>" class="modal fade" role="dialog">
                                         <div class="modal-dialog">
@@ -325,6 +326,7 @@
                                                         <div id="inputAgg" class="form-group has-feedback"> 
                                                             <div class="controls">
                                                                 <label class="control-label" for="nameTag">Tag name: </label><input id="nameAgg" type="text" placeholder="insert name" class="form-control">
+
                                                             </div>
                                                         </div>
                                                     </div>
@@ -341,6 +343,7 @@
 
                                     <!-- Modal -->
 
+
                                     <div class="modal fade modalToClose" id="myModal<%=service.getId()%>" role="dialog" >
                                         <div class="modal-dialog">
 
@@ -353,16 +356,16 @@
                                                 <div class="modal-body">
                                                     <div class="dialogo" nome="<%=service.getId()%>" title="Vota ">
                                                         <ol class="listVotiOl">
-                                                            <li class="ui-widget-content">POOR (scarcely adopted within the mashup)<span class='labelVoto right'>0.0</span></li>
-                                                            <li class="ui-widget-content">MARGINAL (several problems during execution within the mashup)<span class='labelVoto right'>0.125</span></li>
-                                                            <li class="ui-widget-content">FAIR (slow and cumbersome)<span class='labelVoto right'>0.25</span></li>
-                                                            <li class="ui-widget-content">SATISFACTORY (small performance penalty)<span class='labelVoto right'>0.375</span></li>
-                                                            <li class="ui-widget-content">GOOD (minimum mashup requirements are satisfied)<span class='labelVoto right'>0.5</span></li>
-                                                            <li class="ui-widget-content">VERY GOOD (good performances and minimum mashup requirements are satisfied)<span class='labelVoto right'>0.625</span></li>
-                                                            <li class="ui-widget-content">EXCELLENT (discreet performances and satisfying functionalities within the mashup)<span class='labelVoto right'>0.75</span></li>
-                                                            <li class="ui-widget-content">OUTSTANDING (very good performances and functionalities within the mashup)<span class='labelVoto right'>0.875</span></li>
-                                                            <li class="ui-widget-content">EXCEPTIONAL (very good performances, functionalities and easy to use in mashup)<span class='labelVoto right'>1.0</span></li>
-                                                        </ol>
+                                                                    <li class="ui-widget-content puntatore">POOR (scarcely adopted within the mashup)<span class='labelVoto right'>0.0</span></li>
+                                                                    <li class="ui-widget-content puntatore">MARGINAL (several problems during execution within the mashup)<span class='labelVoto right'>0.125</span></li>
+                                                                    <li class="ui-widget-content puntatore">FAIR (slow and cumbersome)<span class='labelVoto right'>0.25</span></li>
+                                                                    <li class="ui-widget-content puntatore">SATISFACTORY (small performance penalty)<span class='labelVoto right'>0.375</span></li>
+                                                                    <li class="ui-widget-content puntatore">GOOD (minimum mashup requirements are satisfied)<span class='labelVoto right'>0.5</span></li>
+                                                                    <li class="ui-widget-content puntatore">VERY GOOD (good performances and minimum mashup requirements are satisfied)<span class='labelVoto right'>0.625</span></li>
+                                                                    <li class="ui-widget-content puntatore">EXCELLENT (discreet performances and satisfying functionalities within the mashup)<span class='labelVoto right'>0.75</span></li>
+                                                                    <li class="ui-widget-content puntatore">OUTSTANDING (very good performances and functionalities within the mashup)<span class='labelVoto right'>0.875</span></li>
+                                                                    <li class="ui-widget-content puntatore">EXCEPTIONAL (very good performances, functionalities and easy to use in mashup)<span class='labelVoto right'>1.0</span></li>
+                                                                </ol>
                                                         <br>
 
                                                     </div>
@@ -404,6 +407,7 @@
                             </div>
                         </div>
 
+
                         <%
                             }
                         %>
@@ -430,10 +434,9 @@
                         <div class="panel-heading">
                             <h4 class="panel-title">
                                 <a data-toggle="collapse" href="#collapse<%=nome%>"><%=nome%></a>
-                                <button id="<%=nome%>elimina" class="glyphicon glyphicon-trash pull-right btnTransparent" data-toggle="modal" data-target="#deleteMashup<%=nome%>"></button>
-                                <button id="<%=nome%>conferma" onclick="confermaMashUp('<%=nome%>')" class="hidden confermaMash glyphicon glyphicon-ok pull-right btnTransparent"></button>
-                                <button id="<%=nome%>modifica" onclick="modificaMashUp('<%=nome%>', '<%=aggr.getId()%>')" class="glyphicon modificaMash glyphicon glyphicon-edit pull-right btnTransparent"></button> 
-
+                                            <button id="<%=nome%>elimina" class="glyphicon glyphicon-trash pull-right btnTransparent" data-toggle="modal" data-target="#deleteMashup<%=nome%>"></button>
+                                            <button id="<%=nome%>conferma" onclick="confermaMashUp('<%=nome%>')" class="hidden confermaMash glyphicon glyphicon-ok pull-right btnTransparent"></button>
+                                            <button id="<%=nome%>modifica" onclick="modificaMashUp('<%=nome%>', '<%=aggr.getId()%>')" class="glyphicon modificaMash glyphicon glyphicon-edit pull-right btnTransparent"></button> 
 
                                 <div id="deleteMashup<%=nome%>" class="modal fade" role="dialog">
                                     <div class="modal-dialog">
@@ -459,6 +462,7 @@
                                                     <button type="button" class="btn btn-danger mostra" data-dismiss="modal"> Annulla</button> 
                                                 </div>
                                             </div>
+
                                         </div>
                                     </div>
                                 </div>

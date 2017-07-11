@@ -53,7 +53,7 @@
                             <div class="row">    
                                 <div class="collapse navbar-collapse" id="menu">
                                     <div class="col-lg-3 col-md-3 col-sm-3">
-                                        <ul class="nav navbar-nav">
+                                 <!--       <ul class="nav navbar-nav">
                                             <li><a href="#">Link <span class="sr-only">Link at: </span></a></li>
                                             <li><a href="#">Link</a></li>
                                             <li class="dropdown">
@@ -68,7 +68,7 @@
                                                     <li><a href="#">Link5</a></li>
                                                 </ul>
                                             </li>
-                                        </ul>
+                                        </ul>  -->
                                     </div>
                                     <div class="col-lg-1 col-md-1 col-sm-1">
                                     </div>
@@ -140,10 +140,10 @@
         </nav> 
 
         <div id="autocompl" style="display:none">
-            <div id="auto1" class="autoc" style="display: none" onmouseover="riempiSearch(id.valueOf())"></div>
-            <div id="auto2" class="autoc" onmouseover="riempiSearch(id.valueOf())"></div>
-            <div id="auto3" class="autoc" onmouseover="riempiSearch(id.valueOf())"></div>
-            <div id="auto4" class="autoc" onmouseover="riempiSearch(id.valueOf())"></div>
+            <div id="auto1" class="autoc" style="display: none" onmouseover="riempiSearch(id.valueOf())" onclick="ricerca(id.valueOf())"></div>
+            <div id="auto2" class="autoc" onmouseover="riempiSearch(id.valueOf())" onclick="ricerca(id.valueOf())"></div>
+            <div id="auto3" class="autoc" onmouseover="riempiSearch(id.valueOf())" onclick="ricerca(id.valueOf())"></div>
+            <div id="auto4" class="autoc" onmouseover="riempiSearch(id.valueOf())" onclick="ricerca(id.valueOf())"></div>
         </div>
 
         <!-- Sidebar -->
@@ -276,13 +276,14 @@
                                             }                   %>     
 
 
-                                        <%      if (parteDecimale < 0.5) {       %>          
+                                        <%      if ((parteDecimale < 0.5)&&(count<5)) {       %>          
                                         <span class="glyphicon glyphicon-star-empty"></span> 
                                         <%          count++;
 
-                                        } else {                %>
+                                        } else {if(count<5) {                 %>
                                         <span class="glyphicon glyphicon-star half"></span> 
                                         <%              count++;
+                                        }
                                             }
                                             for (i = count; i < 5; i++) {                 %>                                                                                                                                                
 
