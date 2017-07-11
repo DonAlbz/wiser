@@ -50,7 +50,8 @@
             <div class="container-fluid" id="container-nav">
                 <div class="row">      
                     <div class="navbar-header col-lg-7 col-md-7 col-sm-7">
-                        <a class="navbar-brand" href="#">Wiser</a>
+                        <%String nomeSessione = session.getAttribute("name").toString();%>
+                        <a class="navbar-brand" href=ActionServlet?op=getList2&nomeU=<%=nomeSessione%>">Wiser</a>
                         <div class="collapse navbar-collapse col-lg-6 col-md-6 col-sm-6" id="menu">
                             <!--    <div class="col-lg-5 col-md-5 col-sm-5">   -->
                             <ul class="nav navbar-nav">
@@ -169,10 +170,10 @@
         </nav> 
 
         <div id="autocompl" style="display:none">
-            <div id="auto1" class="autoc" style="display: none" onmouseover="riempiSearch(id.valueOf())"></div>
-            <div id="auto2" class="autoc" onmouseover="riempiSearch(id.valueOf())"></div>
-            <div id="auto3" class="autoc" onmouseover="riempiSearch(id.valueOf())"></div>
-            <div id="auto4" class="autoc" onmouseover="riempiSearch(id.valueOf())"></div>
+            <div id="auto1" class="autoc" style="display: none" onmouseover="riempiSearch(id.valueOf())" onclick="ricerca(id.valueOf())"></div>
+            <div id="auto2" class="autoc" onmouseover="riempiSearch(id.valueOf())" onclick="ricerca(id.valueOf())"></div>
+            <div id="auto3" class="autoc" onmouseover="riempiSearch(id.valueOf())" onclick="ricerca(id.valueOf())"></div>
+            <div id="auto4" class="autoc" onmouseover="riempiSearch(id.valueOf())" onclick="ricerca(id.valueOf())"></div>
         </div>
 
         <!-- Sidebar -->
@@ -320,7 +321,7 @@
                                                             </div>
                                                             <div class="modal-footer">
                                                                 <button type="button" onclick="aggiungiTag('<%=service.getId()%>')" class="btn btn-primary mostra" data-dismiss="modal"> Confirm</button> 
-                                                                <button type="button" class="btn btn-danger mostra" data-dismiss="modal"> Annulla</button> 
+                                                                <button type="button" class="btn btn-danger mostra" data-dismiss="modal"> Close</button> 
                                                             </div>
                                                         </div>
                                                     </div>
@@ -343,15 +344,15 @@
                                                         <div class="modal-body">
                                                             <div class="dialogo" nome="<%=service.getId()%>" title="Vota ">
                                                                 <ol class="listVotiOl">
-                                                                    <li class="ui-widget-content">POOR (scarcely adopted within the mashup)<span class='labelVoto right'>0.0</span></li>
-                                                                    <li class="ui-widget-content">MARGINAL (several problems during execution within the mashup)<span class='labelVoto right'>0.125</span></li>
-                                                                    <li class="ui-widget-content">FAIR (slow and cumbersome)<span class='labelVoto right'>0.25</span></li>
-                                                                    <li class="ui-widget-content">SATISFACTORY (small performance penalty)<span class='labelVoto right'>0.375</span></li>
-                                                                    <li class="ui-widget-content">GOOD (minimum mashup requirements are satisfied)<span class='labelVoto right'>0.5</span></li>
-                                                                    <li class="ui-widget-content">VERY GOOD (good performances and minimum mashup requirements are satisfied)<span class='labelVoto right'>0.625</span></li>
-                                                                    <li class="ui-widget-content">EXCELLENT (discreet performances and satisfying functionalities within the mashup)<span class='labelVoto right'>0.75</span></li>
-                                                                    <li class="ui-widget-content">OUTSTANDING (very good performances and functionalities within the mashup)<span class='labelVoto right'>0.875</span></li>
-                                                                    <li class="ui-widget-content">EXCEPTIONAL (very good performances, functionalities and easy to use in mashup)<span class='labelVoto right'>1.0</span></li>
+                                                                    <li class="ui-widget-content puntatore">POOR (scarcely adopted within the mashup)<span class='labelVoto right'>0.0</span></li>
+                                                                    <li class="ui-widget-content puntatore">MARGINAL (several problems during execution within the mashup)<span class='labelVoto right'>0.125</span></li>
+                                                                    <li class="ui-widget-content puntatore">FAIR (slow and cumbersome)<span class='labelVoto right'>0.25</span></li>
+                                                                    <li class="ui-widget-content puntatore">SATISFACTORY (small performance penalty)<span class='labelVoto right'>0.375</span></li>
+                                                                    <li class="ui-widget-content puntatore">GOOD (minimum mashup requirements are satisfied)<span class='labelVoto right'>0.5</span></li>
+                                                                    <li class="ui-widget-content puntatore">VERY GOOD (good performances and minimum mashup requirements are satisfied)<span class='labelVoto right'>0.625</span></li>
+                                                                    <li class="ui-widget-content puntatore">EXCELLENT (discreet performances and satisfying functionalities within the mashup)<span class='labelVoto right'>0.75</span></li>
+                                                                    <li class="ui-widget-content puntatore">OUTSTANDING (very good performances and functionalities within the mashup)<span class='labelVoto right'>0.875</span></li>
+                                                                    <li class="ui-widget-content puntatore">EXCEPTIONAL (very good performances, functionalities and easy to use in mashup)<span class='labelVoto right'>1.0</span></li>
                                                                 </ol>
                                                                 <br>
 
@@ -400,7 +401,7 @@
                             </div>
                         </div>
                         <div class="col-lg-3 list-group listGroupMashUp">
-                            <legend class="center-block">MY MASH-UP</legend>
+                            <legend class="center-block">My Mash-Up</legend>
                             <%
                                 ArrayList<Aggregazione> mashup = (ArrayList<Aggregazione>) session.getAttribute("mashup");
                                 if (mashup.size() == 0) {
@@ -437,15 +438,15 @@
                                                             <div id="creazioneAggr">
                                                                 <div id="inputAgg" class="form-group has-feedback"> 
                                                                     <div class="controls">
-                                                                        Sei sicuro di voler eliminare <b><%=nome%></b> ?
+                                                                        Are you sure you want to delete <b><%=nome%></b> ?
                                                                         <br>
-                                                                        Attenzione, una volta cancellato non può più essere recuperato!
+                                                                        Attention, if you confirm you can't recover it!
                                                                     </div>
                                                                 </div>
                                                             </div>
                                                             <div class="modal-footer">
-                                                                <button type="button" onclick="eliminaAggregazione('<%=nome%>')" class="btn btn-primary mostra" data-dismiss="modal"> Cancella</button> 
-                                                                <button type="button" class="btn btn-danger mostra" data-dismiss="modal"> Annulla</button> 
+                                                                <button type="button" onclick="eliminaAggregazione('<%=nome%>')" class="btn btn-primary mostra" data-dismiss="modal"> Confirm</button> 
+                                                                <button type="button" class="btn btn-danger mostra" data-dismiss="modal"> Close</button> 
                                                             </div>
                                                         </div>
                                                     </div>
@@ -468,7 +469,7 @@
                                                         DataService ds = (DataService) iteratoreDS.next();
                                                         String nomeDS = ds.getNome();
                                                 %>
-                                            <li id="<%=nome%>_<%=ds.getId()%>" class="list-group-item"><%=nomeDS%> <button type="button" id="delAggr<%=ds.getId()%>" onclick="rimuoviDataService('<%=ds.getId()%>')" class="delAggr pull-right glyphicon glyphicon-remove glyphicon-minus btn-xs btn-danger hidden"></button></li>   
+                                            <li id="<%=nome%>_<%=ds.getId()%>" class="list-group-item"><%=nomeDS%> <button type="button" id="delAggr<%=ds.getId()%>" onclick="rimuoviDataService('<%=ds.getId()%>')" class="delAggr pull-right glyphicon glyphicon-remove btnTransparent hidden"></button></li>   
                                                 <%
                                                         }
                                                     }

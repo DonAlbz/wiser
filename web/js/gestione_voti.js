@@ -1,11 +1,30 @@
 var votoSel;// e' il voto selezionato dall'utente
 
-
+function apriModalVoto(){
+    
+    $(".btnIndietro").addClass("hidden");
+    $(".ui-widget-content").removeClass("ui-selected");
+    $(".listaAggregazioni").html('');
+    $(".modalConfermaVoto").addClass("hidden");
+    $(".confermaButton").addClass("hidden").addClass("disabled");
+    $(".listaAggregazioni").addClass("hidden");
+    $(".msgModal").addClass("hidden");
+    $(".noBtn").removeClass("disabled");
+    $(".yesBtn").removeClass("disabled");
+    $(".feedbackVoto").addClass("hidden");
+    $(".dialogo").removeClass("hidden");
+    $(".confermaVoto").removeClass("hidden");
+   
+}
 function selezione(nome_modal) {
+    
+    apriModalVoto();
+    
     var votiNum = {"0.0": "POOR", "0.125": "MARGINAL", "0.25": "FAIR", "0.375": "SATISFACTORY", "0.5": "GOOD", "0.625": "VERY GOOD",
         "0.75": "EXCELLENT", "0.875": "OUTSTANDING", "1.0": "EXCEPTIONAL"};
     // nome_modal Ã¨ l'id del dataService
 
+    
     $(".confermaVoto").attr("disabled", true);
     $("ol").selectable({
         selected: function (event, ui) {
@@ -218,7 +237,7 @@ function si(id_s) {
 }
 
 
-$(".closeButton").click(chiudiModal);
+/**$(".closeButton").click(chiudiModal);
 
 $(".closeButtonX").click(chiudiModal);
 
@@ -237,7 +256,7 @@ function chiudiModal() {
         $(".dialogo").removeClass("hidden");
         $(".confermaVoto").removeClass("hidden");
     }, 1000);
-}
+}**/
 
 
 function indietro() {

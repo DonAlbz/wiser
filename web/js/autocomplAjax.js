@@ -93,7 +93,7 @@ function getPosizione()
 
 function arrowEnable(e)
 {
-    if (e.keyCode == 40)
+    if (e.keyCode === 40)
     {
         if ($(".autoc-selected")[0])
         {
@@ -126,7 +126,7 @@ function arrowEnable(e)
             $("#auto0").val($("#auto1").text());
         }
     }
-    else if (e.keyCode == 38)
+    else if (e.keyCode === 38)
     {
         if ($(".autoc-selected")[0])
         {
@@ -152,7 +152,7 @@ function arrowEnable(e)
 
         }
     }
-    else if (e.keyCode == 13) {
+    else if (e.keyCode === 13) {
         if ($(".autoc-selected")[0])
         {
             var id = $(".autoc-selected").first().attr("id");
@@ -161,6 +161,11 @@ function arrowEnable(e)
         }
         parseSend();
     }
+}
+
+function ricerca(id) {
+    $("#auto0").val($("#"+id).text());
+    parseSend();
 }
 
 function parseSend()

@@ -149,6 +149,17 @@ Tibi's custom styles
 
 }
 
+.glyphicon-ok {
+    color: green;
+}
+
+.glyphicon-remove {
+    color: #b92c28;
+}
+
+.puntatore:hover {
+    cursor: pointer;
+}
 
 /* ==========================================================================
    Alb's custom styles
