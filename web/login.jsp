@@ -15,7 +15,7 @@
 
         <title>Login</title>
     </head>
-    <body>
+    <body onload="controllo()">
         <fmt:setLocale value="en"/>
         <fmt:setBundle basename="indexBundle"/>   
         <nav class="navbar navbar-inverse">
@@ -56,13 +56,6 @@
                                              </span>
                                              <div>
                                              </form>-->
-
-
-
-
-
-
-
                                     </div>
                                 </div>
                             </div>
@@ -92,10 +85,10 @@
 
 
 
-                    <form class="form-horizontal" action='ActionServlet' method="post" id="centra">
+                    <form class="form-horizontal form-login" action='ActionServlet' method="post" id="centra">
                         <fieldset>
                             <div id="legend"  class="title text-center">
-                                <h2 class="">Login</h2>
+                                <h2 class="">Log in to Wiser</h2>
                             </div>
                             <div class="form-group has-feedback">
                                 <!-- Username -->
@@ -109,9 +102,11 @@
                                 <label class="control-label" for="password">Password</label>
                                 <div class="controls">
                                     <input type="password" id="password" name="password" placeholder="" class="form-control">
+                                    <p class="help-block erroreLogin">${error}</p>
                                     <input name="op" value="login" hidden="hidden">
                                 </div>
-                                <span class="error" style="color:red;text-align: center;"><b>${error}</b><br></span>
+                                
+                                <!--<span class="error" style="color:red;text-align: center;"><b></b><br></span>-!
                             </div>
 
 
@@ -119,7 +114,7 @@
                             <div class="text-center">
                                 <!-- Button -->
                                 <div class="controls">
-                                    <button class="btn btn-success">Access</button>
+                                    <button class="btn btn-success">Log In</button>
                                 </div>
                             </div>
 
@@ -136,6 +131,14 @@
                 </div>
             </div>
         </div>
+        <script type="text/javascript">
+            function controllo() {
+                if ($(".erroreLogin").html() !== "") {
+                    $(".form-login").addClass("has-error");
+                }
+
+            }
+        </script>
         <script type="text/javascript" src="./js/jquery.js"></script>
         <script type="text/javascript" src="./js/bootstrap.js"></script>
         <script type="text/javascript" src="./js/Alb.js"></script> 
