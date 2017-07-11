@@ -167,6 +167,8 @@ public class ActionServlet extends HttpServlet {
         ArrayList<DataService> servicesOrdered = new ArrayList<>();
         ArrayList<DataService> servicesParsed = new ArrayList<>();
         String tagFilter = req.getParameter("tag");
+        String nomeAggr = req.getParameter("nomeMash");
+        String idAggr = req.getParameter("idMash");
         Integer start = Functions.parseInteger(req.getParameter("start"));
         String catFilter = req.getParameter("filtro");
         String searchBar = "";
@@ -212,6 +214,8 @@ public class ActionServlet extends HttpServlet {
         req.setAttribute("cats", categories);
         req.setAttribute("orderBy", order);
         req.setAttribute("nomeU", nomeU);
+        req.setAttribute("nomeAggr", nomeAggr);
+        req.setAttribute("idAggr", idAggr);
         rd.forward(req, resp);
     }
 
