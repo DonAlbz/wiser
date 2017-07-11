@@ -35,6 +35,12 @@ function riempiSearch(id) {
     }
 }
 
+/*
+function ricerca(id) {
+    
+}*/
+
+
 function modalAggregazioniPag2() {
     $(".modalScegliDS").removeClass("hidden");
     $(".formAggr").addClass("hidden");
@@ -78,9 +84,7 @@ function creaAggregazione()
 
 
 function chiudiModalAggregazione() {
-    setTimeout(function () {
-        location.reload();
-    }, 1000);
+    setTimeout(function(){location.reload();}, 300);
 }
 
 
@@ -119,6 +123,9 @@ function apriWizard() {
     }
     $("#nameAgg").val("");
     $("#descrizioneAgg").val("");
+    $("#inputAgg").removeClass("has-error");
+    $("#mashup-text").removeClass("hidden");
+    $("#mashup-err").addClass("hidden");
     $("#meshup-modal").modal("show");
 }
 
@@ -198,10 +205,9 @@ function aggiungiDataService(idDataService) {
         vett = response.toString().split(" ");
         tag = "<li id=" + vett[2].trim() + "_" + vett[1].trim() + " class=list-group-item>" + vett[0].trim() + "</li>";
         $("#" + vett[2].trim() + "list").append(tag);
-        html = "<button type='button' id='delAggr" + idDataService + "' onclick='rimuoviDataService(" + idDataService + ")' class='delAggr glyphicon glyphicon-remove pull-right btn-xs btn-danger'></button>";
+        html = "<button type='button' id='delAggr" + idDataService + "' onclick='rimuoviDataService(" + idDataService + ")' class='delAggr glyphicon glyphicon-remove pull-right btnTransparent'></button>";
         $("#" + vett[2].trim() + "_" + vett[1].trim()).append(html);
         $("#no" + vett[2].trim()).addClass("hidden");
-
     }, "text");
 }
 
