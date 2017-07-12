@@ -151,6 +151,13 @@
         <script type="text/javascript" src="./js/Alb.js"></script> 
         <script type="text/javascript" src="./js/Mat.js"></script> 
         <script type="text/javascript" src="./js/main.js"></script> 
+        <script>
+            $(document).ready(function()
+            {
+                $("#username").focus();
+            });
+            
+        </script>
     </body>
 
 </html>
