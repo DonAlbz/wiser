@@ -1,7 +1,7 @@
 var votoSel;// e' il voto selezionato dall'utente
 
-function apriModalVoto(){
-    
+function apriModalVoto() {
+
     $(".btnIndietro").addClass("hidden");
     $(".ui-widget-content").removeClass("ui-selected");
     $(".listaAggregazioni").html('');
@@ -14,17 +14,17 @@ function apriModalVoto(){
     $(".feedbackVoto").addClass("hidden");
     $(".dialogo").removeClass("hidden");
     $(".confermaVoto").removeClass("hidden");
-   
+
 }
 function selezione(nome_modal) {
-    
+
     apriModalVoto();
-    
+
     var votiNum = {"0.0": "POOR", "0.125": "MARGINAL", "0.25": "FAIR", "0.375": "SATISFACTORY", "0.5": "GOOD", "0.625": "VERY GOOD",
         "0.75": "EXCELLENT", "0.875": "OUTSTANDING", "1.0": "EXCEPTIONAL"};
     // nome_modal Ã¨ l'id del dataService
 
-    
+
     $(".confermaVoto").attr("disabled", true);
     $("ol").selectable({
         selected: function (event, ui) {
@@ -46,8 +46,6 @@ function selezione(nome_modal) {
 ;
 
 
-
-
 function modal2() {
     // nome_modal + l'id del DataService
     // mostro pagina2 modal
@@ -61,7 +59,7 @@ function modal2() {
 }
 
 
-function confermaVoto(id_s) {
+function confermaVoto(id_s, msg1, msg2) {
 
     var jsonAgg;
 
@@ -83,7 +81,7 @@ function confermaVoto(id_s) {
 
         $boxes.each(function () {
             $str = $(this).text(); // prende i titoli
-           
+
             json.push({nome: $str});
         });
         json2.aggregazioni = json;
@@ -97,23 +95,27 @@ function confermaVoto(id_s) {
                 var verifica = false;
                 //alert('sono in response: ' + response.toString());
                 if (response.toString().trim() === "true") {
-                    $(".feedbackVoto").html(" <h3> Il tuo voto &egrave; stato registrato con successo!</h3>");
+                    $(".feedbackVoto").html(" <h3>" + msg1 + "</h3>");
                     verifica = true;
                 }
 
                 if (response.toString().trim() === "okAggr") {
-                    $(".feedbackVoto").html(" <h3> Il tuo voto &egrave; stato registrato con successo!</h3>");
+                    $(".feedbackVoto").html(" <h3>" + msg1 + "</h3>");
                     verifica = true;
                 }
                 if (verifica === false) {
-                    $(".feedbackVoto").html(" <h3>Errore</h3>");
+                    $(".feedbackVoto").html(" <h3>" + msg2 + "</h3>");
                 }
 
             }, "text");
 
     $(".btnIndietro").addClass("hidden");
     $(".modalConfermaVoto").addClass("hidden");
-    $(".feedbackVoto").removeClass("hidden");
+    
+    setTimeout(function () {
+        $(".feedbackVoto").removeClass("hidden");
+    }, 1000);
+    
     $(".confermaButton").addClass("disabled");
 
     $(".listaAggregazioni").addClass("hidden");
@@ -121,20 +123,12 @@ function confermaVoto(id_s) {
 }
 
 function abilitaConfermaVoto() {
-
     $(".confermaButton").removeClass("disabled");
 }
 
 
-
 function insertRadioButton(name) {
-    //$(".listaAggregazioni").append('<li class="checkbox  checkbox-primary"><input name="inputCk" class="checkInput" type="checkbox"> <label>' + name + '</label></div>');
-    //$(".listaAggregazioni").append('<label for="checkbox' + name + '">' + name + '</label><input type="checkbox"  class="ciao" name="checkbox' + name + '" id="checkbox' + name + '"><br>');
-
-    //$(".listaAggregazioni").append('<ul class="ui-widget-content ui-selectee"><input type="checkbox" class="checkbox checkbox-primary">'+name+'</ul>');
-    //$(".listaAggregazioni").append('<ul class="ui-widget-content ui-selectee "><li class="checkbox  checkbox-default"><input name="inputCk" class="checkInput checkbox-primary" type="checkbox"> <label>' + name + '</label></ul></li>');
-    $(".listaAggregazioni").append('<li class="list-group-item checkListModal" name=inputCk>'+name+'</li>');
-
+    $(".listaAggregazioni").append('<li class="list-group-item checkListModal" name=inputCk>' + name + '</li>');
 }
 
 function insertCheck() {
@@ -148,23 +142,8 @@ function insertCheck() {
         for (var i = 0; i < jo.aggregazioni.length; i++)
         {
             insertRadioButton(jo.aggregazioni[i].nome);
-
         }
     }
-     
-    /**$(".listaAggregazioni").selectable({
-        selected: function (event, ui) {
-            $(ui.selected).addClass('ui-selected');
-            $(ui.selected).find("input").attr("checked", "checked");
-
-            //$(ui.selected).addClass('ui-selected').siblings().removeClass('ui-selected');
-        },
-        unselected: function (event, ui) {
-            $(ui.unselected).find("input").removeAttr("checked");
-        }
-
-    });**/
-
     checkboxList();
     $(".listaAggregazioni").removeClass("hidden");
 
@@ -209,8 +188,8 @@ function myGetXmlHttpRequest()
             }
         }
     }
-    
-   
+
+
     return XmlHttpReq;
 }
 
@@ -237,26 +216,6 @@ function si(id_s) {
 }
 
 
-/**$(".closeButton").click(chiudiModal);
-
-$(".closeButtonX").click(chiudiModal);
-
-function chiudiModal() {
-    $(".btnIndietro").addClass("hidden");
-    $(".ui-widget-content").removeClass("ui-selected");
-    $(".listaAggregazioni").html('');
-    $(".modalConfermaVoto").addClass("hidden");
-    $(".confermaButton").addClass("hidden").addClass("disabled");
-    $(".listaAggregazioni").addClass("hidden");
-    $(".msgModal").addClass("hidden");
-    $(".noBtn").removeClass("disabled");
-    $(".yesBtn").removeClass("disabled");
-    $(".feedbackVoto").addClass("hidden");
-    setTimeout(function () {
-        $(".dialogo").removeClass("hidden");
-        $(".confermaVoto").removeClass("hidden");
-    }, 1000);
-}**/
 
 
 function indietro() {
@@ -274,7 +233,7 @@ function indietro() {
 
 }
 
-function checkboxList () {
+function checkboxList() {
     $('.list-group.checked-list-box .list-group-item').each(function () {
 
         // Settings
@@ -343,7 +302,7 @@ function checkboxList () {
     });
 
     $('#get-checked-data').on('click', function (event) {
-            event.preventDefault();
+        event.preventDefault();
         var checkedItems = {}, counter = 0;
         $(".check-list-box li.active").each(function (idx, li) {
             checkedItems[counter] = $(li).text();
@@ -351,5 +310,6 @@ function checkboxList () {
         });
         $('#display-json').html(JSON.stringify(checkedItems, null, '\t'));
     });
-};
+}
+;
 

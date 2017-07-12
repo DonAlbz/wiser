@@ -37,42 +37,11 @@
         <nav class="navbar navbar-inverse">
             <div class="container-fluid" id="container-nav">
                 <div class="row">      
-                    <div class="navbar-header col-lg-1 col-md-1 col-sm-1">
-
-                        <a class="navbar-brand" href="ActionServlet?op=getList"><fmt:message key="titleNavbar"/></a>
-
-                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#">
-                            <span class="glyphicon glyphicon-user white" aria-hidden="true"></span>
-                        </button>
-                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#search">
-                            <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-                        </button>
+                    <div class="navbar-header col-xs-12 col-xs-offset-4 col-sm-offset-0 col-lg-2 col-md-2 col-sm-2">
+                        <a class="navbar-brand" href="ActionServlet?op=getList"><fmt:message key="titleNavbar"/></a>                        
                     </div>
-                    <div class="col-lg-10 col-md-10 col-sm-10">
-                        <div class="container-fluid">
-                            <div class="row">    
-                                <div class="collapse navbar-collapse" id="menu">
-                                    <div class="col-lg-3 col-md-3 col-sm-3">
-                                        <!--       <ul class="nav navbar-nav">
-                                                   <li><a href="#">Link <span class="sr-only">Link at: </span></a></li>
-                                                   <li><a href="#">Link</a></li>
-                                                   <li class="dropdown">
-                                                       <a href="#" class="dropdown-toggle pulsante-dropdown" data-toggle="dropdown" role="button" >Menu <span class="caret"></span></a>
-                                                       <ul class="dropdown-menu" role="menu">
-                                                           <li><a href="#">Link1</a></li>
-                                                           <li><a href="#">Link2</a></li>
-                                                           <li><a href="#">Link3</a></li>
-                                                           <li class="divider"></li>
-                                                           <li><a href="#">Link4</a></li>
-                                                           <li class="divider"></li>
-                                                           <li><a href="#">Link5</a></li>
-                                                       </ul>
-                                                   </li>
-                                               </ul>  -->
-                                    </div>
-                                    <div class="col-lg-1 col-md-1 col-sm-1">
-                                    </div>
-                                    <div class="col-lg-8 col-md-8 col-sm-8">
+                    
+                    <div class="navbar-header col-xs-12 col-sm-8 col-sm-offset-1  col-lg-8 col-md-8">
 
                                         <!--search bar-->
                                         <!-- <form class="navbar-form   hidden-xs" role="search" action="ActionServlet" method="GET">
@@ -92,7 +61,7 @@
                                                 searchBar = "";
                                             }
                                         %>
-                                        <form class="navbar-form   hidden-xs" role="search">
+                                        <form class="navbar-form" role="search">
                                             <div id="nav-centrata" class="input-group" >
                                                 <input id="auto0" name="search" type="text" value='<%=searchBar%>' class="form-control center-block height-40" placeholder=<fmt:message key="searchPlaceHolder"/> onkeydown="arrowEnable(event)" onkeyup="autocompl(this.value, event);" 
                                                        autocomplete="off">
@@ -107,12 +76,8 @@
                                             </div>
                                         </form>
                                     </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="hidden-xs col-lg-1 col-md-1 col-sm-1 ">
+                              
+                    <div class="col-xs-12 col-lg-1 col-md-1 col-sm-1 pull-right ">
                         <ul class="nav navbar-nav navbar-right">
                             <li>
                                 <a href="login.jsp"><span class="glyphicon glyphicon-log-in"></span>  <fmt:message key="loginButton"/></a>
@@ -121,6 +86,10 @@
                         </ul>
 
                     </div> 
+                            </div>
+                       
+                    </div>
+
 
                     <!-- /.navbar-collapse #menu -->
                     <!-- barra di ricerca per dispositivi mobile -->
@@ -166,10 +135,6 @@
                             }
                             String tag = (String) request.getAttribute("tag");
                             String ordinamento = (String) request.getAttribute("orderBy");
-                            String hidden = new String();
-                            if (ordinamento == null) {
-                                hidden = "hidden";
-                            }
                             ArrayList<Category> categories = (ArrayList<Category>) request.getAttribute("cats");
                             Iterator<Category> iterCat = categories.iterator();
                             while (iterCat.hasNext()) {
@@ -216,7 +181,12 @@
                                     </div>
                                     <div id="divOrd" class="col-xs-5 col-sm-5 col-md-4 col-lg-4">
 
-                                        <div id="ord" class="label label-success <%=hidden%>" role="alert">${ordinamento}</div>
+                                        <div id="ordNome" class="ord label label-success hidden" role="alert"><fmt:message key="ordName"/></div>
+                                        <div id="ordUsiMax" class="ord label label-success hidden" role="alert"><fmt:message key="ordUsiMax"/></div>
+                                        <div id="ordUsiMin" class="ord label label-success hidden" role="alert"><fmt:message key="ordUsiMin"/></div>
+                                        <div id="ordRatMax" class="ord label label-success hidden" role="alert"><fmt:message key="ordRatMax"/></div>
+                                        <div id="ordRatMin" class="ord label label-success hidden" role="alert"><fmt:message key="ordRatMin"/></div>
+
                                     </div>
                                     <div>
                                         <div class="col-xs-3 col-sm-3 col-md-4 col-lg-4  pull-right">
@@ -343,7 +313,7 @@
         </div>
 
         <footer class="container-fluid text-right" style="color: black; padding: 15px;">
-            <p>&copy; Beschi Chiari Tiberti Vivenzi</p>
+            <p>&copy; <fmt:message key="firme"/></p>
         </footer>
         <script type="text/javascript" src="./js/jquery.js"></script>
         <script type="text/javascript" src="./js/bootstrap.js"></script>
@@ -363,7 +333,8 @@
                 });
         </script>-->
         <script>
-            $(document).ready(selezionaCategoria('<%=filter%>'));
+                $(document).ready(selezionaCategoria('<%=filter%>'));
+                $(document).ready(selectOrdinamento('${ordinamento}'));
         </script>
     </body>
 </html>

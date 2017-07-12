@@ -1,4 +1,26 @@
-
+function selectOrdinamento(stringa)
+{
+    if(stringa == "nome")
+    {
+        $("#ordNome").removeClass("hidden");
+    }
+    if(stringa == "utilizziMax")
+    {
+        $("#ordUsiMax").removeClass("hidden");
+    }
+    if(stringa == "utilizziMin")
+    {
+        $("#ordUsiMin").removeClass("hidden");
+    }
+    if(stringa == "votoMax")
+    {
+        $("#ordRatMax").removeClass("hidden");
+    }
+    if(stringa == "votoMin")
+    {
+        $("#ordRatMin").removeClass("hidden");
+    }
+}
 function confrontaPassword()
 {
     var send = true;
