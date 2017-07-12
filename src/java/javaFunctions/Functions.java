@@ -85,21 +85,21 @@ public class Functions {
         } else {
             if (filter.equalsIgnoreCase("nome")) {
                 list.sort((t1, t2) -> t1.getNome().compareTo(t2.getNome()));
-                req.setAttribute("ordinamento", "Ordinamento per nome");
+                req.setAttribute("ordinamento", "nome");
             } else if (filter.equalsIgnoreCase("utilizziMax")) {
                 list.sort((t1, t2) -> Integer.compare(t1.getNumeroUtilizzi(), t2.getNumeroUtilizzi()));
                 Collections.reverse(list);
-                req.setAttribute("ordinamento", "Dai pi&ugrave; ai meno utilizzati");
+                req.setAttribute("ordinamento", "utilizziMax");
             } else if (filter.equalsIgnoreCase("utilizziMin")) {
                 list.sort((t1, t2) -> Integer.compare(t1.getNumeroUtilizzi(), t2.getNumeroUtilizzi()));
-                req.setAttribute("ordinamento", "Dai meno ai pi&ugrave; utilizzati");
+                req.setAttribute("ordinamento", "utilizziMin");
             } else if (filter.equalsIgnoreCase("votoMax")) {
                 list.sort((t1, t2) -> Double.compare(t1.getMediaVoti(), t2.getMediaVoti()));
                 Collections.reverse(list);
-                req.setAttribute("ordinamento", "Dai pi&ugrave; ai meno votati");
+                req.setAttribute("ordinamento", "votoMax");
             } else if (filter.equalsIgnoreCase("votoMin")) {
                 list.sort((t1, t2) -> Double.compare(t1.getMediaVoti(), t2.getMediaVoti()));
-                req.setAttribute("ordinamento", "Dai meno ai pi&ugrave; votati");
+                req.setAttribute("ordinamento", "votoMin");
             }
             else
             {

@@ -278,7 +278,7 @@ Tibi's custom styles
 }
 
 
-#ord{
+.ord{
     display: inline-block;
     padding: 6px 12px;
     margin-bottom: 0;

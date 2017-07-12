@@ -211,6 +211,22 @@ function parseSend()
     {
         $("#auto0").val("");
     }
+    if(key == "")
+    {
+        var userMode = $("#userModeSearch").val();
+        if((userMode != null)||(userMode == "true"))
+            {
+                var nomeM = $("#nomeMash").val();
+                var idM = $("#idMash").val();
+                var nomeUt = $("#userSearch").val();
+                window.location.replace("ActionServlet?op=getList2&search=null&nomeU="+nomeUt+
+                        "&nomeMash="+nomeM+"&idMash="+idM);
+            }
+            else
+            {
+                 window.location.replace("ActionServlet?op=getList&search=null");
+            }
+    }
 }
 
 function createJSONString(array)
