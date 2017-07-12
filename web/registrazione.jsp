@@ -51,44 +51,69 @@
         <nav class="navbar navbar-inverse">
             <div class="container-fluid" id="container-nav">
                 <div class="row">      
-                    <div class="navbar-header col-lg-1 col-md-1 col-sm-1">
-
-                        <a class="navbar-brand" href="ActionServlet?op=getList"><fmt:message key="titleNavbar"/></a>
-                        <form action="firstpage.jsp">
-                            <button type="submit" class="navbar-toggle collapsed btn-lg glyphicon glyphicon-home btnTransparent btnHome" data-toggle="collapse" data-target="#"></button>
-                        </form>
-                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#">
-
-                            <!--<span class="glyphicon glyphicon-user white" aria-hidden="true"></span>-->
-                        </button>
-                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#search">
-                            <!--<span class="glyphicon glyphicon-search" aria-hidden="true"></span>-->
-                        </button>
+                    <div class="navbar-header col-xs-12 col-xs-offset-4 col-sm-offset-0 col-lg-2 col-md-2 col-sm-2">
+                        <a class="navbar-brand" href="ActionServlet?op=getList"><fmt:message key="titleNavbar"/></a> 
+                        
                     </div>
-                    <div class="col-lg-10 col-md-10 col-sm-10">
-                        <div class="container-fluid">
-                            <div class="row">    
-                                <div class="collapse navbar-collapse" id="menu">
-                                    <div class="col-lg-3 col-md-3 col-sm-3">
-                                        <form action="firstpage.jsp">
-                                            <button type="submit" class="btn-lg glyphicon glyphicon-home pull-left btnTransparent btnHome"></button>
-                                        </form>
-                                    </div>
-                                    <div class="col-lg-1 col-md-1 col-sm-1">
-                                    </div>
-                                    <div class="col-lg-8 col-md-8 col-sm-8">
-                                    </div>
-                                </div>
-                            </div>
+
+
+                    <div class="navbar-header col-xs-12 col-sm-8 col-sm-offset-1  col-lg-8 col-md-8">
+
+
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</nav> 
+<div class="container">
+    <div class="row">
+        <div class="col-lg-3 col-md-3 col-sm-3 col-xs-2">                    
+        </div>
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-8">
+
+            <form class="form-horizontal" action='ActionServlet' method="post" id="centra">
+                <fieldset>
+                    <div id="legend" class="title text-center">
+                        <h2><fmt:message key="createAccountTitle"/></h2> 
+                    </div>
+                    <div id="form-user"class="form-group has-feedback">
+                        <!-- Username -->
+                        <label class="control-label"  for="username"><fmt:message key="usernameInput"/></label>
+                        <div class="controls">
+                            <input type="text" id="username" name="username" placeholder="" class="form-control" onkeyup="confrontaPassword()">
+                            <p id="user-text" class="help-block"><fmt:message key="inputUsernameMessage"/></p>
+
+
+
                         </div>
                     </div>
 
-                    <div class="hidden-xs col-lg-1 col-md-1 col-sm-1 ">
+                    <div id="form-pwd" class="form-group has-feedback">
+                        <!-- Password-->
+                        <label class="control-label" for="password"><fmt:message key="passwordInput"/></label>
+                        <div class="controls">
+                            <input type="password" id="password" name="password" placeholder="" class="form-control" onkeyup="confrontaPassword()">
+                            <p id="pwd-text" class="help-block"><fmt:message key="inputPasswordMessage"/></p>
+                        </div>
+                    </div>
 
-                    </div> 
-
+                    <div id="form-pwd-confirm" class="form-group has-feedback">
+                        <!-- Password -->
+                        <label class="control-label"  for="password_confirm"><fmt:message key="passwordConfirmInput"/></label>
+                        <div class="controls">
+                            <input type="password" id="password_confirm" name="password_confirm" onkeyup="confrontaPassword()" placeholder="" class="form-control">
+                            <p id="pwd-confirm-text" class="help-block"><fmt:message key="confimPasswordMessage"/></p>
+                        </div>                        
+                        <span class="error" style="color:red;text-align: center;"><b>${error_a}</b><br></span>
+                    </div>
+                    <br>
                     <div class="collapse navbar-collapse hidden-lg" id="search">
-
                     </div>
                 </div>
             </div>
@@ -179,5 +204,6 @@
 
         </script>
     </body>
+
 
 </html>
