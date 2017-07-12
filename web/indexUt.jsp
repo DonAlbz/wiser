@@ -205,12 +205,18 @@
                         }
                         String tag = (String) request.getAttribute("tag");
                         String ordinamento = (String) request.getAttribute("orderBy");
+
+                        String hidden=new String();
+                        if(ordinamento==null){
+                            hidden="hidden";
+                        }
+
                         ArrayList<Category> categories = (ArrayList<Category>) request.getAttribute("cats");
                         Iterator<Category> iterCat = categories.iterator();
                         while (iterCat.hasNext()) {
                             Category selCat = (Category) iterCat.next();
                     %>        
-                    <a onclick="doHref('ActionServlet?op=getList2&filtro=<%=selCat.getNome()%>&search=<%=key%>&tag=<%=tag%>&nomeU=<%=nome_utente%>')" class=" categorie list-group-item"> <%=selCat.getNome()%></a>
+                    <a onclick="doHref('ActionServlet?op=getList2&filtro=<%=selCat.getNome()%>&search=<%=key%>&tag=<%=tag%>&nomeU=<%=nome_utente%>')" class=" categorie puntatore list-group-item"> <%=selCat.getNome()%></a>
                     <%
                         }
                     %>
@@ -219,63 +225,71 @@
 
 
             <!-- Pagina centrale -->
-            <div class="hidden-sm hidden-lg hidden-md">
+          
                 <!-- Tasto per comprimere sidebar -->
                 <!---<a href="#menu-toggle" class="btn btn-default" id="menu-toggle">Toggle Menu</a>-->
 
-                <!--Paginazione schermo piccolo-->
-
-                <div class="pull-right">
-                    <ul class="pagination" >
-                        <%
-                            if (numPages > 1) {
-                                for (int i = 0; i < numPages; i++) {
-
-                        %>
-
-                        <li><a onclick="doHref('ActionServlet?op=getList2&start=<%=i * 8%>&filtro=<%=filter%>&search=<%=key%>&tag=<%=tag%>&orderBy=<%=ordinamento%>&nomeU=<%=nome_utente%>')"><%=i + 1%></a></li>
-                            <%
-                                    }
-                                }
-                            %>
-                    </ul>
-                </div>
-            </div>
 
             <!-- Page Content -->
+           
             <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
 
                 <div class="container-fluid">
                     <div class="row">
                         <div class="row">
-                            <div class=" btn-group" id="ordinaPer">  
-                                <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
-                                    <fmt:message key="orderButton"/><span class="caret"></span>
-                                </button>
-                                <ul class="dropdown-menu" role="menu">
-                                    <li><a id="1" class="mouseOver" onclick="doHref('ActionServlet?op=getList2&filtro=<%=filter%>&search=<%=key%>&tag=<%=tag%>&orderBy=nome&nomeU=<%=nome_utente%>')"><fmt:message key="orderModeName"/></a></li>
-                                    <li class="dropdown-submenu">
-                                        <a class="test mouseOver" id="2" tabindex="-1" id="2"><fmt:message key="orderModeUse"/><span class="caret"></span></a>
-                                        <ul class="dropdown-menu" id="menu1">
-                                            <li><a tabindex="-1" class="mouseOver" id="3" onclick="doHref('ActionServlet?op=getList2&filtro=<%=filter%>&search=<%=key%>&tag=<%=tag%>&orderBy=utilizziMax&nomeU=<%=nome_utente%>')"><fmt:message key="orderMostUsed"/></a></li>
-                                            <li><a tabindex="-1" class="mouseOver" id="4" onclick="doHref('ActionServlet?op=getList2&filtro=<%=filter%>&search=<%=key%>&tag=<%=tag%>&orderBy=utilizziMin&nomeU=<%=nome_utente%>')"><fmt:message key="orderLessUsed"/></a></li>
-                                        </ul>
-                                    </li>
-                                    <li class="dropdown-submenu">
-                                        <a class="test1 mouseOver" id="5" tabindex="-1"><fmt:message key="orderModeVote"/><span class="caret"></span></a>
-                                        <ul class="dropdown-menu" id="menu2">
-                                            <li><a tabindex="-1" class="mouseOver" id="6" onclick="doHref('ActionServlet?op=getList2&filtro=<%=filter%>&search=<%=key%>&tag=<%=tag%>&orderBy=votoMax&nomeU=<%=nome_utente%>')"><fmt:message key="orderMostVoted"/></a></li>
-                                            <li><a tabindex="-1" class="mouseOver" id="7" onclick="doHref('ActionServlet?op=getList2&filtro=<%=filter%>&search=<%=key%>&tag=<%=tag%>&orderBy=votoMin&nomeU=<%=nome_utente%>')"><fmt:message key="orderLessVoted"/></a></li>
-                                        </ul>
-                                    </li>
-                                </ul>
+
+
+                            <div class="row">
+                                
+                                <div class=" btn-group col-xs-4 col-sm-3 col-md-2 col-lg-2" id="ordinaPer">  
+                                    <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
+                                        Sort by <span class="caret"></span>
+                                    </button>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li><a id="1" class="mouseOver" onclick="doHref('ActionServlet?op=getList2&filtro=<%=filter%>&search=<%=key%>&tag=<%=tag%>&orderBy=nome&nomeU=<%=nome_utente%>')"><fmt:message key="orderModeName"/></a></li>
+                                        <li class="dropdown-submenu">
+                                            <a class="test mouseOver" id="2" tabindex="-1" id="2"><fmt:message key="orderModeUse"/><span class="caret"></span></a>
+                                            <ul class="dropdown-menu" id="menu1">
+                                                <li><a tabindex="-1" class="mouseOver" id="3" onclick="doHref('ActionServlet?op=getList2&filtro=<%=filter%>&search=<%=key%>&tag=<%=tag%>&orderBy=utilizziMax&nomeU=<%=nome_utente%>')"><fmt:message key="orderMostUsed"/></a></li>
+                                                <li><a tabindex="-1" class="mouseOver" id="4" onclick="doHref('ActionServlet?op=getList2&filtro=<%=filter%>&search=<%=key%>&tag=<%=tag%>&orderBy=utilizziMin&nomeU=<%=nome_utente%>')"><fmt:message key="orderLessUsed"/></a></li>
+                                            </ul>
+                                        </li>
+                                        <li class="dropdown-submenu">
+                                            <a class="test1 mouseOver" id="5" tabindex="-1"><fmt:message key="orderModeVote"/><span class="caret"></span></a>
+                                            <ul class="dropdown-menu" id="menu2">
+                                                <li><a tabindex="-1" class="mouseOver" id="6" onclick="doHref('ActionServlet?op=getList2&filtro=<%=filter%>&search=<%=key%>&tag=<%=tag%>&orderBy=votoMax&nomeU=<%=nome_utente%>')"><fmt:message key="orderMostVoted"/></a></li>
+                                                <li><a tabindex="-1" class="mouseOver" id="7" onclick="doHref('ActionServlet?op=getList2&filtro=<%=filter%>&search=<%=key%>&tag=<%=tag%>&orderBy=votoMin&nomeU=<%=nome_utente%>')"><fmt:message key="orderLessVoted"/></a></li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div id="divOrd" class="col-xs-6 col-sm-5 col-md-4 col-lg-4">
+
+                                    <div id="ord" class="label label-success <%=hidden%>" role="alert">${ordinamento}</div>
+                                </div>
+                                <!--Paginazione schermo piccolo-->
+
+                                <div class="col-xs-3 col-sm-3 col-md-4 col-lg-4 pull-right">
+                                    <ul class="pagination" style="float:right; margin: 0px;">
+                                        <%
+                                            if (numPages > 1) {
+                                                for (int i = 0; i < numPages; i++) {
+
+                                        %>
+
+                                        <li><a onclick="doHref('ActionServlet?op=getList2&start=<%=i * 8%>&filtro=<%=filter%>&search=<%=key%>&tag=<%=tag%>&orderBy=<%=ordinamento%>&nomeU=<%=nome_utente%>')"><%=i + 1%></a></li>
+                                            <%
+                                                    }
+                                                }
+                                            %>
+                                    </ul>
+                                </div>
+                          
+
                             </div>
                         </div>
+                        <br>
 
-                        <div id="divOrd" class="row">
-                            <br>
-                            <div id="ord" class="label label-success" role="alert">${ordinamento}</div>
-                        </div>
 
                         <%
                             ArrayList<DataService> services = (ArrayList<DataService>) request.getAttribute("list");
@@ -311,7 +325,7 @@
                                                 Tag selTag = (Tag) iterTag.next();
                                         %>
 
-                                        <a onclick="doHref('ActionServlet?op=getList2&tag=<%=selTag.getNome()%>&nomeU=<%=nome_utente%>')"> <%= selTag.getNome()%> </a>
+                                        <a class="puntatore" onclick="doHref('ActionServlet?op=getList2&tag=<%=selTag.getNome()%>&nomeU=<%=nome_utente%>')"> <%= selTag.getNome()%> </a>
                                         <%
                                             }
                                         %>
@@ -426,7 +440,7 @@
                     </div>
                 </div>
             </div>
-            <div class="hidden-xs col-sm-2 col-md-2 col-lg-2 list-group listGroupMashUp">
+            <div class="hidden-xs col-sm-2 col-md-2 col-lg-2">
                 <legend class="center-block"><fmt:message key="myMashupTitle"/></legend>
                 <%
                     ArrayList<Aggregazione> mashup = (ArrayList<Aggregazione>) session.getAttribute("mashup");
@@ -510,6 +524,7 @@
                         }
                     }
                 %>
+                
             </div>    
 
 
@@ -532,7 +547,7 @@
 
                     %>
 
-                    <li><a onclick="doHref('ActionServlet?op=getList2&start=<%=i * 8%>&filtro=<%=filter%>&search=<%=key%>&tag=<%=tag%>&orderBy=<%=ordinamento%>&nomeU=<%=nome_utente%>')"><%=i + 1%></a></li>
+                    <li><a class="puntatore" onclick="doHref('ActionServlet?op=getList2&start=<%=i * 8%>&filtro=<%=filter%>&search=<%=key%>&tag=<%=tag%>&orderBy=<%=ordinamento%>&nomeU=<%=nome_utente%>')"><%=i + 1%></a></li>
 
                     <%
                             }
@@ -553,15 +568,18 @@
 
 
     <!-- script per comprimere sidebar -->
+    <!--
     <script>
                         $("#menu-toggle").click(function (e) {
                             e.preventDefault();
                             $("#wrapper").toggleClass("toggled");
                         });
-    </script>
+
+    </script>-->
     <script>
-                $(document).ready(selezionaCategoria('<%=filter%>'));
-                $(document).ready(selectMash('<%=nomeMash%>', '<%=idMash%>'));
+        $(document).ready(selezionaCategoria('<%=filter%>'));
+        $(document).ready(selectMash('<%=nomeMash%>', '<%=idMash%>'));
+
     </script>
     <script src="js/gestione_voti.js"></script>
 </body>

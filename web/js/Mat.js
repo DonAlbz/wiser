@@ -62,8 +62,8 @@ $('#centra').on('keyup keypress', function (e) {
     }
 });
 
-function selezionaCategoria(filtro) {
-    var $filter = filtro.trim();
+    function selezionaCategoriaUt(filtro){
+    var $filter=filtro.trim();
     var $ciao;
     $(".categorie").each(function () {
         $ciao = $(this).text().trim();
@@ -107,3 +107,17 @@ function doHref(href)
 
 
 
+function selezionaCategoria(filtro){
+    var $filter=filtro.trim();
+    var $ciao;
+    $(".categorie").each(function(){
+        $ciao= $(this).text().trim();
+        if( $ciao === $filter){
+            
+            $(this).css("background","black");
+            $(this).css("color","white");
+            
+        }
+
+    });      
+};

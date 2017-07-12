@@ -134,6 +134,7 @@
 
 
 
+
                             <div class="control-group">
                                 <!-- Button -->
                                 <div class="form-group">
@@ -141,9 +142,6 @@
                                     <input name="op" value="registrazione" hidden="hidden">
                                 </div>
                             </div>
-
-
-
                         </fieldset>
                     </form>
                 </div>
