@@ -539,7 +539,7 @@
                                     });
     </script>
     <script>
-        $(document).ready(selezionaCategoria('<%=filter%>'));
+        $(document).ready(selezionaCategoriaUt('<%=filter%>'));
     </script>
     <script src="js/gestione_voti.js"></script>
 </body>

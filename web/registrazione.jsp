@@ -69,8 +69,7 @@
                                     var pwd2 = document.getElementById("password_confirm").value;
                                     
                                     
-                                    
-                                    if((user !== "") && (pwd1 !== "") && (pwd2 !== "") && (pwd1 === pwd2) && (pwd1.length>3)) {
+                                  if((user !== "") && (pwd1 !== "") && (pwd2 !== "") && (pwd1 === pwd2) && (pwd1.length>3)) {
                                         document.getElementById("daAbilitare").removeAttribute("disabled");
                                         $("#form-pwd-confirm").removeClass("has-error");
                                         $("#form-pwd").removeClass("has-error");
@@ -93,6 +92,8 @@
                                         }
                                     }
                                 }
+                                   
+                                   
                             </script>
 
                                 <div class="control-group">
