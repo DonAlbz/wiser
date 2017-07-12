@@ -19,7 +19,7 @@
         <link rel="stylesheet" href="css/main.css">
 
 
-        <title>Registrazione</title>
+        <title>Create account</title>
     </head>
     <body>
         <fmt:setLocale value="en"/>
@@ -30,12 +30,15 @@
                     <div class="navbar-header col-lg-1 col-md-1 col-sm-1">
 
                         <a class="navbar-brand" href="ActionServlet?op=getList"><fmt:message key="titleNavbar"/></a>
-
+                        <form action="firstpage.jsp">
+                            <button type="submit" class="navbar-toggle collapsed btn-lg glyphicon glyphicon-home btnTransparent btnHome" data-toggle="collapse" data-target="#"></button>
+                        </form>
                         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#">
-                            <span class="glyphicon glyphicon-user white" aria-hidden="true"></span>
+
+                            <!--<span class="glyphicon glyphicon-user white" aria-hidden="true"></span>-->
                         </button>
                         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#search">
-                            <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                            <!--<span class="glyphicon glyphicon-search" aria-hidden="true"></span>-->
                         </button>
                     </div>
                     <div class="col-lg-10 col-md-10 col-sm-10">
@@ -96,32 +99,32 @@
                     <form class="form-horizontal" action='ActionServlet' method="post" id="centra">
                         <fieldset>
                             <div id="legend" class="title text-center">
-                                <h2>Create a new Account</h2> 
+                                <h2><fmt:message key="createAccountTitle"/></h2> 
                             </div>
                             <div id="form-user"class="form-group has-feedback">
                                 <!-- Username -->
-                                <label class="control-label"  for="username">Username</label>
+                                <label class="control-label"  for="username"><fmt:message key="usernameInput"/></label>
                                 <div class="controls">
                                     <input type="text" id="username" name="username" placeholder="" class="form-control" onkeyup="confrontaPassword()">
-                                    <p id="user-text" class="help-block">Username can contain any letters or numbers, without spaces and can't start with a number</p>
+                                    <p id="user-text" class="help-block"><fmt:message key="inputUsernameMessage"/></p>
                                 </div>
                             </div>
 
                             <div id="form-pwd" class="form-group has-feedback">
                                 <!-- Password-->
-                                <label class="control-label" for="password">Password</label>
+                                <label class="control-label" for="password"><fmt:message key="passwordInput"/></label>
                                 <div class="controls">
                                     <input type="password" id="password" name="password" placeholder="" class="form-control" onkeyup="confrontaPassword()">
-                                    <p id="pwd-text" class="help-block">Password should be at least 4 characters</p>
+                                    <p id="pwd-text" class="help-block"><fmt:message key="inputPasswordMessage"/></p>
                                 </div>
                             </div>
 
                             <div id="form-pwd-confirm" class="form-group has-feedback">
                                 <!-- Password -->
-                                <label class="control-label"  for="password_confirm">Password (Confirm)</label>
+                                <label class="control-label"  for="password_confirm"><fmt:message key="passwordConfirmInput"/></label>
                                 <div class="controls">
                                     <input type="password" id="password_confirm" name="password_confirm" onkeyup="confrontaPassword()" placeholder="" class="form-control">
-                                    <p id="pwd-confirm-text" class="help-block">Please confirm password</p>
+                                    <p id="pwd-confirm-text" class="help-block"><fmt:message key="confimPasswordMessage"/></p>
                                 </div>                        
                                 <span class="error" style="color:red;text-align: center;"><b>${error_a}</b><br></span>
                             </div>
@@ -135,7 +138,7 @@
                             <div class="control-group">
                                 <!-- Button -->
                                 <div class="form-group">
-                                    <button id="daAbilitare" class="btn btn-success disabled">Register</button>
+                                    <button id="daAbilitare" class="btn btn-success disabled center-block"><fmt:message key="accountConfirmButton"/></button>
                                     <input name="op" value="registrazione" hidden="hidden">
                                 </div>
                             </div>
@@ -150,11 +153,11 @@
         <script type="text/javascript" src="./js/Mat.js"></script> 
         <script type="text/javascript" src="./js/main.js"></script> 
         <script>
-            $(document).ready(function()
-            {
-                $("#username").focus();
-            });
-            
+                                        $(document).ready(function ()
+                                        {
+                                            $("#username").focus();
+                                        });
+
         </script>
     </body>
 

@@ -82,6 +82,7 @@
     top: 20%;
     left: 7%;
     position: absolute;
+    margin-left: 105px;
 }
 
 .msgModal{
@@ -109,7 +110,7 @@
 
 }
 .checkListModal:last-child {
-  
+
     border-bottom-right-radius: 0px !important; 
     border-bottom-left-radius: 0px !important;
 }
@@ -132,9 +133,9 @@
     background-image: linear-gradient(to bottom,#286090 0,#286090 0%) !important;
     filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#428bca', endColorstr='#428bca', GradientType=0) !important;
     background-repeat: no-repeat !important;
-    
-    
- 
+
+
+
 }
 
 .contentVota{
@@ -143,4 +144,17 @@
 
 .glyphicon-unchecked{
     color:steelblue !important;
+}
+
+#divAccount{
+    width: 100%;
+    height: 10px; 
+    border-bottom: 1px solid #c5c5c5; 
+    text-align: center;
+}
+#divAccount span{
+    font-size: 1em;
+    padding: 0 5px;
+    background-color: white;
+    color: gray;
 }
