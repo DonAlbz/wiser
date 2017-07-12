@@ -210,7 +210,7 @@
                         while (iterCat.hasNext()) {
                             Category selCat = (Category) iterCat.next();
                     %>        
-                    <a onclick="doHref('ActionServlet?op=getList2&filtro=<%=selCat.getNome()%>&search=<%=key%>&tag=<%=tag%>&nomeU=<%=nome_utente%>')" class=" categorie list-group-item"> <%=selCat.getNome()%></a>
+                    <a onclick="doHref('ActionServlet?op=getList2&filtro=<%=selCat.getNome()%>&search=<%=key%>&tag=<%=tag%>&nomeU=<%=nome_utente%>')" class=" categorie puntatore list-group-item"> <%=selCat.getNome()%></a>
                     <%
                         }
                     %>
@@ -311,7 +311,7 @@
                                                 Tag selTag = (Tag) iterTag.next();
                                         %>
 
-                                        <a onclick="doHref('ActionServlet?op=getList2&tag=<%=selTag.getNome()%>&nomeU=<%=nome_utente%>')"> <%= selTag.getNome()%> </a>
+                                        <a class="puntatore" onclick="doHref('ActionServlet?op=getList2&tag=<%=selTag.getNome()%>&nomeU=<%=nome_utente%>')"> <%= selTag.getNome()%> </a>
                                         <%
                                             }
                                         %>
@@ -532,7 +532,7 @@
 
                     %>
 
-                    <li><a onclick="doHref('ActionServlet?op=getList2&start=<%=i * 8%>&filtro=<%=filter%>&search=<%=key%>&tag=<%=tag%>&orderBy=<%=ordinamento%>&nomeU=<%=nome_utente%>')"><%=i + 1%></a></li>
+                    <li><a class="puntatore" onclick="doHref('ActionServlet?op=getList2&start=<%=i * 8%>&filtro=<%=filter%>&search=<%=key%>&tag=<%=tag%>&orderBy=<%=ordinamento%>&nomeU=<%=nome_utente%>')"><%=i + 1%></a></li>
 
                     <%
                             }

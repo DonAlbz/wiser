@@ -168,7 +168,7 @@
                             while (iterCat.hasNext()) {
                                 Category selCat = (Category) iterCat.next();
                         %>        
-                        <a href="ActionServlet?op=getList&filtro=<%=selCat.getNome()%>&search=<%=key%>&tag=<%=tag%>" class="categorie list-group-item"> <%=selCat.getNome()%></a>
+                        <a href="ActionServlet?op=getList&filtro=<%=selCat.getNome()%>&search=<%=key%>&tag=<%=tag%>" class="categorie puntatore list-group-item"> <%=selCat.getNome()%></a>
                         <%
                             }
                         %>
