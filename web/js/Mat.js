@@ -17,23 +17,33 @@ function confrontaPassword()
         console.log("pwdCvuota");
         send = false;
     }
-    if(send == true)
+    if (send == true)
     {
-        if($("#form-user").hasClass("has-error"))
+        if ($("#form-user").hasClass("has-error"))
         {
-           console.log("username");
+
             send = false;
         }
     }
-     if(send == true)
+    if (send == true)
     {
-        if($("#password").val() !== $("#password_confirm").val())
+        if ($("#password").val() !== $("#password_confirm").val())
         {
-            console.log("pwdDiverse");
+            $("#form-pwd").addClass("has-error");
+            $("#form-pwd-confirm").addClass("has-error");
+            $("#pwd-confirm-text").html("This is not the same password");
             send = false;
         }
+        else
+        {
+            $("#pwd-confirm-text").html("Password confirmed");
+            $("#form-pwd").addClass("has-success");
+            $("#form-pwd-confirm").addClass("has-success");
+            $("#form-pwd").removeClass("has-error");
+            $("#form-pwd-confirm").removeClass("has-error");
+        }
     }
-    
+
     if (send == true)
     {
         $("#daAbilitare").removeClass("disabled");
@@ -44,13 +54,12 @@ function confrontaPassword()
     }
 }
 
-
-$('#centra').on('keyup keypress', function(e) {
-  var keyCode = e.keyCode || e.which;
-  if (keyCode === 13) { 
-    e.preventDefault();
-    return false;
-  }
+$('#centra').on('keyup keypress', function (e) {
+    var keyCode = e.keyCode || e.which;
+    if (keyCode === 13) {
+        e.preventDefault();
+        return false;
+    }
 });
 
 function selezionaCategoria(filtro) {
