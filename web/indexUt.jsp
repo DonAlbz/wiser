@@ -205,10 +205,12 @@
                         }
                         String tag = (String) request.getAttribute("tag");
                         String ordinamento = (String) request.getAttribute("orderBy");
+
                         String hidden=new String();
                         if(ordinamento==null){
                             hidden="hidden";
                         }
+
                         ArrayList<Category> categories = (ArrayList<Category>) request.getAttribute("cats");
                         Iterator<Category> iterCat = categories.iterator();
                         while (iterCat.hasNext()) {
@@ -252,6 +254,7 @@
                 <div class="container-fluid">
                     <div class="row">
                         <div class="row">
+
                             <div class="row">
                                 <div class=" btn-group col-xs-4 col-sm-3 col-md-2 col-lg-2" id="ordinaPer">  
                                     <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
@@ -279,6 +282,8 @@
 
                                     <div id="ord" class="label label-success <%=hidden%>" role="alert">${ordinamento}</div>
                                 </div>
+
+                          
                             </div>
                         </div>
                         <br>
@@ -288,6 +293,13 @@
                             ArrayList<DataService> services = (ArrayList<DataService>) request.getAttribute("list");
                             Iterator<DataService> iterServ = services.iterator();
                             Aggregazione aggregazione = (Aggregazione) request.getAttribute("newAggregazione");
+                            if (services.size() == 0) {
+                        %>
+                        <div class="row">
+                                <p> We are sorry! We could not find any matches for your search terms</p>
+                        </div>
+                        <%
+                            } 
                             while (iterServ.hasNext()) {
                                 DataService service = (DataService) iterServ.next();
                                 Set<Tag> taglist = service.getTag();
@@ -559,10 +571,12 @@
                             e.preventDefault();
                             $("#wrapper").toggleClass("toggled");
                         });
+
     </script>-->
     <script>
         $(document).ready(selezionaCategoria('<%=filter%>'));
         $(document).ready(selectMash('<%=nomeMash%>', '<%=idMash%>'));
+
     </script>
     <script src="js/gestione_voti.js"></script>
 </body>

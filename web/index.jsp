@@ -156,7 +156,8 @@
 
                     <h3><fmt:message key="titleCategories"/></h3>
                     <div class="list-group">
-                        <%                            int servicesDim = (Integer) request.getAttribute("servicesDim");
+                        <%
+                            int servicesDim = (Integer) request.getAttribute("servicesDim");
                             int numPages = Functions.numberOfPages(servicesDim);
                             String filter = (String) request.getAttribute("filtro");
                             String key = (String) request.getAttribute("search");
@@ -174,7 +175,7 @@
                             while (iterCat.hasNext()) {
                                 Category selCat = (Category) iterCat.next();
                         %>        
-                        <a href="ActionServlet?op=getList&filtro=<%=selCat.getNome()%>&search=<%=key%>&tag=<%=tag%>" class="list-group-item"> <%=selCat.getNome()%></a>
+                        <a href="ActionServlet?op=getList&filtro=<%=selCat.getNome()%>&search=<%=key%>&tag=<%=tag%>" class="categorie list-group-item"> <%=selCat.getNome()%></a>
                         <%
                             }
                         %>
@@ -290,6 +291,7 @@
                                                 }                   %>     
 
 
+
                                             <%      if ((parteDecimale < 0.5) && (count < 5)) {       %>          
                                             <span class="glyphicon glyphicon-star-empty"></span> 
                                             <%          count++;
@@ -301,6 +303,7 @@
                                                     }
                                                 }
                                                 for (i = count; i < 5; i++) {                 %>                                                                                                                                                
+
 
                                             <span class="glyphicon glyphicon-star-empty"></span>
                                             <%      }%>
@@ -347,16 +350,20 @@
         <script type="text/javascript" src="./js/autocomplAjax.js"></script>
         <script type="text/javascript" src="./js/main.js"></script>
         <script type="text/javascript" src="./js/Tibi.js"></script>
+        <script type="text/javascript" src="./js/Mat.js"></script>
 
 
 
 
-        <!-- script per comprimere sidebar -->
+        <!-- script per comprimere sidebar
         <script>
                 $("#menu-toggle").click(function (e) {
                     e.preventDefault();
                     $("#wrapper").toggleClass("toggled");
                 });
+        </script>-->
+        <script>
+            $(document).ready(selezionaCategoria('<%=filter%>'));
         </script>
     </body>
 </html>
