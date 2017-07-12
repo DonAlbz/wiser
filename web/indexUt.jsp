@@ -27,7 +27,6 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
-        <!--  <script type="text/javascript" src="./js/bootstrap.js"></script>  -->
 
         <link rel="stylesheet" href="jquery-ui/jquery-ui.css">
         <link rel="stylesheet" href="/resources/demos/style.css">
@@ -81,6 +80,7 @@
                         <%
                             String nome_utente = (String) request.getAttribute("nomeU");
                             session = request.getSession();
+                            int DSPerPag = Functions.DS_PER_PAGINA;
                             String nomeSes = session.getAttribute("name").toString();
                             String searchBar = (String) request.getAttribute("ricerca");
                             if (searchBar == null) {
@@ -278,7 +278,7 @@
 
                                         %>
 
-                                        <li><a onclick="doHref('ActionServlet?op=getList2&start=<%=i * 8%>&filtro=<%=filter%>&search=<%=key%>&tag=<%=tag%>&orderBy=<%=ordinamento%>&nomeU=<%=nome_utente%>')"><%=i + 1%></a></li>
+                                        <li><a onclick="doHref('ActionServlet?op=getList2&start=<%=i * DSPerPag%>&filtro=<%=filter%>&search=<%=key%>&tag=<%=tag%>&orderBy=<%=ordinamento%>&nomeU=<%=nome_utente%>')"><%=i + 1%></a></li>
                                             <%
                                                     }
                                                 }
@@ -548,7 +548,7 @@
 
                     %>
 
-                    <li><a class="puntatore" onclick="doHref('ActionServlet?op=getList2&start=<%=i * 8%>&filtro=<%=filter%>&search=<%=key%>&tag=<%=tag%>&orderBy=<%=ordinamento%>&nomeU=<%=nome_utente%>')"><%=i + 1%></a></li>
+                    <li><a class="puntatore" onclick="doHref('ActionServlet?op=getList2&start=<%=i * DSPerPag%>&filtro=<%=filter%>&search=<%=key%>&tag=<%=tag%>&orderBy=<%=ordinamento%>&nomeU=<%=nome_utente%>')"><%=i + 1%></a></li>
 
                     <%
                             }
@@ -578,9 +578,11 @@
 
     </script>-->
     <script>
-                        $(document).ready(selezionaCategoria('<%=filter%>'));
-                        $(document).ready(selectMash('<%=nomeMash%>', '<%=idMash%>'));
-                        $(document).ready(selectOrdinamento('${ordinamento}'));
+
+        $(document).ready(selezionaCategoriaUt('<%=filter%>'));
+        $(document).ready(selectMash('<%=nomeMash%>', '<%=idMash%>'));
+        $(document).ready(selectOrdinamento('${ordinamento}'));
+
     </script>
     <script src="js/gestione_voti.js"></script>
 </body>

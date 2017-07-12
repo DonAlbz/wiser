@@ -57,6 +57,7 @@
                              </form>-->
 
                         <%
+                            int DSPerPag = Functions.DS_PER_PAGINA;
                             String searchBar = (String) request.getAttribute("ricerca");
                             if (searchBar == null) {
                                 searchBar = "";
@@ -66,6 +67,7 @@
                             <div id="nav-centrata" class="input-group" >
                                 <input id="auto0" name="search" type="text" value='<%=searchBar%>' class="form-control center-block height-40" placeholder=<fmt:message key="searchPlaceHolder"/> onkeydown="arrowEnable(event)" onkeyup="autocompl(this.value, event);" 
                                        autocomplete="off">
+
 
 
 
@@ -170,15 +172,37 @@
                                             <li><a tabindex="-1" class="mouseOver" id="3" href="ActionServlet?op=getList&filtro=<%=filter%>&search=<%=key%>&tag=<%=tag%>&orderBy=utilizziMax"><fmt:message key="orderMostUsed"/></a></li>
                                             <li><a tabindex="-1" class="mouseOver" id="4" href="ActionServlet?op=getList&filtro=<%=filter%>&search=<%=key%>&tag=<%=tag%>&orderBy=utilizziMin"><fmt:message key="orderLessUsed"/></a></li>
                                         </ul>
-                                    </li>
-                                    <li class="dropdown-submenu">
-                                        <a class="test1 mouseOver" id="5" tabindex="-1"><fmt:message key="orderModeVote"/><span class="caret"></span></a>
-                                        <ul class="dropdown-menu" id="menu2">
-                                            <li><a tabindex="-1" class="mouseOver" id="6" href="ActionServlet?op=getList&filtro=<%=filter%>&search=<%=key%>&tag=<%=tag%>&orderBy=votoMax"><fmt:message key="orderMostVoted"/></a></li>
-                                            <li><a tabindex="-1" class="mouseOver" id="7" href="ActionServlet?op=getList&filtro=<%=filter%>&search=<%=key%>&tag=<%=tag%>&orderBy=votoMin"><fmt:message key="orderLessVoted"/></a></li>
-                                        </ul>
-                                    </li>
-                                </ul>
+
+                                    </div>
+                                    <div id="divOrd" class="col-xs-5 col-sm-5 col-md-4 col-lg-4">
+
+                                        <div id="ordNome" class="ord label label-success hidden" role="alert"><fmt:message key="ordName"/></div>
+                                        <div id="ordUsiMax" class="ord label label-success hidden" role="alert"><fmt:message key="ordUsiMax"/></div>
+                                        <div id="ordUsiMin" class="ord label label-success hidden" role="alert"><fmt:message key="ordUsiMin"/></div>
+                                        <div id="ordRatMax" class="ord label label-success hidden" role="alert"><fmt:message key="ordRatMax"/></div>
+                                        <div id="ordRatMin" class="ord label label-success hidden" role="alert"><fmt:message key="ordRatMin"/></div>
+
+                                    </div>
+                                    <div>
+                                        <div class="col-xs-3 col-sm-3 col-md-4 col-lg-4  pull-right">
+                                            <!--Paginazione schermo piccolo-->
+                                            <ul class="pagination" style="float:right; margin: 0px;" >
+                                                <%
+                                                    if (numPages > 1) {
+                                                        for (int i = 0; i < numPages; i++) {
+
+                                                %>
+
+                                                <li><a href="ActionServlet?op=getList&start=<%=i * DSPerPag%>&filtro=<%=filter%>&search=<%=key%>&tag=<%=tag%>&orderBy=<%=ordinamento%>"><%=i + 1%></a></li>
+                                                    <%
+                                                            }
+                                                        }
+                                                    %>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+
                             </div>
                             <div id="divOrd" class="col-xs-5 col-sm-5 col-md-4 col-lg-4">
 
@@ -302,13 +326,17 @@
 
                 %>
 
-                <li><a href="ActionServlet?op=getList&start=<%=i * 8%>&filtro=<%=filter%>&search=<%=key%>&tag=<%=tag%>&orderBy=<%=ordinamento%>"><%=i + 1%></a></li>
 
-                <%
-                        }
-                    }
-                %>
-            </ul>
+                        <li><a href="ActionServlet?op=getList&start=<%=i * DSPerPag%>&filtro=<%=filter%>&search=<%=key%>&tag=<%=tag%>&orderBy=<%=ordinamento%>"><%=i + 1%></a></li>
+
+                        <%
+                                }
+                            }
+                        %>
+                    </ul>
+                </div>
+            </div> 
+
         </div>
     </div>
 </div>

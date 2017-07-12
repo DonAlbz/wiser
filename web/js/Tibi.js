@@ -36,9 +36,9 @@ function riempiSearch(id) {
 }
 
 /*
-function ricerca(id) {
-    
-}*/
+ function ricerca(id) {
+ 
+ }*/
 
 
 function modalAggregazioniPag2() {
@@ -84,7 +84,9 @@ function creaAggregazione()
 
 
 function chiudiModalAggregazione() {
-    setTimeout(function(){location.reload();}, 300);
+    setTimeout(function () {
+        location.reload();
+    }, 300);
 }
 
 
@@ -227,6 +229,21 @@ function rimuoviDataService(idDataService) {
             $("#no" + vett[1].trim()).removeClass("hidden");
         }
     }, "text");
+}
+
+
+function confermaRegistrazione(Stringa) {
+    var pass = $("#password").val();
+    var usern = $("#username").val();
+    var passconf = $("#password_confirm").val();
+    $("#welcDiv").text(Stringa + " " + usern.toUpperCase());
+    $("#modalRegistration").modal("show");
+    setTimeout(function () {
+        $.post("ActionServlet", {"op": "registrazione", "username": usern, "password": pass, "password_confirm": passconf},
+        function (response) {
+        window.location.replace("login.jsp")
+        }, "text");
+    },3000);
 }
 
 

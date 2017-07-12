@@ -16,7 +16,7 @@ import wiser.dao.*;
 public class Functions {
 
     public final static Integer DS_PER_PAGINA = 8;
-
+    
     public static Integer parseInteger(String s) {
         Integer start;
         if (s == null) {
