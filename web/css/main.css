@@ -42,11 +42,7 @@ html, body {
 /* ==========================================================================
 Tibi's custom styles
    ========================================================================== */
-.listGroupMashUp {
-    border-radius: 0px !important;
-    -webkit-box-shadow: none !important;
-     box-shadow: none !important;
-}
+
 .btnTransparent{
     border-color: transparent;
     background: transparent;
