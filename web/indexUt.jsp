@@ -206,11 +206,6 @@
                         String tag = (String) request.getAttribute("tag");
                         String ordinamento = (String) request.getAttribute("orderBy");
 
-                        String hidden=new String();
-                        if(ordinamento==null){
-                            hidden="hidden";
-                        }
-
                         ArrayList<Category> categories = (ArrayList<Category>) request.getAttribute("cats");
                         Iterator<Category> iterCat = categories.iterator();
                         while (iterCat.hasNext()) {
@@ -280,7 +275,11 @@
                                 </div>
                                 <div id="divOrd" class="col-xs-6 col-sm-5 col-md-4 col-lg-4">
 
-                                    <div id="ord" class="label label-success <%=hidden%>" role="alert">${ordinamento}</div>
+                                    <div id="ordNome" class="ord label label-success hidden" role="alert"><fmt:message key="ordName"/></div>
+                                    <div id="ordUsiMax" class="ord label label-success hidden" role="alert"><fmt:message key="ordUsiMax"/></div>
+                                    <div id="ordUsiMin" class="ord label label-success hidden" role="alert"><fmt:message key="ordUsiMin"/></div>
+                                    <div id="ordRatMax" class="ord label label-success hidden" role="alert"><fmt:message key="ordRatMax"/></div>
+                                    <div id="ordRatMin" class="ord label label-success hidden" role="alert"><fmt:message key="ordRatMin"/></div>
                                 </div>
 
                           
@@ -576,7 +575,7 @@
     <script>
         $(document).ready(selezionaCategoria('<%=filter%>'));
         $(document).ready(selectMash('<%=nomeMash%>', '<%=idMash%>'));
-
+        $(document).ready(selectOrdinamento('${ordinamento}'));
     </script>
     <script src="js/gestione_voti.js"></script>
 </body>
