@@ -56,8 +56,10 @@
                     <div class="navbar-header col-xs-1 col-lg-1 col-md-1 col-sm-1 ">
                         <%String nomeSessione = session.getAttribute("name").toString();%>                                                           
                         <a class="navbar-brand" href="ActionServlet?op=getList2&nomeU=<%=nomeSessione%>"><fmt:message key="titleNavbar"/></a>
+                         
                     </div>
                     <div class="navbar-header col-sm-2 col-md-2 col-lg-2  ">
+             
 
                     </div>
                     <div class="navbar-header col-xs-11 col-sm-11  col-lg-6 col-md-6">
@@ -220,13 +222,13 @@
 
 
             <!-- Pagina centrale -->
-          
-                <!-- Tasto per comprimere sidebar -->
-                <!---<a href="#menu-toggle" class="btn btn-default" id="menu-toggle">Toggle Menu</a>-->
+
+            <!-- Tasto per comprimere sidebar -->
+            <!---<a href="#menu-toggle" class="btn btn-default" id="menu-toggle">Toggle Menu</a>-->
 
 
             <!-- Page Content -->
-           
+
             <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
 
                 <div class="container-fluid">
@@ -235,7 +237,7 @@
 
 
                             <div class="row">
-                                
+
                                 <div class=" btn-group col-xs-4 col-sm-3 col-md-2 col-lg-2" id="ordinaPer">  
                                     <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
                                         Sort by <span class="caret"></span>
@@ -283,7 +285,7 @@
                                             %>
                                     </ul>
                                 </div>
-                          
+
 
                             </div>
                         </div>
@@ -300,7 +302,7 @@
                             <p><fmt:message key="DSnotFound"/></p>
                         </div>
                         <%
-                            } 
+                            }
                             while (iterServ.hasNext()) {
                                 DataService service = (DataService) iterServ.next();
                                 Set<Tag> taglist = service.getTag();
@@ -408,7 +410,7 @@
                                                         <br>
                                                     </div>
                                                     <div class="msgModal hidden">
-                                                        <ul class="listaAggregazioni hidden list-group checked-list-box">
+                                                        <ul class="listaAggregazioni hidden list-group checked-list-box" onclick="abilitaVotaAggr()">
                                                         </ul>
                                                         <div class="jumbotron feedbackVoto hidden">                                                           
                                                         </div>
@@ -416,7 +418,7 @@
 
                                                     <div class="modal-footer">
                                                         <button class="btn btnIndietro glyphicon glyphicon-chevron-left pull-left btn-default hidden" onclick="indietro()"></button>
-                                                        <button type="button" class="btn btn-primary hidden disabled confermaButton" onclick="confermaVoto('<%=service.getId()%>','<fmt:message key="voteSuccessMessage2"/>','<fmt:message key="voteErrorMessage"/>')"><a><fmt:message key="confirmButton"/></a></button>                                                               
+                                                        <button type="button" class="btn btn-primary hidden disabled confermaButton" onclick="confermaVoto('<%=service.getId()%>', '<fmt:message key="voteSuccessMessage2"/>', '<fmt:message key="voteErrorMessage"/>')"><a><fmt:message key="confirmButton"/></a></button>                                                               
                                                         <button class="btn btn-primary confermaVoto" disabled="true" onclick="modal2()"><fmt:message key="confirmButton"/></button>
                                                         <button  type="button" class="btn btn-danger closeButton" data-dismiss="modal"><fmt:message key="closeButton"/></button>
                                                     </div>
@@ -523,7 +525,7 @@
                         }
                     }
                 %>
-                
+
             </div>    
 
 
@@ -576,9 +578,9 @@
 
     </script>-->
     <script>
-        $(document).ready(selezionaCategoria('<%=filter%>'));
-        $(document).ready(selectMash('<%=nomeMash%>', '<%=idMash%>'));
-        $(document).ready(selectOrdinamento('${ordinamento}'));
+                        $(document).ready(selezionaCategoria('<%=filter%>'));
+                        $(document).ready(selectMash('<%=nomeMash%>', '<%=idMash%>'));
+                        $(document).ready(selectOrdinamento('${ordinamento}'));
     </script>
     <script src="js/gestione_voti.js"></script>
 </body>

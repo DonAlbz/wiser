@@ -49,6 +49,7 @@ function selezione(nome_modal) {
 function modal2() {
     // nome_modal + l'id del DataService
     // mostro pagina2 modal
+    $(".confermaButton").addClass("disabled");
     $(".btnIndietro").removeClass("hidden");
     $(".modalConfermaVoto").removeClass("hidden");
     $(".confermaButton").removeClass("hidden");
@@ -111,11 +112,11 @@ function confermaVoto(id_s, msg1, msg2) {
 
     $(".btnIndietro").addClass("hidden");
     $(".modalConfermaVoto").addClass("hidden");
-    
+
     setTimeout(function () {
         $(".feedbackVoto").removeClass("hidden");
     }, 1000);
-    
+
     $(".confermaButton").addClass("disabled");
 
     $(".listaAggregazioni").addClass("hidden");
@@ -148,8 +149,6 @@ function insertCheck() {
     $(".listaAggregazioni").removeClass("hidden");
 
 }
-
-
 
 var xhr;
 
@@ -207,14 +206,34 @@ function noA(id_s) {
 function si(id_s) {
 
     $(".yesBtn").addClass("disabled");
+
     $(".noBtn").removeClass("disabled");
     if ($(".listaAggregazioni").html().trim() === '') {
-
         visAggr(id_s);
-        abilitaConfermaVoto();
+        abilitaVotaAggr();
     }
 }
 
+
+function abilitaVotaAggr(){
+    if (cercaCheckedLi()) {
+            abilitaConfermaVoto();
+        } else {
+            $(".confermaButton").addClass("disabled");
+        }
+}
+
+function cercaCheckedLi() {
+    check = false;
+    $('li[name=inputCk]').each(function () {
+        if ($(this).hasClass('active')) {
+            check = true;
+        }
+    });
+
+    return check;
+
+}
 
 
 

@@ -22,156 +22,131 @@
         <nav class="navbar navbar-inverse">
             <div class="container-fluid" id="container-nav">
                 <div class="row">      
-                    <div class="navbar-header col-lg-1 col-md-1 col-sm-1">
+                    <div class="navbar-header col-xs-12 col-xs-offset-4 col-sm-offset-0 col-lg-2 col-md-2 col-sm-2">
+                        <a class="navbar-brand" href="ActionServlet?op=getList"><fmt:message key="titleNavbar"/></a> 
 
-                        <a class="navbar-brand" href="ActionServlet?op=getList"><fmt:message key="titleNavbar"/></a>
-                        <form action="firstpage.jsp">
-                            <button type="submit" class="navbar-toggle collapsed btn-lg glyphicon glyphicon-home btnTransparent btnHome" data-toggle="collapse" data-target="#"></button>
-                        </form>
-                        
-                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#search">
-
-                        </button>
-                    </div>
-                    <div class="col-lg-10 col-md-10 col-sm-10">
-                        <div class="container-fluid">
-                            <div class="row">    
-                                <div class="collapse navbar-collapse" id="menu">
-                                    <div class="col-lg-3 col-md-3 col-sm-3">
-                                        <form action="firstpage.jsp">
-                                            <button type="submit" class="btn-lg glyphicon glyphicon-home pull-left btnTransparent btnHome"></button>
-                                        </form>
-                                    </div>
-                                    <div class="col-lg-1 col-md-1 col-sm-1">
-                                    </div>
-                                    <div class="col-lg-8 col-md-8 col-sm-8">
-
-
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     </div>
 
-                    <div class="hidden-xs col-lg-1 col-md-1 col-sm-1 ">
-
-                    </div> 
-
-                    <!-- /.navbar-collapse #menu -->
-                    <!-- barra di ricerca per dispositivi mobile -->
+                    <div class="navbar-header col-xs-12 col-sm-8 col-sm-offset-1  col-lg-8 col-md-8">
 
 
-                </div><!-- /.container -->
-            </div>
-        </div>
-    </nav> 
 
-    <div class="container">
-        <div class="row">
-            <br>
-            <div class="col-lg-3 col-md-2 col-sm-2">
+                    </div>
+
+
+                </div>
 
             </div>
-            <div class="col-lg-6 col-md-8 col-sm-8">
 
-
-
-                <form class="form-horizontal form-login" action='ActionServlet' method="post" id="centra">
-                    <fieldset>
-                        <div id="legend"  class="title text-center">
-                            <h2 class=""><fmt:message key="loginTitle"/></h2>
-                        </div>
-                        <div class="form-group has-feedback">
-                            <!-- Username -->
-                            <label class="control-label"  for="username"><fmt:message key="usernameInput"/></label>
-                            <div class="controls" id="usernameDiv">
-                                <input type="text" id="username" name="username" placeholder="" class="form-control" value="${nomeInserito}">
-                                <p class="help-block erroreUsr"></p>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <!-- Password-->
-                            <label class="control-label" for="password"><fmt:message key="passwordInput"/></label>
-                            <div class="controls" id="passwordDiv">
-                                <input type="password" id="password" name="password" placeholder="" class="form-control" value="${pwdInserita}">
-                                <p class="help-block errorePwd"></p>
-                                <p class="help-block erroreLogin hidden">${error}</p>
-                                <input name="op" value="login" hidden="hidden">
-                            </div>
-
-                            <!--<span class="error" style="color:red;text-align: center;"><b></b><br></span>-!
-                        </div>
-
-
-                        <br>
-                        <div class="text-center">
-                            <!-- Button -->
-                            <div class="controls">
-                                <br><br>
-                                <button class="btn btn-success center-block"><fmt:message key="loginButton"/></button>
-                            </div>
-                        </div>
-
-                        <div class="clearfix"></div>
-                        <br>
-                        <br>
-                        <div class="bottom text-center">
-                            <div id="divAccount">
-                                <span>
-                                    <fmt:message key="accountTitle"/> <!--Padding is optional-->
-                                </span>
-                            </div>
-                            <br>
-
-                            <a class="text-success" href="registrazione.jsp"><h4><fmt:message key="accountLink"/></h4></a>
-                        </div>
-
-                    </fieldset>
-                </form>
-
-            </div>
         </div>
     </div>
-    <script type="text/javascript">
+</nav> 
+<div class="container">
+    <div class="row">
+        <br>
+        <div class="col-lg-3 col-md-2 col-sm-2">
 
-        function controllo() {
-            $("#username").focus();
-            var msgerror = $(".erroreLogin").html();
-            if (msgerror !== "") {
-                switch (msgerror) {
-                    case "noUsr":
-                        $("#usernameDiv").addClass("has-error");
-                        $(".erroreUsr").html("<fmt:message key="enterUsrMessage"/>");
-                        $("#username").focus();
-                        break;
-                    case "noPwd":
-                        $("#passwordDiv").addClass("has-error");
-                        $(".errorePwd").html("<fmt:message key="enterPwdMessage"/>");
-                        $("#password").focus();
-                        break;
-                    case "noUsrPwd":
-                        $(".form-login").addClass("has-error");
-                        $(".erroreUsr").html("<fmt:message key="enterUsrMessage"/>");
-                        $(".errorePwd").html("<fmt:message key="enterPwdMessage"/>");
-                        break;
-                    case "errorUsrPwd":
-                        $(".form-login").addClass("has-error");
-                        $(".errorePwd").html("<fmt:message key="loginFailedMessage"/>");
-                        break;
-                    case "noAccount":
-                        $(".errorePwd").html("<fmt:message key="createAccounMessage"/>");
-                        $(".form-login").addClass("has-error");
-                        break;
-                }
+        </div>
+        <div class="col-lg-6 col-md-8 col-sm-8">
 
+            <form class="form-horizontal form-login" action='ActionServlet' method="post" id="centra">
+                <fieldset>
+                    <div id="legend"  class="title text-center">
+                        <h2 class=""><fmt:message key="loginTitle"/></h2>
+                    </div>
+                    <div class="form-group has-feedback">
+                        <!-- Username -->
+                        <label class="control-label"  for="username"><fmt:message key="usernameInput"/></label>
+                        <div class="controls" id="usernameDiv">
+                            <input type="text" id="username" name="username" placeholder="" class="form-control" value="${nomeInserito}">
+                            <p class="help-block erroreUsr"></p>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <!-- Password-->
+                        <label class="control-label" for="password"><fmt:message key="passwordInput"/></label>
+                        <div class="controls" id="passwordDiv">
+                            <input type="password" id="password" name="password" placeholder="" class="form-control" value="${pwdInserita}">
+                            <p class="help-block errorePwd"></p>
+                            <p class="help-block erroreLogin hidden">${error}</p>
+                            <input name="op" value="login" hidden="hidden">
+                        </div>
+
+                        <!--<span class="error" style="color:red;text-align: center;"><b></b><br></span>-!
+                    </div>
+
+
+                    <br>
+                    <div class="text-center">
+                        <!-- Button -->
+                        <div class="controls">
+                            <br><br>
+                            <button class="btn btn-success center-block"><fmt:message key="loginButton"/></button>
+                        </div>
+                    </div>
+
+                    <div class="clearfix"></div>
+                    <br>
+                    <br>
+                    <div class="bottom text-center">
+                        <div id="divAccount">
+                            <span>
+                                <fmt:message key="accountTitle"/> <!--Padding is optional-->
+                            </span>
+                        </div>
+                        <br>
+
+                        <a class="text-success" href="registrazione.jsp"><h4><fmt:message key="accountLink"/></h4></a>
+                    </div>
+
+                </fieldset>
+            </form>
+
+
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+
+    function controllo() {
+        $("#username").focus();
+        var msgerror = $(".erroreLogin").html();
+        if (msgerror !== "") {
+            switch (msgerror) {
+                case "noUsr":
+                    $("#usernameDiv").addClass("has-error");
+                    $(".erroreUsr").html("<fmt:message key="enterUsrMessage"/>");
+                    $("#username").focus();
+                    break;
+                case "noPwd":
+                    $("#passwordDiv").addClass("has-error");
+                    $(".errorePwd").html("<fmt:message key="enterPwdMessage"/>");
+                    $("#password").focus();
+                    break;
+                case "noUsrPwd":
+                    $(".form-login").addClass("has-error");
+                    $(".erroreUsr").html("<fmt:message key="enterUsrMessage"/>");
+                    $(".errorePwd").html("<fmt:message key="enterPwdMessage"/>");
+                    break;
+                case "errorUsrPwd":
+                    $(".form-login").addClass("has-error");
+                    $(".errorePwd").html("<fmt:message key="loginFailedMessage"/>");
+                    break;
+                case "noAccount":
+                    $(".errorePwd").html("<fmt:message key="createAccounMessage"/>");
+                    $(".form-login").addClass("has-error");
+                    break;
             }
 
         }
-    </script>
-    <script type="text/javascript" src="./js/jquery.js"></script>
-    <script type="text/javascript" src="./js/bootstrap.js"></script>
-    <script type="text/javascript" src="./js/Alb.js"></script> 
-    <script type="text/javascript" src="./js/main.js"></script>
+
+    }
+</script>
+<script type="text/javascript" src="./js/jquery.js"></script>
+<script type="text/javascript" src="./js/bootstrap.js"></script>
+<script type="text/javascript" src="./js/Alb.js"></script> 
+<script type="text/javascript" src="./js/main.js"></script>
 </body>
 
 </html>
