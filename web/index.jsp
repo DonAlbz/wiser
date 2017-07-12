@@ -56,6 +56,7 @@
                                              </form>-->
 
                                         <%
+                                            int DSPerPag = Functions.DS_PER_PAGINA;
                                             String searchBar = (String) request.getAttribute("ricerca");
                                             if (searchBar == null) {
                                                 searchBar = "";
@@ -198,7 +199,7 @@
 
                                                 %>
 
-                                                <li><a href="ActionServlet?op=getList&start=<%=i * 8%>&filtro=<%=filter%>&search=<%=key%>&tag=<%=tag%>&orderBy=<%=ordinamento%>"><%=i + 1%></a></li>
+                                                <li><a href="ActionServlet?op=getList&start=<%=i * DSPerPag%>&filtro=<%=filter%>&search=<%=key%>&tag=<%=tag%>&orderBy=<%=ordinamento%>"><%=i + 1%></a></li>
                                                     <%
                                                             }
                                                         }
@@ -301,7 +302,7 @@
 
                         %>
 
-                        <li><a href="ActionServlet?op=getList&start=<%=i * 8%>&filtro=<%=filter%>&search=<%=key%>&tag=<%=tag%>&orderBy=<%=ordinamento%>"><%=i + 1%></a></li>
+                        <li><a href="ActionServlet?op=getList&start=<%=i * DSPerPag%>&filtro=<%=filter%>&search=<%=key%>&tag=<%=tag%>&orderBy=<%=ordinamento%>"><%=i + 1%></a></li>
 
                         <%
                                 }
