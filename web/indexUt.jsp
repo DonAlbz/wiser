@@ -225,30 +225,13 @@
 
 
             <!-- Pagina centrale -->
-            <div class="hidden-sm hidden-lg hidden-md">
+          
                 <!-- Tasto per comprimere sidebar -->
                 <!---<a href="#menu-toggle" class="btn btn-default" id="menu-toggle">Toggle Menu</a>-->
 
-                <!--Paginazione schermo piccolo-->
-
-                <div class="pull-right">
-                    <ul class="pagination" >
-                        <%
-                            if (numPages > 1) {
-                                for (int i = 0; i < numPages; i++) {
-
-                        %>
-
-                        <li><a onclick="doHref('ActionServlet?op=getList2&start=<%=i * 8%>&filtro=<%=filter%>&search=<%=key%>&tag=<%=tag%>&orderBy=<%=ordinamento%>&nomeU=<%=nome_utente%>')"><%=i + 1%></a></li>
-                            <%
-                                    }
-                                }
-                            %>
-                    </ul>
-                </div>
-            </div>
 
             <!-- Page Content -->
+           
             <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
 
                 <div class="container-fluid">
@@ -256,6 +239,7 @@
                         <div class="row">
 
                             <div class="row">
+                                
                                 <div class=" btn-group col-xs-4 col-sm-3 col-md-2 col-lg-2" id="ordinaPer">  
                                     <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
                                         Sort by <span class="caret"></span>
@@ -282,7 +266,23 @@
 
                                     <div id="ord" class="label label-success <%=hidden%>" role="alert">${ordinamento}</div>
                                 </div>
+                                <!--Paginazione schermo piccolo-->
 
+                                <div class="col-xs-3 col-sm-3 col-md-4 col-lg-4 pull-right">
+                                    <ul class="pagination" style="float:right; margin: 0px;">
+                                        <%
+                                            if (numPages > 1) {
+                                                for (int i = 0; i < numPages; i++) {
+
+                                        %>
+
+                                        <li><a onclick="doHref('ActionServlet?op=getList2&start=<%=i * 8%>&filtro=<%=filter%>&search=<%=key%>&tag=<%=tag%>&orderBy=<%=ordinamento%>&nomeU=<%=nome_utente%>')"><%=i + 1%></a></li>
+                                            <%
+                                                    }
+                                                }
+                                            %>
+                                    </ul>
+                                </div>
                           
                             </div>
                         </div>
@@ -438,7 +438,7 @@
                     </div>
                 </div>
             </div>
-            <div class="hidden-xs col-sm-2 col-md-2 col-lg-2 list-group listGroupMashUp">
+            <div class="hidden-xs col-sm-2 col-md-2 col-lg-2">
                 <legend class="center-block"><fmt:message key="myMashupTitle"/></legend>
                 <%
                     ArrayList<Aggregazione> mashup = (ArrayList<Aggregazione>) session.getAttribute("mashup");
@@ -522,6 +522,7 @@
                         }
                     }
                 %>
+                
             </div>    
 
 
