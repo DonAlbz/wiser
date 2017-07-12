@@ -126,7 +126,7 @@
                                 <label class="control-label"  for="password_confirm"><fmt:message key="passwordConfirmInput"/></label>
                                 <div class="controls">
                                     <input type="password" id="password_confirm" name="password_confirm" onkeyup="confrontaPassword()" placeholder="" class="form-control">
-                                    <p id="pwd-confirm-text" class="help-block"><fmt:message key="confimPasswordMessage"/></p>
+                                    <p id="pwd-confirm-text" class="help-block"><fmt:message key="confirmPasswordMessage"/></p>
                                 </div>                        
                                 <span class="error" style="color:red;text-align: center;"><b>${error_a}</b><br></span>
                             </div>
@@ -135,23 +135,21 @@
                                 <!-- Button -->
                                 <div class="form-group">
 
-                                    <button type="button" id="daAbilitare" class="btn btn-success disabled" onclick="confermaRegistrazione()"><fmt:message key="accountConfirmButton"/></button>
-                                    <!--         <input name="op" value="registrazione" hidden="hidden"> --->
-
+                                    <button type="button" id="daAbilitare" class="btn btn-success disabled" onclick="confermaRegistrazione('<fmt:message key="welcomeRegister"/>')"><fmt:message key="accountConfirmButton"/></button>
                                 </div>
                             </div>
                         </fieldset>
                     </form>
 
                     <!-- Modal -->
-                    <div id="modalRegistration" class="modal fade" role="dialog">
+                    <div id="modalRegistration" class="modal fade posizionaModal" role="dialog">
                         <div class="modal-dialog">
 
                             <!-- Modal content-->
                             <div class="modal-content">
                                 <div class="modal-header">
                                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                    <h4 class="modal-title">User successfully registered!</h4>
+                                    <h4 class="modal-title"><fmt:message key="confirmRegistration"/></h4>
                                 </div>
                                 <div class="modal-body">
                                     <div>

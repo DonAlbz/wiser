@@ -232,11 +232,11 @@ function rimuoviDataService(idDataService) {
 }
 
 
-function confermaRegistrazione() {
+function confermaRegistrazione(Stringa) {
     var pass = $("#password").val();
     var usern = $("#username").val();
     var passconf = $("#password_confirm").val();
-    $("#welcDiv").text("Welcome " + usern.toUpperCase());
+    $("#welcDiv").text(Stringa + " " + usern.toUpperCase());
     $("#modalRegistration").modal("show");
     setTimeout(function () {
         $.post("ActionServlet", {"op": "registrazione", "username": usern, "password": pass, "password_confirm": passconf},
