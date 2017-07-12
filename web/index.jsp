@@ -309,7 +309,7 @@
                         %>
                     </ul>
                 </div>
-            </div>
+            </div> 
         </div>
 
         <footer class="container-fluid text-right" style="color: black; padding: 15px;">

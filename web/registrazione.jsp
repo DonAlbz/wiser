@@ -10,16 +10,40 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <title></title>
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="apple-touch-icon" href="apple-touch-icon.png">
+
         <link rel="stylesheet" href="css/bootstrap.min.css">
         <link rel="stylesheet" href="css/bootstrap-theme.min.css">
+
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+
+        <link rel="stylesheet" href="jquery-ui/jquery-ui.css">
+        <link rel="stylesheet" href="/resources/demos/style.css">
+
+        <!--<script src="https://code.jquery.com/jquery-1.12.4.js"></script>-->
+        <script src="jquery-ui/jquery-ui.js"></script>
+
+        <link rel="apple-touch-icon" href="apple-touch-icon.png">
+        <link rel="stylesheet" href="css/sidebar.css">
         <link rel="stylesheet" href="css/main.css">
 
 
+
+        <script type="text/javascript" src="./js/gestione_voti.js"></script>
+        <link rel="stylesheet" href="css/sara_css.css">
+
+
+
+ 
         <title>Create account</title>
+
     </head>
     <body>
         <fmt:setLocale value="en"/>
@@ -53,25 +77,6 @@
                                     <div class="col-lg-1 col-md-1 col-sm-1">
                                     </div>
                                     <div class="col-lg-8 col-md-8 col-sm-8">
-
-                                        <!--search bar-->
-                                        <!-- <form class="navbar-form   hidden-xs" role="search" action="ActionServlet" method="GET">
-                                             <div id="nav-centrata" class="input-group" >
-                                             <input id="auto0" name="search" type="text" class="form-control center-block height-40" placeholder="search..." onkeydown="arrowEnable(event)" onkeyup="autocompl(this.value, event);" 
-                                                   autocomplete="off">
-                                             <input name="op"  type="text" value="getList" hidden>
-                                             <span class="input-group-btn">
-                                             <button class="btn btn-success height-40" type="submit">Search</button>
-                                             </span>
-                                             <div>
-                                             </form>-->
-
-
-
-
-
-
-
                                     </div>
                                 </div>
                             </div>
@@ -82,11 +87,9 @@
 
                     </div> 
 
-                    <!-- /.navbar-collapse #menu -->
-                    <!-- barra di ricerca per dispositivi mobile -->
                     <div class="collapse navbar-collapse hidden-lg" id="search">
 
-                    </div><!-- /.container -->
+                    </div>
                 </div>
             </div>
         </nav> 
@@ -96,12 +99,12 @@
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-6 col-xs-8">
 
-                    <form class="form-horizontal" action='ActionServlet' method="post" id="centra">
+                    <form class="form-horizontal" id="centra"> 
                         <fieldset>
                             <div id="legend" class="title text-center">
                                 <h2><fmt:message key="createAccountTitle"/></h2> 
                             </div>
-                            <div id="form-user"class="form-group has-feedback">
+                            <div id="form-user" class="form-group has-feedback">
                                 <!-- Username -->
                                 <label class="control-label"  for="username"><fmt:message key="usernameInput"/></label>
                                 <div class="controls">
@@ -109,7 +112,6 @@
                                     <p id="user-text" class="help-block"><fmt:message key="inputUsernameMessage"/></p>
                                 </div>
                             </div>
-
                             <div id="form-pwd" class="form-group has-feedback">
                                 <!-- Password-->
                                 <label class="control-label" for="password"><fmt:message key="passwordInput"/></label>
@@ -129,27 +131,46 @@
                                 <span class="error" style="color:red;text-align: center;"><b>${error_a}</b><br></span>
                             </div>
                             <br>
-
-
-
-
-
-
                             <div class="control-group">
                                 <!-- Button -->
                                 <div class="form-group">
-                                    <button id="daAbilitare" class="btn btn-success disabled center-block"><fmt:message key="accountConfirmButton"/></button>
-                                    <input name="op" value="registrazione" hidden="hidden">
+
+                                    <button type="button" id="daAbilitare" class="btn btn-success disabled" onclick="confermaRegistrazione()"><fmt:message key="accountConfirmButton"/></button>
+                                    <!--         <input name="op" value="registrazione" hidden="hidden"> --->
+
                                 </div>
                             </div>
                         </fieldset>
                     </form>
+
+                    <!-- Modal -->
+                    <div id="modalRegistration" class="modal fade" role="dialog">
+                        <div class="modal-dialog">
+
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h4 class="modal-title">User successfully registered!</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <div>
+                                        <div class="form-group has-feedback"> 
+                                            <div class="controls">
+                                                <label id="welcDiv" class="control-label" for="nameTag"></label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
-        <script type="text/javascript" src="./js/jquery.js"></script>
-        <script type="text/javascript" src="./js/bootstrap.js"></script>
-        <script type="text/javascript" src="./js/Alb.js"></script> 
+
+        <script type="text/javascript" src="./js/Alb.js"></script>
+        <script type="text/javascript" src="./js/Tibi.js"></script> 
         <script type="text/javascript" src="./js/Mat.js"></script> 
         <script type="text/javascript" src="./js/main.js"></script> 
         <script>
