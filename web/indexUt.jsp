@@ -55,7 +55,7 @@
 
                     <div class="navbar-header col-xs-1 col-lg-1 col-md-1 col-sm-1 ">
                         <%String nomeSessione = session.getAttribute("name").toString();%>                                                           
-                        <a class="navbar-brand" href="ActionServlet?op=getList2&nomeU=<%=nomeSessione%>">Wiser</a>
+                        <a class="navbar-brand" href="ActionServlet?op=getList2&nomeU=<%=nomeSessione%>"><fmt:message key="titleNavbar"/></a>
                     </div>
                     <div class="navbar-header col-sm-2 col-md-2 col-lg-2  ">
 
@@ -87,14 +87,14 @@
                         %>
                         <form class="navbar-form " role="search">
                             <div id="nav-centrata" class="input-group" >
-                                <input id="auto0" name="search" type="text" value='<%=searchBar%>' class="form-control center-block height-40" placeholder="search..." onkeydown="arrowEnable(event)" onkeyup="autocompl(this.value, event);" 
+                                <input id="auto0" name="search" type="text" value='<%=searchBar%>' class="form-control center-block height-40" placeholder="<fmt:message key="searchPlaceHolder"/>" onkeydown="arrowEnable(event)" onkeyup="autocompl(this.value, event);" 
                                        autocomplete="off">
 
                                 <input id="op"  type="text" value="getList2" hidden>
 
 
                                 <span class="input-group-btn">
-                                    <button class="btn btn-success height-40" type="button" onclick="parseSend()">Search</button>
+                                    <button class="btn btn-success height-40" type="button" onclick="parseSend()"><fmt:message key="searchButton"/></button>
                                 </span>
                                 <input id="userModeSearch" value="true" class="hidden">
                                 <input id="userSearch" value="<%=nome_utente%>" class="hidden">
@@ -220,37 +220,22 @@
 
 
             <!-- Pagina centrale -->
-            <div class="hidden-sm hidden-lg hidden-md">
+          
                 <!-- Tasto per comprimere sidebar -->
                 <!---<a href="#menu-toggle" class="btn btn-default" id="menu-toggle">Toggle Menu</a>-->
 
-                <!--Paginazione schermo piccolo-->
-
-                <div class="pull-right">
-                    <ul class="pagination" >
-                        <%
-                            if (numPages > 1) {
-                                for (int i = 0; i < numPages; i++) {
-
-                        %>
-
-                        <li><a onclick="doHref('ActionServlet?op=getList2&start=<%=i * 8%>&filtro=<%=filter%>&search=<%=key%>&tag=<%=tag%>&orderBy=<%=ordinamento%>&nomeU=<%=nome_utente%>')"><%=i + 1%></a></li>
-                            <%
-                                    }
-                                }
-                            %>
-                    </ul>
-                </div>
-            </div>
 
             <!-- Page Content -->
+           
             <div class="col-xs-12 col-sm-12 col-md-8 col-lg-8">
 
                 <div class="container-fluid">
                     <div class="row">
                         <div class="row">
 
+
                             <div class="row">
+                                
                                 <div class=" btn-group col-xs-4 col-sm-3 col-md-2 col-lg-2" id="ordinaPer">  
                                     <button type="button" class="btn btn-success dropdown-toggle" data-toggle="dropdown">
                                         Sort by <span class="caret"></span>
@@ -281,8 +266,25 @@
                                     <div id="ordRatMax" class="ord label label-success hidden" role="alert"><fmt:message key="ordRatMax"/></div>
                                     <div id="ordRatMin" class="ord label label-success hidden" role="alert"><fmt:message key="ordRatMin"/></div>
                                 </div>
+                                <!--Paginazione schermo piccolo-->
 
+                                <div class="col-xs-3 col-sm-3 col-md-4 col-lg-4 pull-right">
+                                    <ul class="pagination" style="float:right; margin: 0px;">
+                                        <%
+                                            if (numPages > 1) {
+                                                for (int i = 0; i < numPages; i++) {
+
+                                        %>
+
+                                        <li><a onclick="doHref('ActionServlet?op=getList2&start=<%=i * 8%>&filtro=<%=filter%>&search=<%=key%>&tag=<%=tag%>&orderBy=<%=ordinamento%>&nomeU=<%=nome_utente%>')"><%=i + 1%></a></li>
+                                            <%
+                                                    }
+                                                }
+                                            %>
+                                    </ul>
+                                </div>
                           
+
                             </div>
                         </div>
                         <br>
@@ -295,7 +297,7 @@
                             if (services.size() == 0) {
                         %>
                         <div class="row">
-                                <p> We are sorry! We could not find any matches for your search terms</p>
+                            <p><fmt:message key="DSnotFound"/></p>
                         </div>
                         <%
                             } 
@@ -343,20 +345,20 @@
                                             <div class="modal-content">
                                                 <div class="modal-header">
                                                     <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                                    <h4 class="modal-title">Add Tag</h4>
+                                                    <h4 class="modal-title"><fmt:message key="tagModalTitle"/></h4>
                                                 </div>
                                                 <div class="modal-body">
                                                     <div id="creazioneAggr">
                                                         <div id="inputAgg" class="form-group has-feedback"> 
                                                             <div class="controls">
-                                                                <label class="control-label" for="nameTag">Tag name: </label><input id="nameAgg" type="text" placeholder="insert name" class="form-control">
+                                                                <label class="control-label" for="nameTag"><fmt:message key="inputName"/></label><input id="nameAgg" type="text" placeholder="insert name" class="form-control">
 
                                                             </div>
                                                         </div>
                                                     </div>
                                                     <div class="modal-footer">
-                                                        <button type="button" onclick="aggiungiTag('<%=service.getId()%>')" class="btn btn-primary mostra" data-dismiss="modal"> Confirm</button> 
-                                                        <button type="button" class="btn btn-danger mostra" data-dismiss="modal"> Close</button> 
+                                                        <button type="button" onclick="aggiungiTag('<%=service.getId()%>')" class="btn btn-primary mostra" data-dismiss="modal"><fmt:message key="confirmButton"/></button> 
+                                                        <button type="button" class="btn btn-danger mostra" data-dismiss="modal"><fmt:message key="closeButton"/></button> 
                                                     </div>
                                                 </div>
                                             </div>
@@ -375,32 +377,32 @@
                                             <div class="modal-content contentVota">
                                                 <div class="modal-header">
                                                     <button type="button" class="close closeButtonX" data-dismiss="modal">&times;</button>
-                                                    <h4 class="modal-title">Vota <%=service.getNome()%></h4>
+                                                    <h4 class="modal-title"><fmt:message key="modalVoteTitle"/> <%=service.getNome()%></h4>
                                                 </div>
                                                 <div class="modal-body">
                                                     <div class="dialogo" nome="<%=service.getId()%>" title="Vota ">
                                                         <ol class="listVotiOl">
-                                                            <li class="ui-widget-content puntatore">POOR (scarcely adopted within the mashup)<span class='labelVoto right'>0.0</span></li>
-                                                            <li class="ui-widget-content puntatore">MARGINAL (several problems during execution within the mashup)<span class='labelVoto right'>0.125</span></li>
-                                                            <li class="ui-widget-content puntatore">FAIR (slow and cumbersome)<span class='labelVoto right'>0.25</span></li>
-                                                            <li class="ui-widget-content puntatore">SATISFACTORY (small performance penalty)<span class='labelVoto right'>0.375</span></li>
-                                                            <li class="ui-widget-content puntatore">GOOD (minimum mashup requirements are satisfied)<span class='labelVoto right'>0.5</span></li>
-                                                            <li class="ui-widget-content puntatore">VERY GOOD (good performances and minimum mashup requirements are satisfied)<span class='labelVoto right'>0.625</span></li>
-                                                            <li class="ui-widget-content puntatore">EXCELLENT (discreet performances and satisfying functionalities within the mashup)<span class='labelVoto right'>0.75</span></li>
-                                                            <li class="ui-widget-content puntatore">OUTSTANDING (very good performances and functionalities within the mashup)<span class='labelVoto right'>0.875</span></li>
-                                                            <li class="ui-widget-content puntatore">EXCEPTIONAL (very good performances, functionalities and easy to use in mashup)<span class='labelVoto right'>1.0</span></li>
+                                                            <li class="ui-widget-content puntatore"><fmt:message key="voteString1"/><span class='labelVoto right'><fmt:message key="voteValue1"/></span></li>
+                                                            <li class="ui-widget-content puntatore"><fmt:message key="voteString2"/><span class='labelVoto right'><fmt:message key="voteValue2"/></span></li>
+                                                            <li class="ui-widget-content puntatore"><fmt:message key="voteString3"/><span class='labelVoto right'><fmt:message key="voteValue3"/></span></li>
+                                                            <li class="ui-widget-content puntatore"><fmt:message key="voteString4"/><span class='labelVoto right'><fmt:message key="voteValue4"/></span></li>
+                                                            <li class="ui-widget-content puntatore"><fmt:message key="voteString5"/><span class='labelVoto right'><fmt:message key="voteValue5"/></span></li>
+                                                            <li class="ui-widget-content puntatore"><fmt:message key="voteString6"/><span class='labelVoto right'><fmt:message key="voteValue6"/></span></li>
+                                                            <li class="ui-widget-content puntatore"><fmt:message key="voteString7"/><span class='labelVoto right'><fmt:message key="voteValue7"/></span></li>
+                                                            <li class="ui-widget-content puntatore"><fmt:message key="voteString8"/><span class='labelVoto right'><fmt:message key="voteValue8"/></span></li>
+                                                            <li class="ui-widget-content puntatore"><fmt:message key="voteString9"/><span class='labelVoto right'><fmt:message key="voteValue9"/></span></li>
                                                         </ol>
                                                         <br>
 
                                                     </div>
                                                     <div class="hidden modalConfermaVoto text-center" >
-                                                        <p class="textConfermaVoto">Vuoi assegnare il voto <b class="votoScelto"></b> a <b><%=service.getNome()%></b> in relazione a qualche aggregazione?</p>
+                                                        <p class="textConfermaVoto"><fmt:message key="voteMessage1"/> <b> <%=service.getNome()%> </b> <fmt:message key="voteMessage2"/></p>
                                                         <br>
                                                         <div class="row">
 
                                                             <div class="center-block">
-                                                                <button type="button" class="btn btn-success yesBtn" onclick="si('<%=service.getId()%>');"><a>yes</a></button>
-                                                                <button type="button" class="btn btn-success noBtn" onclick="noA('<%=service.getId()%>');"><a>no</a></button>
+                                                                <button type="button" class="btn btn-success yesBtn" onclick="si('<%=service.getId()%>');"><a><fmt:message key="yesButton"/></a></button>
+                                                                <button type="button" class="btn btn-success noBtn" onclick="noA('<%=service.getId()%>');"><a><fmt:message key="noButton"/></a></button>
                                                             </div>
                                                         </div>
                                                         <br>
@@ -414,9 +416,9 @@
 
                                                     <div class="modal-footer">
                                                         <button class="btn btnIndietro glyphicon glyphicon-chevron-left pull-left btn-default hidden" onclick="indietro()"></button>
-                                                        <button type="button" class="btn btn-primary hidden disabled confermaButton" onclick="confermaVoto('<%=service.getId()%>')"><a>Confirm</a></button>                                                               
-                                                        <button class="btn btn-primary confermaVoto" disabled="true" onclick="modal2()">Confirm</button>
-                                                        <button  type="button" class="btn btn-danger closeButton" data-dismiss="modal">Close</button>
+                                                        <button type="button" class="btn btn-primary hidden disabled confermaButton" onclick="confermaVoto('<%=service.getId()%>','<fmt:message key="voteSuccessMessage2"/>','<fmt:message key="voteErrorMessage"/>')"><a><fmt:message key="confirmButton"/></a></button>                                                               
+                                                        <button class="btn btn-primary confermaVoto" disabled="true" onclick="modal2()"><fmt:message key="confirmButton"/></button>
+                                                        <button  type="button" class="btn btn-danger closeButton" data-dismiss="modal"><fmt:message key="closeButton"/></button>
                                                     </div>
 
                                                 </div>
@@ -437,7 +439,7 @@
                     </div>
                 </div>
             </div>
-            <div class="hidden-xs col-sm-2 col-md-2 col-lg-2 list-group listGroupMashUp">
+            <div class="hidden-xs col-sm-2 col-md-2 col-lg-2">
                 <legend class="center-block"><fmt:message key="myMashupTitle"/></legend>
                 <%
                     ArrayList<Aggregazione> mashup = (ArrayList<Aggregazione>) session.getAttribute("mashup");
@@ -469,21 +471,21 @@
                                         <div class="modal-content">
                                             <div class="modal-header">
                                                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                                <h4 class="modal-title">Delete Mash-Up</h4>
+                                                <h4 class="modal-title"><fmt:message key="titleModalDeleteMU"/></h4>
                                             </div>
                                             <div class="modal-body">
                                                 <div id="creazioneAggr">
                                                     <div id="inputAgg" class="form-group has-feedback"> 
                                                         <div class="controls">
-                                                            Are you sure you want to delete <b><%=nome%></b> ?
+                                                            <fmt:message key="deleteMessage1"/><b><%=nome%></b> ?
                                                             <br>
-                                                            Attention, if you confirm you can't recover it!
+                                                            <fmt:message key="deleteMessage2"/>
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="modal-footer">
-                                                    <button type="button" onclick="eliminaAggregazione('<%=nome%>')" class="btn btn-primary mostra" data-dismiss="modal"> Confirm</button> 
-                                                    <button type="button" class="btn btn-danger mostra" data-dismiss="modal"> Close</button> 
+                                                    <button type="button" onclick="eliminaAggregazione('<%=nome%>')" class="btn btn-primary mostra" data-dismiss="modal"><fmt:message key="confirmButton"/></button> 
+                                                    <button type="button" class="btn btn-danger mostra" data-dismiss="modal"><fmt:message key="closeButton"/></button> 
                                                 </div>
                                             </div>
 
@@ -497,10 +499,10 @@
                                 <%
                                     if (dataServiceByAggr.size() == 0) {
                                 %>
-                                <li class="list-group-item" id="no<%=nome%>" > No Data Services </li> 
+                                <li class="list-group-item" id="no<%=nome%>" > <fmt:message key="noDSmessage"/> </li> 
                                     <% } else {
                                     %>
-                                <li class="list-group-item hidden" id="no<%=nome%>" > No Data Services </li>
+                                <li class="list-group-item hidden" id="no<%=nome%>" > <fmt:message key="noDSmessage"/>  </li>
                                     <%
                                         Iterator iteratoreDS = dataServiceByAggr.iterator();
                                         while (iteratoreDS.hasNext()) {
@@ -521,6 +523,7 @@
                         }
                     }
                 %>
+                
             </div>    
 
 
@@ -554,7 +557,7 @@
         </div>
     </div>
     <footer class="container-fluid text-right" style="color: black; padding: 15px;">
-        <p>&copy; Beschi Chiari Tiberti Vivenzi</p>
+        <p>&copy; <fmt:message key="firme"/></p>
     </footer>
     <script type="text/javascript" src="./js/autocomplAjax.js"></script>
     <script type="text/javascript" src="./js/Tibi.js"></script>
