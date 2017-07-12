@@ -34,7 +34,7 @@ function alb(){
                          if(pwd1!==""){ 
                              $("#form-pwd").addClass("has-error");
                          }
-                    }
+                    }                
                 });
                 
         $("#password_confirm").blur(
@@ -43,10 +43,8 @@ function alb(){
                         pwd2=$(this).val();
                         if(pwd1 !== pwd2){                           
                             $("#form-pwd-confirm").addClass("has-error");
-                        } else {
-                            $("#form-pwd-confirm").removeClass("has-error");
-                            $("#form-pwd-confirm").addClass("has-success");
-                        }
+
+                        }                     
                     });
      // $(this).css("background-color","#0A5B68");
     });
@@ -74,6 +72,7 @@ function controlloUsername(username){
                 $("#user-text").html("Username already taken, please choose another one!");
                
             }
+            confrontaPassword();
         }, "text");
      
     }

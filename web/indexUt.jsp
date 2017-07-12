@@ -8,6 +8,8 @@
 <%@page import="java.util.*"%>
 <%@page import="wiser.dao.*"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -42,6 +44,8 @@
         <link rel="stylesheet" href="css/sara_css.css">
     </head>
     <body>
+        <fmt:setLocale value="en"/>
+        <fmt:setBundle basename="indexBundle"/>
         <!--[if lt IE 8]>
             <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
@@ -50,7 +54,7 @@
                 <div class="row">      
 
                     <div class="navbar-header col-xs-1 col-lg-1 col-md-1 col-sm-1 ">
-                       <%String nomeSessione = session.getAttribute("name").toString();%>                                                           
+                        <%String nomeSessione = session.getAttribute("name").toString();%>                                                           
                         <a class="navbar-brand" href="ActionServlet?op=getList2&nomeU=<%=nomeSessione%>">Wiser</a>
                     </div>
                     <div class="navbar-header col-sm-2 col-md-2 col-lg-2  ">
@@ -88,6 +92,7 @@
 
                                 <input id="op"  type="text" value="getList2" hidden>
 
+
                                 <span class="input-group-btn">
                                     <button class="btn btn-success height-40" type="button" onclick="parseSend()">Search</button>
                                 </span>
@@ -100,7 +105,7 @@
 
                         <ul class="nav navbar-nav navbar-right">
                             <!-- Trigger the modal with a button -->
-                            <li><a href="#"><button id="btnCreaMeshup" type="button" class="btn btn-primary margine" onclick="apriWizard()">New Mash-Up! </button></a></li>
+                            <li><a href="#"><button id="btnCreaMeshup" type="button" class="btn btn-primary margine" onclick="apriWizard()"><fmt:message key="buttonNewMashup"/></button></a></li>
                             <!--         <li><a href="#"><button id="confirmMeshup" type="button" class="btn btn-warning margine hidden">Conferma</button></a></li>  -->
 
                             <!-- Modal -->
@@ -111,45 +116,45 @@
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                            <h4 class="modal-title">Create Mash-Up</h4>
+                                            <h4 class="modal-title"><fmt:message key="modalMashupTitle"/></h4>
                                         </div>
                                         <div class="modal-body">
 
                                             <div id="creazioneAggr" class="creazioneAggr">
                                                 <div id="inputAgg" class="form-group has-feedback"> 
 
-                                                    <label class="control-label" for="nameAgg">Name: </label>
+                                                    <label class="control-label" for="nameAgg"><fmt:message key="inputName"/></label>
                                                     <div class="controls">
                                                         <input id="nameAgg" type="text" placeholder="insert name" class="form-control">
-                                                        <p id="mashup-text" class="help-block">A mash-up can contain any letters (without accent) or numbers, without spaces and can't start with a number</p>
-                                                        <p id="mashup-err" class="help-block hidden">This mash-up already exists!</p>
+                                                        <p id="mashup-text" class="help-block"><fmt:message key="inputHelpMessageMU"/></p>
+                                                        <p id="mashup-err" class="help-block hidden"><fmt:message key="inputErrorMessageMU"/></p>
                                                     </div>
                                                 </div>
                                                 <br>
                                                 <div class="form-group has-feedback"> 
-                                                    <label class="control-label" for="descrizioneAgg">Description: </label>
+                                                    <label class="control-label" for="descrizioneAgg"><fmt:message key="inputDescription"/></label>
                                                     <textarea class="form-control" id="descrizioneAgg" placeholder="insert description"></textarea>                                           
                                                 </div>
                                             </div>
                                             <div id="msg-conf-aggr" class="creazioneAggr hidden">
                                                 <div  class="jumbotron feedbackMashup">
                                                     <h3>
-                                                        Mash-up created!
+                                                        <fmt:message key="successMessageMU"/>
                                                     </h3>
                                                 </div>
                                             </div>
 
                                         </div>
                                         <div class="modal-footer">
-                                            <button id="btn-crea-aggregazione" type="button" onclick="creaAggregazione()" class="btn btn-primary" >Confirm</button>                                                                                    
-                                            <button  type="button" class="btn btn-danger" data-dismiss="modal" onclick="chiudiModalAggregazione();">Close</button>
+                                            <button id="btn-crea-aggregazione" type="button" onclick="creaAggregazione()" class="btn btn-primary" ><fmt:message key="confirmButton"/></button>                                                                                    
+                                            <button  type="button" class="btn btn-danger" data-dismiss="modal" onclick="chiudiModalAggregazione();"><fmt:message key="closeButton"/></button>
                                         </div>                     
                                     </div>
                                 </div>
                             </div>
 
                             <li><a href="#"><span class="glyphicon glyphicon-user"></span><%=nomeSes%></a></li>
-                            <li><a href="ActionServlet?op=logout"><span class="glyphicon glyphicon-log-out"></span>Logout</a></li>
+                            <li><a href="ActionServlet?op=logout"><span class="glyphicon glyphicon-log-out"></span><fmt:message key="logoutButton"/></a></li>
                         </ul>
 
                     </div> 
@@ -160,9 +165,9 @@
                 <div class="collapse navbar-collapse hidden-lg" id="search">
                     <form class="mobile_search hidden-sm hidden-md hidden-lg" role="search" action="/" method="GET">
                         <div class="input-group">
-                            <input type="text" class="form-control" placeholder="looking for something?"/>
+                            <input type="text" class="form-control" placeholder="<fmt:message key="searchPlaceHolder"/>"/>
                             <span class="input-group-btn">
-                                <a href="#" class="btn btn-success" type="button">Search</a>
+                                <a href="#" class="btn btn-success" type="button"><fmt:message key="searchButton"/></a>
                             </span>
 
                         </div><!-- /.navbar-collapse #search -->
@@ -172,28 +177,31 @@
         </div> 
     </nav> 
 
-     <div id="autocompl" style="display:none">
-            <div id="auto1" class="autoc" style="display: none" onmouseover="riempiSearch(id.valueOf())" onclick="ricerca(id.valueOf())"></div>
-            <div id="auto2" class="autoc" onmouseover="riempiSearch(id.valueOf())" onclick="ricerca(id.valueOf())"></div>
-            <div id="auto3" class="autoc" onmouseover="riempiSearch(id.valueOf())" onclick="ricerca(id.valueOf())"></div>
-            <div id="auto4" class="autoc" onmouseover="riempiSearch(id.valueOf())" onclick="ricerca(id.valueOf())"></div>
-        </div>
+    <div id="autocompl" style="display:none">
+        <div id="auto1" class="autoc" style="display: none" onmouseover="riempiSearch(id.valueOf())" onclick="ricerca(id.valueOf())"></div>
+        <div id="auto2" class="autoc" onmouseover="riempiSearch(id.valueOf())" onclick="ricerca(id.valueOf())"></div>
+        <div id="auto3" class="autoc" onmouseover="riempiSearch(id.valueOf())" onclick="ricerca(id.valueOf())"></div>
+        <div id="auto4" class="autoc" onmouseover="riempiSearch(id.valueOf())" onclick="ricerca(id.valueOf())"></div>
+    </div>
     <div class="container-fluid">
         <div class="row">
             <!-- Sidebar -->
             <!-- il div wrapper serve per comprimere la navbar e comprende tutto il contenuto della pagina-->
 
-
             <div class="col-xs-12- col-sm-12 col-md-2 col-lg-2">
-                <legend> Filter by Categories </legend>
+                <legend><fmt:message key="titleCategories"/></legend>
                 <div class="list-group">
                     <%
                         int servicesDim = (Integer) request.getAttribute("servicesDim");
                         int numPages = Functions.numberOfPages(servicesDim);
                         String filter = (String) request.getAttribute("filtro");
                         String key = (String) request.getAttribute("search");
-                        if (key != null) {
-                            key = key.replace("\"", "\'");
+                        if ((key != null)) {
+
+                            if (!key.equalsIgnoreCase("null")) {
+                                key = key.replace("\"", "|!");
+                                key = key.replace("\'", "|!");
+                            }
                         }
                         String tag = (String) request.getAttribute("tag");
                         String ordinamento = (String) request.getAttribute("orderBy");
@@ -202,7 +210,7 @@
                         while (iterCat.hasNext()) {
                             Category selCat = (Category) iterCat.next();
                     %>        
-                    <a href="ActionServlet?op=getList2&filtro=<%=selCat.getNome()%>&search=<%=key%>&tag=<%=tag%>&nomeU=<%=nome_utente%>" class=" categorie list-group-item"> <%=selCat.getNome()%></a>
+                    <a onclick="doHref('ActionServlet?op=getList2&filtro=<%=selCat.getNome()%>&search=<%=key%>&tag=<%=tag%>&nomeU=<%=nome_utente%>')" class=" categorie list-group-item"> <%=selCat.getNome()%></a>
                     <%
                         }
                     %>
@@ -216,20 +224,21 @@
                 <!---<a href="#menu-toggle" class="btn btn-default" id="menu-toggle">Toggle Menu</a>-->
 
                 <!--Paginazione schermo piccolo-->
+
                 <div class="pull-right">
-                <ul class="pagination  hidden-sm hidden-lg hidden-md" >
-                    <%
-                        if (numPages > 1) {
-                            for (int i = 0; i < numPages; i++) {
-
-                    %>
-
-                    <li><a href="ActionServlet?op=getList2&start=<%=i * 8%>&filtro=<%=filter%>&search=<%=key%>&tag=<%=tag%>&orderBy=<%=ordinamento%>&nomeU=<%=nome_utente%>"><%=i + 1%></a></li>
+                    <ul class="pagination" >
                         <%
-                                }
-                            }
+                            if (numPages > 1) {
+                                for (int i = 0; i < numPages; i++) {
+
                         %>
-                </ul>
+
+                        <li><a onclick="doHref('ActionServlet?op=getList2&start=<%=i * 8%>&filtro=<%=filter%>&search=<%=key%>&tag=<%=tag%>&orderBy=<%=ordinamento%>&nomeU=<%=nome_utente%>')"><%=i + 1%></a></li>
+                            <%
+                                    }
+                                }
+                            %>
+                    </ul>
                 </div>
             </div>
 
@@ -244,19 +253,19 @@
                                     Sort by <span class="caret"></span>
                                 </button>
                                 <ul class="dropdown-menu" role="menu">
-                                    <li><a id="1" class="mouseOver" href="ActionServlet?op=getList2&filtro=<%=filter%>&search=<%=key%>&tag=<%=tag%>&orderBy=nome&nomeU=<%=nome_utente%>">Nome</a></li>
+                                    <li><a id="1" class="mouseOver" onclick="doHref('ActionServlet?op=getList2&filtro=<%=filter%>&search=<%=key%>&tag=<%=tag%>&orderBy=nome&nomeU=<%=nome_utente%>')"><fmt:message key="orderModeName"/></a></li>
                                     <li class="dropdown-submenu">
-                                        <a class="test mouseOver" id="2" tabindex="-1" id="2">Utilizzi<span class="caret"></span></a>
+                                        <a class="test mouseOver" id="2" tabindex="-1" id="2"><fmt:message key="orderModeUse"/><span class="caret"></span></a>
                                         <ul class="dropdown-menu" id="menu1">
-                                            <li><a tabindex="-1" class="mouseOver" id="3" href="ActionServlet?op=getList2&filtro=<%=filter%>&search=<%=key%>&tag=<%=tag%>&orderBy=utilizziMax&nomeU=<%=nome_utente%>">Dai più ai meno utilizzati</a></li>
-                                            <li><a tabindex="-1" class="mouseOver" id="4" href="ActionServlet?op=getList2&filtro=<%=filter%>&search=<%=key%>&tag=<%=tag%>&orderBy=utilizziMin&nomeU=<%=nome_utente%>">Dai meno ai più utilizzati</a></li>
+                                            <li><a tabindex="-1" class="mouseOver" id="3" onclick="doHref('ActionServlet?op=getList2&filtro=<%=filter%>&search=<%=key%>&tag=<%=tag%>&orderBy=utilizziMax&nomeU=<%=nome_utente%>')"><fmt:message key="orderMostUsed"/></a></li>
+                                            <li><a tabindex="-1" class="mouseOver" id="4" onclick="doHref('ActionServlet?op=getList2&filtro=<%=filter%>&search=<%=key%>&tag=<%=tag%>&orderBy=utilizziMin&nomeU=<%=nome_utente%>')"><fmt:message key="orderLessUsed"/></a></li>
                                         </ul>
                                     </li>
                                     <li class="dropdown-submenu">
-                                        <a class="test1 mouseOver" id="5" tabindex="-1">Voti<span class="caret"></span></a>
+                                        <a class="test1 mouseOver" id="5" tabindex="-1"><fmt:message key="orderModeVote"/><span class="caret"></span></a>
                                         <ul class="dropdown-menu" id="menu2">
-                                            <li><a tabindex="-1" class="mouseOver" id="6" href="ActionServlet?op=getList2&filtro=<%=filter%>&search=<%=key%>&tag=<%=tag%>&orderBy=votoMax&nomeU=<%=nome_utente%>">Dai più ai meno votati</a></li>
-                                            <li><a tabindex="-1" class="mouseOver" id="7" href="ActionServlet?op=getList2&filtro=<%=filter%>&search=<%=key%>&tag=<%=tag%>&orderBy=votoMin&nomeU=<%=nome_utente%>">Dai meno ai più votati</a></li>
+                                            <li><a tabindex="-1" class="mouseOver" id="6" onclick="doHref('ActionServlet?op=getList2&filtro=<%=filter%>&search=<%=key%>&tag=<%=tag%>&orderBy=votoMax&nomeU=<%=nome_utente%>')"><fmt:message key="orderMostVoted"/></a></li>
+                                            <li><a tabindex="-1" class="mouseOver" id="7" onclick="doHref('ActionServlet?op=getList2&filtro=<%=filter%>&search=<%=key%>&tag=<%=tag%>&orderBy=votoMin&nomeU=<%=nome_utente%>')"><fmt:message key="orderLessVoted"/></a></li>
                                         </ul>
                                     </li>
                                 </ul>
@@ -272,6 +281,13 @@
                             ArrayList<DataService> services = (ArrayList<DataService>) request.getAttribute("list");
                             Iterator<DataService> iterServ = services.iterator();
                             Aggregazione aggregazione = (Aggregazione) request.getAttribute("newAggregazione");
+                            if (services.size() == 0) {
+                        %>
+                        <div class="row">
+                                <p> We are sorry! We could not find any matches for your search terms</p>
+                        </div>
+                        <%
+                            } 
                             while (iterServ.hasNext()) {
                                 DataService service = (DataService) iterServ.next();
                                 Set<Tag> taglist = service.getTag();
@@ -295,15 +311,12 @@
                                                 Tag selTag = (Tag) iterTag.next();
                                         %>
 
-                                        <a href="ActionServlet?op=getList2&tag=<%=selTag.getNome()%>&nomeU=<%=nome_utente%>"> <%= selTag.getNome()%> </a>
-
+                                        <a onclick="doHref('ActionServlet?op=getList2&tag=<%=selTag.getNome()%>&nomeU=<%=nome_utente%>')"> <%= selTag.getNome()%> </a>
                                         <%
                                             }
                                         %>
                                     </p>
                                 </div>
-
-
                                 <div class="col-sm-12 col-md-2 col-lg-2 margine-top-30">
                                     <button onclick="selezione('<%=service.getId()%>')" type="button" data-toggle="modal" class="dimension" data-target="#myModal<%=service.getId()%>"><span class="glyphicon glyphicon-pencil"></span>   Vota</button>
                                     <br>
@@ -356,16 +369,16 @@
                                                 <div class="modal-body">
                                                     <div class="dialogo" nome="<%=service.getId()%>" title="Vota ">
                                                         <ol class="listVotiOl">
-                                                                    <li class="ui-widget-content puntatore">POOR (scarcely adopted within the mashup)<span class='labelVoto right'>0.0</span></li>
-                                                                    <li class="ui-widget-content puntatore">MARGINAL (several problems during execution within the mashup)<span class='labelVoto right'>0.125</span></li>
-                                                                    <li class="ui-widget-content puntatore">FAIR (slow and cumbersome)<span class='labelVoto right'>0.25</span></li>
-                                                                    <li class="ui-widget-content puntatore">SATISFACTORY (small performance penalty)<span class='labelVoto right'>0.375</span></li>
-                                                                    <li class="ui-widget-content puntatore">GOOD (minimum mashup requirements are satisfied)<span class='labelVoto right'>0.5</span></li>
-                                                                    <li class="ui-widget-content puntatore">VERY GOOD (good performances and minimum mashup requirements are satisfied)<span class='labelVoto right'>0.625</span></li>
-                                                                    <li class="ui-widget-content puntatore">EXCELLENT (discreet performances and satisfying functionalities within the mashup)<span class='labelVoto right'>0.75</span></li>
-                                                                    <li class="ui-widget-content puntatore">OUTSTANDING (very good performances and functionalities within the mashup)<span class='labelVoto right'>0.875</span></li>
-                                                                    <li class="ui-widget-content puntatore">EXCEPTIONAL (very good performances, functionalities and easy to use in mashup)<span class='labelVoto right'>1.0</span></li>
-                                                                </ol>
+                                                            <li class="ui-widget-content puntatore">POOR (scarcely adopted within the mashup)<span class='labelVoto right'>0.0</span></li>
+                                                            <li class="ui-widget-content puntatore">MARGINAL (several problems during execution within the mashup)<span class='labelVoto right'>0.125</span></li>
+                                                            <li class="ui-widget-content puntatore">FAIR (slow and cumbersome)<span class='labelVoto right'>0.25</span></li>
+                                                            <li class="ui-widget-content puntatore">SATISFACTORY (small performance penalty)<span class='labelVoto right'>0.375</span></li>
+                                                            <li class="ui-widget-content puntatore">GOOD (minimum mashup requirements are satisfied)<span class='labelVoto right'>0.5</span></li>
+                                                            <li class="ui-widget-content puntatore">VERY GOOD (good performances and minimum mashup requirements are satisfied)<span class='labelVoto right'>0.625</span></li>
+                                                            <li class="ui-widget-content puntatore">EXCELLENT (discreet performances and satisfying functionalities within the mashup)<span class='labelVoto right'>0.75</span></li>
+                                                            <li class="ui-widget-content puntatore">OUTSTANDING (very good performances and functionalities within the mashup)<span class='labelVoto right'>0.875</span></li>
+                                                            <li class="ui-widget-content puntatore">EXCEPTIONAL (very good performances, functionalities and easy to use in mashup)<span class='labelVoto right'>1.0</span></li>
+                                                        </ol>
                                                         <br>
 
                                                     </div>
@@ -407,7 +420,6 @@
                             </div>
                         </div>
 
-
                         <%
                             }
                         %>
@@ -415,7 +427,7 @@
                 </div>
             </div>
             <div class="hidden-xs col-sm-2 col-md-2 col-lg-2 list-group listGroupMashUp">
-                <legend class="center-block">MY MASH-UP</legend>
+                <legend class="center-block"><fmt:message key="myMashupTitle"/></legend>
                 <%
                     ArrayList<Aggregazione> mashup = (ArrayList<Aggregazione>) session.getAttribute("mashup");
                     if (mashup.size() == 0) {
@@ -434,9 +446,10 @@
                         <div class="panel-heading">
                             <h4 class="panel-title">
                                 <a data-toggle="collapse" href="#collapse<%=nome%>"><%=nome%></a>
-                                            <button id="<%=nome%>elimina" class="glyphicon glyphicon-trash pull-right btnTransparent" data-toggle="modal" data-target="#deleteMashup<%=nome%>"></button>
-                                            <button id="<%=nome%>conferma" onclick="confermaMashUp('<%=nome%>')" class="hidden confermaMash glyphicon glyphicon-ok pull-right btnTransparent"></button>
-                                            <button id="<%=nome%>modifica" onclick="modificaMashUp('<%=nome%>', '<%=aggr.getId()%>')" class="glyphicon modificaMash glyphicon glyphicon-edit pull-right btnTransparent"></button> 
+
+                                <button id="<%=nome%>elimina" class="glyphicon glyphicon-trash pull-right btnTransparent" data-toggle="modal" data-target="#deleteMashup<%=nome%>"></button>
+                                <button id="<%=nome%>conferma" onclick="confermaMashUp('<%=nome%>')" class="hidden confermaMash glyphicon glyphicon-ok pull-right btnTransparent"></button>
+                                <button id="<%=nome%>modifica" onclick="modificaMashUp('<%=nome%>', '<%=aggr.getId()%>')" class="glyphicon modificaMash glyphicon glyphicon-edit pull-right btnTransparent"></button> 
 
                                 <div id="deleteMashup<%=nome%>" class="modal fade" role="dialog">
                                     <div class="modal-dialog">
@@ -492,6 +505,7 @@
                         </div>
                     </div>
                 </div>
+
                 <%
                         }
                     }
@@ -502,6 +516,13 @@
 
 
         </div>
+        <%
+            String nomeMash = (String) request.getAttribute("nomeAggr");
+            String idMash = (String) request.getAttribute("idAggr");
+        %>
+
+        <input type="text" id="nomeMash" value='<%=nomeMash%>' class="hidden"> 
+        <input type="text" id="idMash" value='<%=idMash%>' class="hidden"> 
         <div class="row">
             <div class="hidden-xs col-sm-2 col-sm-offset-5 col-md-2 col-md-offset-5 col-lg-2 col-lg-offset-5 ">
                 <ul class="pagination">
@@ -511,7 +532,7 @@
 
                     %>
 
-                    <li><a href="ActionServlet?op=getList2&start=<%=i * 8%>&filtro=<%=filter%>&search=<%=key%>&tag=<%=tag%>&orderBy=<%=ordinamento%>&nomeU=<%=nome_utente%>"><%=i + 1%></a></li>
+                    <li><a onclick="doHref('ActionServlet?op=getList2&start=<%=i * 8%>&filtro=<%=filter%>&search=<%=key%>&tag=<%=tag%>&orderBy=<%=ordinamento%>&nomeU=<%=nome_utente%>')"><%=i + 1%></a></li>
 
                     <%
                             }
@@ -533,13 +554,16 @@
 
     <!-- script per comprimere sidebar -->
     <script>
-                                    $("#menu-toggle").click(function (e) {
-                                        e.preventDefault();
-                                        $("#wrapper").toggleClass("toggled");
-                                    });
+                        $("#menu-toggle").click(function (e) {
+                            e.preventDefault();
+                            $("#wrapper").toggleClass("toggled");
+                        });
     </script>
     <script>
+      
         $(document).ready(selezionaCategoriaUt('<%=filter%>'));
+        $(document).ready(selectMash('<%=nomeMash%>', '<%=idMash%>'));
+
     </script>
     <script src="js/gestione_voti.js"></script>
 </body>

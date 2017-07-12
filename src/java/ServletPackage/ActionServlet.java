@@ -99,8 +99,7 @@ public class ActionServlet extends HttpServlet {
         if (op.equalsIgnoreCase("deleteDStoMeshUp")) {
             doPostDeleteDS(req, resp);
         }
-        if(op.equalsIgnoreCase("addVoto"))
-        {
+        if (op.equalsIgnoreCase("addVoto")) {
             doGetAddVoto(req, resp);
         }
     }
@@ -167,6 +166,8 @@ public class ActionServlet extends HttpServlet {
         ArrayList<DataService> servicesOrdered = new ArrayList<>();
         ArrayList<DataService> servicesParsed = new ArrayList<>();
         String tagFilter = req.getParameter("tag");
+        String nomeAggr = req.getParameter("nomeMash");
+        String idAggr = req.getParameter("idMash");
         Integer start = Functions.parseInteger(req.getParameter("start"));
         String catFilter = req.getParameter("filtro");
         String searchBar = "";
@@ -212,6 +213,8 @@ public class ActionServlet extends HttpServlet {
         req.setAttribute("cats", categories);
         req.setAttribute("orderBy", order);
         req.setAttribute("nomeU", nomeU);
+        req.setAttribute("nomeAggr", nomeAggr);
+        req.setAttribute("idAggr", idAggr);
         rd.forward(req, resp);
     }
 
@@ -223,7 +226,7 @@ public class ActionServlet extends HttpServlet {
         String pass = req.getParameter("password");
         ArrayList<Aggregazione> mashup = new ArrayList<>();
 
-        if (validaUtente(nome, pass)) {
+        if (validaUtente(nome, pass).equals("true")) {
 
             req.setAttribute("nome", nome);
             Sviluppatore svil = readDeveloperByName(nome);
@@ -242,33 +245,47 @@ public class ActionServlet extends HttpServlet {
             sess.setAttribute("logged", "uno");
 
         } else {
-            req.setAttribute("error", "Attenzione! non sei registrato!");
-            req.getRequestDispatcher("/login.jsp").forward(req, resp);
+
+            if (validaUtente(nome, pass).equals("diversi")) {
+                req.setAttribute("error", "Login fallito. Nome utente o password errati.");
+                req.getRequestDispatcher("/login.jsp").forward(req, resp);
+            }
+
+            else  {
+                req.setAttribute("error", "Attenzione! non sei registrato!");
+                req.getRequestDispatcher("/login.jsp").forward(req, resp);
+            }
+
         }
     }
 
-    protected void doPostRegistrazione(HttpServletRequest request, HttpServletResponse response)
+    protected void doPostRegistrazione(HttpServletRequest req, HttpServletResponse resp)
             throws ServletException, IOException {
-        PrintWriter out = response.getWriter();
+        PrintWriter out = resp.getWriter();
 
-        String nome = request.getParameter("username");
-        String pass = request.getParameter("password");
-        String pass_confirm = request.getParameter("password_confirm");
+        String nome = req.getParameter("username");
+        String pass = req.getParameter("password");
+        String pass_confirm = req.getParameter("password_confirm");
 
         hibernate.createDeveloper(nome, pass, 0, pass, pass, pass, nome);
-        out.println("Registrato!");
+        req.getRequestDispatcher("/login.jsp").forward(req, resp);
     }
 
-    public boolean validaUtente(String name, String password) {
-        boolean stato = false;
+    public String validaUtente(String name, String password) {
+        String stato = "false";
         String nome1 = name.toLowerCase();
         String pwd1 = password.toLowerCase();
         Set<Sviluppatore> utenti = hibernate.readDevelopers();
 
         for (Sviluppatore sviluppatore : utenti) {
-            if (nome1.equals(sviluppatore.getNome().toLowerCase()) && pwd1.equals(sviluppatore.getPassword().toLowerCase())) {
-                stato = true;
+            if (nome1.equals(sviluppatore.getNome()) && pwd1.equals(sviluppatore.getPassword())) {
+                stato = "true";
             }
+            else if ((nome1.equals(sviluppatore.getNome().toLowerCase()) && !pwd1.equals(sviluppatore.getPassword().toLowerCase()))
+                    || (!nome1.equals(sviluppatore.getNome().toLowerCase()) && pwd1.equals(sviluppatore.getPassword().toLowerCase()))) {
+                stato = "diversi";
+            }
+
         }
 
         return stato;
@@ -511,7 +528,7 @@ public class ActionServlet extends HttpServlet {
         return arrlist;
     }
 
-     public void doPostCreaAggregazione(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+    public void doPostCreaAggregazione(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         //Boolean creaAgg = false;
         String nomeAggr = req.getParameter("nameAgg");
         String descrizioneAggr = req.getParameter("descrizioneAgg");
@@ -538,7 +555,7 @@ public class ActionServlet extends HttpServlet {
             ArrayList<Tag> tags = hibernate.readTags();
             ArrayList<Category> categs = hibernate.readCategories();
             req.setAttribute("newAggregazione", nuovaAggregazione);
-      //  ArrayList<Aggregazione> mashlist = (ArrayList<Aggregazione>) req.getSession().getAttribute("mashup");
+            //  ArrayList<Aggregazione> mashlist = (ArrayList<Aggregazione>) req.getSession().getAttribute("mashup");
             mashlist.add(nuovaAggregazione);
             req.getSession().setAttribute("mashup", mashlist);
             resp.getWriter().println(bool);
@@ -622,7 +639,6 @@ public class ActionServlet extends HttpServlet {
     }
 
     //Sara
-
     public Aggregazione readAggregazioneByName(String nomeA) {
 
         Aggregazione find = null;
@@ -635,5 +651,5 @@ public class ActionServlet extends HttpServlet {
         }
         return find;
     }
-    
+
 }

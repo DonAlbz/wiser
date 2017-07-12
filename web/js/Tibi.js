@@ -145,8 +145,11 @@ function apriWizard() {
  */
 
 var mashSel;
+var nomeMashSel;
 function modificaMashUp(nomeMU, idMU) {
     mashSel = idMU;
+    $("#idMash").val(idMU);
+    $("#nomeMash").val(nomeMU);
     $(".delAggr").addClass("hidden");
     $("#collapse" + nomeMU).collapse("show");
     $("#" + nomeMU.trim() + "list").find(".delAggr").removeClass("hidden");
@@ -165,12 +168,16 @@ function modificaMashUp(nomeMU, idMU) {
 }
 
 function confermaMashUp(nomeMU) {
+    $("#idMash").val(-1);
+    $("#nomeMash").val("");
     $("#collapse" + nomeMU).collapse("hide");
     $("#" + nomeMU + "conferma").addClass("hidden");
     $("#" + nomeMU + "modifica").removeClass("hidden");
     $(".delAggr").addClass("hidden");
     $(".aggr").addClass("hidden");
 }
+
+
 
 
 /*
