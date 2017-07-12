@@ -320,7 +320,7 @@
         </div>
 
         <footer class="container-fluid text-right" style="color: black; padding: 15px;">
-            <p>&copy; Beschi Chiari Tiberti Vivenzi</p>
+            <p>&copy; <fmt:message key="firme"/></p>
         </footer>
         <script type="text/javascript" src="./js/jquery.js"></script>
         <script type="text/javascript" src="./js/bootstrap.js"></script>

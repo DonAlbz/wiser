@@ -226,37 +226,60 @@ public class ActionServlet extends HttpServlet {
         String pass = req.getParameter("password");
         ArrayList<Aggregazione> mashup = new ArrayList<>();
 
-        if (validaUtente(nome, pass).equals("true")) {
+        if (emptyInputLogin(req, resp, nome, pass) == false) {
+            String validaUtente = validaUtente(nome, pass);
+            switch (validaUtente) {
+                case "true":
+                    req.setAttribute("nome", nome);
+                    Sviluppatore svil = readDeveloperByName(nome);
+                    if (svil != null) {
+                        HashSet<Aggregazione> set = (HashSet<Aggregazione>) hibernate.readAggregation(svil);
+                        List<Aggregazione> list = new ArrayList<Aggregazione>(set);
+                        mashup = (ArrayList<Aggregazione>) list;
+                    } else {
+                        mashup = null;
+                    }
+                    req.getRequestDispatcher("/firstpage2.jsp").forward(req, resp);
 
-            req.setAttribute("nome", nome);
-            Sviluppatore svil = readDeveloperByName(nome);
-            if (svil != null) {
-                HashSet<Aggregazione> set = (HashSet<Aggregazione>) hibernate.readAggregation(svil);
-                List<Aggregazione> list = new ArrayList<Aggregazione>(set);
-                mashup = (ArrayList<Aggregazione>) list;
-            } else {
-                mashup = null;
-            }
-            req.getRequestDispatcher("/firstpage2.jsp").forward(req, resp);
-
-            sess = req.getSession(true);
-            sess.setAttribute("name", nome);
-            sess.setAttribute("mashup", mashup);
-            sess.setAttribute("logged", "uno");
-
-        } else {
-
-            if (validaUtente(nome, pass).equals("diversi")) {
-                req.setAttribute("error", "Login fallito. Nome utente o password errati.");
-                req.getRequestDispatcher("/login.jsp").forward(req, resp);
-            }
-
-            else  {
-                req.setAttribute("error", "Attenzione! non sei registrato!");
-                req.getRequestDispatcher("/login.jsp").forward(req, resp);
+                    sess = req.getSession(true);
+                    sess.setAttribute("name", nome);
+                    sess.setAttribute("mashup", mashup);
+                    sess.setAttribute("logged", "uno");
+                    break;
+                case "diversi":
+                    req.setAttribute("error", "errorUsrPwd");
+                    req.getRequestDispatcher("/login.jsp").forward(req, resp);
+                    break;
+                case "false":
+                    req.setAttribute("error", "noAccount");
+                    req.getRequestDispatcher("/login.jsp").forward(req, resp);
+                    break;
             }
 
         }
+
+    }
+
+    public boolean emptyInputLogin(HttpServletRequest req, HttpServletResponse resp, String nome, String pwd) throws ServletException, IOException {
+        boolean result = false;
+        if (nome.equals("") && !pwd.equals("")) {
+            req.setAttribute("error", "noUsr");
+            req.setAttribute("pwdInserita", pwd);
+            req.getRequestDispatcher("/login.jsp").forward(req, resp);
+            result = true;
+        }
+        if (pwd.equals("") && !nome.equals("")) {
+            req.setAttribute("error", "noPwd");
+            req.setAttribute("nomeInserito", nome);
+            req.getRequestDispatcher("/login.jsp").forward(req, resp);
+            result = true;
+        }
+        if (nome.equals("") && pwd.equals("")) {
+            req.setAttribute("error", "noUsrPwd");
+            req.getRequestDispatcher("/login.jsp").forward(req, resp);
+            result = true;
+        }
+        return result;
     }
 
     protected void doPostRegistrazione(HttpServletRequest req, HttpServletResponse resp)
@@ -280,8 +303,7 @@ public class ActionServlet extends HttpServlet {
         for (Sviluppatore sviluppatore : utenti) {
             if (nome1.equals(sviluppatore.getNome()) && pwd1.equals(sviluppatore.getPassword())) {
                 stato = "true";
-            }
-            else if ((nome1.equals(sviluppatore.getNome().toLowerCase()) && !pwd1.equals(sviluppatore.getPassword().toLowerCase()))
+            } else if ((nome1.equals(sviluppatore.getNome().toLowerCase()) && !pwd1.equals(sviluppatore.getPassword().toLowerCase()))
                     || (!nome1.equals(sviluppatore.getNome().toLowerCase()) && pwd1.equals(sviluppatore.getPassword().toLowerCase()))) {
                 stato = "diversi";
             }
@@ -372,6 +394,7 @@ public class ActionServlet extends HttpServlet {
         PrintWriter out = resp.getWriter();
         out.print(toRet);
     }
+
     /*
      private boolean isCategory(String key) {
      ArrayList<Category> categories = hibernate.readCategories();
@@ -384,7 +407,6 @@ public class ActionServlet extends HttpServlet {
      }
      return false;
      }*/
-
     private ArrayList<DataService> getCategoryDS(String catName) {
         ArrayList<DataService> services = hibernate.readDataServices();
         ArrayList<DataService> toRet = Functions.filterCategoryDSList(services, catName);
@@ -420,7 +442,7 @@ public class ActionServlet extends HttpServlet {
      }
      */
 
-    /*
+ /*
      private boolean isTag(String key) {
      ArrayList<Tag> tags = hibernate.readTags();
      Iterator iterTags = tags.iterator();
