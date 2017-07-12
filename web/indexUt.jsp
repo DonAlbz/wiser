@@ -79,6 +79,7 @@
                         <%
                             String nome_utente = (String) request.getAttribute("nomeU");
                             session = request.getSession();
+                            int DSPerPag = Functions.DS_PER_PAGINA;
                             String nomeSes = session.getAttribute("name").toString();
                             String searchBar = (String) request.getAttribute("ricerca");
                             if (searchBar == null) {
@@ -276,7 +277,7 @@
 
                                         %>
 
-                                        <li><a onclick="doHref('ActionServlet?op=getList2&start=<%=i * 8%>&filtro=<%=filter%>&search=<%=key%>&tag=<%=tag%>&orderBy=<%=ordinamento%>&nomeU=<%=nome_utente%>')"><%=i + 1%></a></li>
+                                        <li><a onclick="doHref('ActionServlet?op=getList2&start=<%=i * DSPerPag%>&filtro=<%=filter%>&search=<%=key%>&tag=<%=tag%>&orderBy=<%=ordinamento%>&nomeU=<%=nome_utente%>')"><%=i + 1%></a></li>
                                             <%
                                                     }
                                                 }
@@ -546,7 +547,7 @@
 
                     %>
 
-                    <li><a class="puntatore" onclick="doHref('ActionServlet?op=getList2&start=<%=i * 8%>&filtro=<%=filter%>&search=<%=key%>&tag=<%=tag%>&orderBy=<%=ordinamento%>&nomeU=<%=nome_utente%>')"><%=i + 1%></a></li>
+                    <li><a class="puntatore" onclick="doHref('ActionServlet?op=getList2&start=<%=i * DSPerPag%>&filtro=<%=filter%>&search=<%=key%>&tag=<%=tag%>&orderBy=<%=ordinamento%>&nomeU=<%=nome_utente%>')"><%=i + 1%></a></li>
 
                     <%
                             }
