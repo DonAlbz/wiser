@@ -560,8 +560,10 @@
                         });
     </script>
     <script>
-                $(document).ready(selezionaCategoria('<%=filter%>'));
-                $(document).ready(selectMash('<%=nomeMash%>', '<%=idMash%>'));
+      
+        $(document).ready(selezionaCategoriaUt('<%=filter%>'));
+        $(document).ready(selectMash('<%=nomeMash%>', '<%=idMash%>'));
+
     </script>
     <script src="js/gestione_voti.js"></script>
 </body>

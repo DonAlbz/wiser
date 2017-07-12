@@ -40,7 +40,7 @@
                     <div class="navbar-header col-lg-1 col-md-1 col-sm-1">
 
                         <a class="navbar-brand" href="ActionServlet?op=getList"><fmt:message key="titleNavbar"/></a>
-                     
+
                         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#">
                             <span class="glyphicon glyphicon-user white" aria-hidden="true"></span>
                         </button>
@@ -53,22 +53,22 @@
                             <div class="row">    
                                 <div class="collapse navbar-collapse" id="menu">
                                     <div class="col-lg-3 col-md-3 col-sm-3">
-                                 <!--       <ul class="nav navbar-nav">
-                                            <li><a href="#">Link <span class="sr-only">Link at: </span></a></li>
-                                            <li><a href="#">Link</a></li>
-                                            <li class="dropdown">
-                                                <a href="#" class="dropdown-toggle pulsante-dropdown" data-toggle="dropdown" role="button" >Menu <span class="caret"></span></a>
-                                                <ul class="dropdown-menu" role="menu">
-                                                    <li><a href="#">Link1</a></li>
-                                                    <li><a href="#">Link2</a></li>
-                                                    <li><a href="#">Link3</a></li>
-                                                    <li class="divider"></li>
-                                                    <li><a href="#">Link4</a></li>
-                                                    <li class="divider"></li>
-                                                    <li><a href="#">Link5</a></li>
-                                                </ul>
-                                            </li>
-                                        </ul>  -->
+                                        <!--       <ul class="nav navbar-nav">
+                                                   <li><a href="#">Link <span class="sr-only">Link at: </span></a></li>
+                                                   <li><a href="#">Link</a></li>
+                                                   <li class="dropdown">
+                                                       <a href="#" class="dropdown-toggle pulsante-dropdown" data-toggle="dropdown" role="button" >Menu <span class="caret"></span></a>
+                                                       <ul class="dropdown-menu" role="menu">
+                                                           <li><a href="#">Link1</a></li>
+                                                           <li><a href="#">Link2</a></li>
+                                                           <li><a href="#">Link3</a></li>
+                                                           <li class="divider"></li>
+                                                           <li><a href="#">Link4</a></li>
+                                                           <li class="divider"></li>
+                                                           <li><a href="#">Link5</a></li>
+                                                       </ul>
+                                                   </li>
+                                               </ul>  -->
                                     </div>
                                     <div class="col-lg-1 col-md-1 col-sm-1">
                                     </div>
@@ -116,7 +116,7 @@
                         <ul class="nav navbar-nav navbar-right">
                             <li>
                                 <a href="login.jsp"><span class="glyphicon glyphicon-log-in"></span>  <fmt:message key="loginButton"/></a>
-          
+
                             </li>
                         </ul>
 
@@ -153,7 +153,8 @@
                 <div class="sidebar-nav">
                     <h3><fmt:message key="titleCategories"/></h3>
                     <div class="list-group">
-                        <%                            int servicesDim = (Integer) request.getAttribute("servicesDim");
+                        <%
+                            int servicesDim = (Integer) request.getAttribute("servicesDim");
                             int numPages = Functions.numberOfPages(servicesDim);
                             String filter = (String) request.getAttribute("filtro");
                             String key = (String) request.getAttribute("search");
@@ -167,7 +168,7 @@
                             while (iterCat.hasNext()) {
                                 Category selCat = (Category) iterCat.next();
                         %>        
-                        <a href="ActionServlet?op=getList&filtro=<%=selCat.getNome()%>&search=<%=key%>&tag=<%=tag%>" class="list-group-item"> <%=selCat.getNome()%></a>
+                        <a href="ActionServlet?op=getList&filtro=<%=selCat.getNome()%>&search=<%=key%>&tag=<%=tag%>" class="categorie list-group-item"> <%=selCat.getNome()%></a>
                         <%
                             }
                         %>
@@ -276,14 +277,15 @@
                                             }                   %>     
 
 
-                                        <%      if ((parteDecimale < 0.5)&&(count<5)) {       %>          
+                                        <%      if ((parteDecimale < 0.5) && (count < 5)) {       %>          
                                         <span class="glyphicon glyphicon-star-empty"></span> 
                                         <%          count++;
 
-                                        } else {if(count<5) {                 %>
+                                        } else {
+                                            if (count < 5) {                 %>
                                         <span class="glyphicon glyphicon-star half"></span> 
                                         <%              count++;
-                                        }
+                                                }
                                             }
                                             for (i = count; i < 5; i++) {                 %>                                                                                                                                                
 
@@ -327,6 +329,7 @@
         <script type="text/javascript" src="./js/autocomplAjax.js"></script>
         <script type="text/javascript" src="./js/main.js"></script>
         <script type="text/javascript" src="./js/Tibi.js"></script>
+        <script type="text/javascript" src="./js/Mat.js"></script>
 
 
 
@@ -337,6 +340,9 @@
                     e.preventDefault();
                     $("#wrapper").toggleClass("toggled");
                 });
+        </script>
+        <script>
+            $(document).ready(selezionaCategoria('<%=filter%>'));
         </script>
     </body>
 </html>
