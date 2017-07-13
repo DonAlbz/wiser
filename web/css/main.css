@@ -152,7 +152,7 @@ Tibi's custom styles
 .dimension {
     height: 33.56px !important;
     width: 79.93px !important;
-
+    border-radius: 8px;
 }
 
 .glyphicon-ok {

@@ -1,22 +1,22 @@
 function selectOrdinamento(stringa)
 {
-    if(stringa == "nome")
+    if (stringa == "nome")
     {
         $("#ordNome").removeClass("hidden");
     }
-    if(stringa == "utilizziMax")
+    if (stringa == "utilizziMax")
     {
         $("#ordUsiMax").removeClass("hidden");
     }
-    if(stringa == "utilizziMin")
+    if (stringa == "utilizziMin")
     {
         $("#ordUsiMin").removeClass("hidden");
     }
-    if(stringa == "votoMax")
+    if (stringa == "votoMax")
     {
         $("#ordRatMax").removeClass("hidden");
     }
-    if(stringa == "votoMin")
+    if (stringa == "votoMin")
     {
         $("#ordRatMin").removeClass("hidden");
     }
@@ -24,19 +24,19 @@ function selectOrdinamento(stringa)
 function confrontaPassword()
 {
     var send = true;
-    if (($("#username").val() == null) || ($("#username").val() == "") || ($("#username").val() == "null"))
+    if (($("#username").val() == null) || ($("#username").val() == "") || ($("#username").val() == "null") || ($("#username").val().length > 15))
     {
-        console.log("userVuoto");
+
         send = false;
     }
     if (($("#password").val() == null) || ($("#password").val() == "") || ($("#password").val() == "null"))
     {
-        console.log("pwdVuota");
+
         send = false;
     }
     if (($("#password_confirm").val() == null) || ($("#password_confirm").val() == "") || ($("#password_confirm").val() == "null"))
     {
-        console.log("pwdCvuota");
+
         send = false;
     }
     if (send == true)
@@ -49,7 +49,7 @@ function confrontaPassword()
     }
     if (send == true)
     {
-        if ($("#password").val() !== $("#password_confirm").val())
+        if (($("#password").val() !== $("#password_confirm").val()) || (($("#password").val().length <= 3)))
         {
             $("#form-pwd").addClass("has-error");
             $("#form-pwd-confirm").addClass("has-error");
@@ -84,8 +84,8 @@ $('#centra').on('keyup keypress', function (e) {
     }
 });
 
-    function selezionaCategoriaUt(filtro){
-    var $filter=filtro.trim();
+function selezionaCategoriaUt(filtro) {
+    var $filter = filtro.trim();
     var $ciao;
     $(".categorie").each(function () {
         $ciao = $(this).text().trim();
@@ -102,18 +102,18 @@ $('#centra').on('keyup keypress', function (e) {
 
 function selectMash(nomeMU, idMU)
 {
-    console.log(nomeMU, idMU);
+
     if ((nomeMU != null) && (nomeMU != "") && (nomeMU != "null"))
     {
-        console.log("if");
+
         modificaMashUp(nomeMU, idMU);
     }
     else
     {
-        console.log("else");
+
         $("#idMash").val(-1);
         $("#nomeMash").val("null");
-        console.log($("#idMash").val());
+
     }
 }
 
@@ -123,23 +123,24 @@ function doHref(href)
     var id = $("#idMash").val();
     href = href + "&idMash=" + id + "&nomeMash=" + nome;
     var toRet = href.toString().replace(/\|\!/gi, "\'");
-    console.log(toRet);
+
     window.location.replace(toRet);
 }
 
 
 
-function selezionaCategoria(filtro){
-    var $filter=filtro.trim();
+function selezionaCategoria(filtro) {
+    var $filter = filtro.trim();
     var $ciao;
-    $(".categorie").each(function(){
-        $ciao= $(this).text().trim();
-        if( $ciao === $filter){
-            
-            $(this).css("background","black");
-            $(this).css("color","white");
-            
+    $(".categorie").each(function () {
+        $ciao = $(this).text().trim();
+        if ($ciao === $filter) {
+
+            $(this).css("background", "black");
+            $(this).css("color", "white");
+
         }
 
-    });      
-};
+    });
+}
+;

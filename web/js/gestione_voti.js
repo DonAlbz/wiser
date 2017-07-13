@@ -49,6 +49,7 @@ function selezione(nome_modal) {
 function modal2() {
     // nome_modal + l'id del DataService
     // mostro pagina2 modal
+    $(".confermaButton").addClass("disabled");
     $(".btnIndietro").removeClass("hidden");
     $(".modalConfermaVoto").removeClass("hidden");
     $(".confermaButton").removeClass("hidden");
@@ -137,7 +138,6 @@ function insertCheck() {
     {
         var ajaxResp = xhr.responseText;
         var jo = JSON.parse(ajaxResp);
-        console.log(jo);
 
         for (var i = 0; i < jo.aggregazioni.length; i++)
         {
@@ -161,7 +161,6 @@ function visAggr(id_s) {
     xhr.onreadystatechange = insertCheck;
 
     xhr.send(null);
-    console.log(xhr);
 
 }
 function myGetXmlHttpRequest()
@@ -211,12 +210,27 @@ function si(id_s) {
     if ($(".listaAggregazioni").html().trim() === '') {
 
         visAggr(id_s);
-        abilitaConfermaVoto();
+        abilitaVotoAggr();
     }
 }
 
+function abilitaVotoAggr(){
+    if(cercaCheckLi()){
+        abilitaConfermaVoto();     
+    }else{
+        $(".confermaButton").addClass("disabled");
+    }
+}
 
-
+function cercaCheckLi(){
+    check=false;
+    $('li[name=inputCk]').each(function(){
+        if($(this).hasClass('active')){
+            check=true;
+        }
+    });
+    return check;
+}
 
 function indietro() {
     // nascondo pagina2 modal

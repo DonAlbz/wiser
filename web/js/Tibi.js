@@ -55,7 +55,7 @@ function creaAggregazione()
     var nomeDesc = ($("#descrizioneAgg").val());
     patt1 = /^[A-Za-z]/ig;
     patt2 = /[^A-Za-z0-9]/gi;
-    if (patt1.test(nameAgg) && !patt2.test(nameAgg)) {
+    if (patt1.test(nameAgg) && !patt2.test(nameAgg)&&(nameAgg.length <16)) {
         $.post("ActionServlet", {"op": "meshup", "nameAgg": nameAgg, "descrizioneAgg": nomeDesc},
         function (response) {
             nomeAggregazCreata = response.trim().toString().trim();
@@ -150,6 +150,7 @@ var mashSel;
 var nomeMashSel;
 function modificaMashUp(nomeMU, idMU) {
     mashSel = idMU;
+    //$(".mashCollapse").collapse("hide");
     $("#idMash").val(idMU);
     $("#nomeMash").val(nomeMU);
     $(".delAggr").addClass("hidden");
@@ -221,10 +222,8 @@ function rimuoviDataService(idDataService) {
     function (response) {
         vett = [];
         vett = response.toString().split(" ");
-        // window.alert("#"+vett[1].trim()+"+"+vett[0].trim());
-        console.log("#" + vett[1].trim() + "_" + vett[0].trim());
+        // window.alert("#"+vett[1].trim()+"+"+vett[0].trim());     
         $("#" + vett[1].trim() + "_" + vett[0].trim()).remove();
-        console.log(response.toString());
         if (vett[2].trim() === "empty") {
             $("#no" + vett[1].trim()).removeClass("hidden");
         }
@@ -241,9 +240,9 @@ function confermaRegistrazione(Stringa) {
     setTimeout(function () {
         $.post("ActionServlet", {"op": "registrazione", "username": usern, "password": pass, "password_confirm": passconf},
         function (response) {
-        window.location.replace("login.jsp")
+            window.location.replace("login.jsp")
         }, "text");
-    },3000);
+    }, 3000);
 }
 
 

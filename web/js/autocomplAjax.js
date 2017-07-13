@@ -58,7 +58,6 @@ function inserisciSuggerimento() {
     {
         var ajaxResp = xhr.responseText;
         var jo = JSON.parse(ajaxResp);
-        console.log(ajaxResp);
         for (var i = 1; i < 5; i++)
         {
             $("#autocompl").css("display", "");
@@ -188,10 +187,8 @@ function parseSend()
         if(array.length >0)
         {
             var joString = createJSONString(array);
-            console.log(joString);
             send = true;
             var userMode = $("#userModeSearch").val();
-            console.log(userMode);
             if((userMode != null)||(userMode == "true"))
             {
                 var nomeM = $("#nomeMash").val();

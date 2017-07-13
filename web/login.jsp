@@ -24,10 +24,7 @@
                 <div class="row">      
                     <div class="navbar-header col-lg-1 col-md-1 col-sm-1">
 
-                        <a class="navbar-brand" href="ActionServlet?op=getList"><fmt:message key="titleNavbar"/></a>
-                        <form action="firstpage.jsp">
-                            <button type="submit" class="navbar-toggle collapsed btn-lg glyphicon glyphicon-home btnTransparent btnHome" data-toggle="collapse" data-target="#"></button>
-                        </form>
+                        <a class="navbar-brand" href="ActionServlet?op=getList"><fmt:message key="titleNavbar"/></a>                   
                         
                         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#search">
 
@@ -38,9 +35,6 @@
                             <div class="row">    
                                 <div class="collapse navbar-collapse" id="menu">
                                     <div class="col-lg-3 col-md-3 col-sm-3">
-                                        <form action="firstpage.jsp">
-                                            <button type="submit" class="btn-lg glyphicon glyphicon-home pull-left btnTransparent btnHome"></button>
-                                        </form>
                                     </div>
                                     <div class="col-lg-1 col-md-1 col-sm-1">
                                     </div>

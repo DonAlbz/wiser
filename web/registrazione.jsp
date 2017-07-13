@@ -53,10 +53,7 @@
                 <div class="row">      
                     <div class="navbar-header col-lg-1 col-md-1 col-sm-1">
 
-                        <a class="navbar-brand" href="ActionServlet?op=getList"><fmt:message key="titleNavbar"/></a>
-                        <form action="firstpage.jsp">
-                            <button type="submit" class="navbar-toggle collapsed btn-lg glyphicon glyphicon-home btnTransparent btnHome" data-toggle="collapse" data-target="#"></button>
-                        </form>
+                        <a class="navbar-brand" href="ActionServlet?op=getList"><fmt:message key="titleNavbar"/></a>                       
                         <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#">
 
                             <!--<span class="glyphicon glyphicon-user white" aria-hidden="true"></span>-->
@@ -69,10 +66,7 @@
                         <div class="container-fluid">
                             <div class="row">    
                                 <div class="collapse navbar-collapse" id="menu">
-                                    <div class="col-lg-3 col-md-3 col-sm-3">
-                                        <form action="firstpage.jsp">
-                                            <button type="submit" class="btn-lg glyphicon glyphicon-home pull-left btnTransparent btnHome"></button>
-                                        </form>
+                                    <div class="col-lg-3 col-md-3 col-sm-3">                                
                                     </div>
                                     <div class="col-lg-1 col-md-1 col-sm-1">
                                     </div>
@@ -135,7 +129,7 @@
                                 <!-- Button -->
                                 <div class="form-group">
 
-                                    <button type="button" id="daAbilitare" class="btn btn-success disabled" onclick="confermaRegistrazione('<fmt:message key="welcomeRegister"/>')"><fmt:message key="accountConfirmButton"/></button>
+                                    <button type="button" id="daAbilitare" class="btn btn-success disabled center-block" onclick="confermaRegistrazione('<fmt:message key="welcomeRegister"/>')"><fmt:message key="accountConfirmButton"/></button>
                                 </div>
                             </div>
                         </fieldset>
@@ -175,6 +169,7 @@
                                         $(document).ready(function ()
                                         {
                                             $("#username").focus();
+                                            loadVars('<fmt:message key="errorMessageUser"/>', '<fmt:message key="errorPass" />', '<fmt:message key="passOk"/>');
                                         });
 
         </script>

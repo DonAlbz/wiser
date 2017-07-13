@@ -241,19 +241,19 @@
                                         Sort by <span class="caret"></span>
                                     </button>
                                     <ul class="dropdown-menu" role="menu">
-                                        <li><a id="1" class="mouseOver" onclick="doHref('ActionServlet?op=getList2&filtro=<%=filter%>&search=<%=key%>&tag=<%=tag%>&orderBy=nome&nomeU=<%=nome_utente%>')"><fmt:message key="orderModeName"/></a></li>
+                                        <li><a id="1" class="mouseOver puntatore" onclick="doHref('ActionServlet?op=getList2&filtro=<%=filter%>&search=<%=key%>&tag=<%=tag%>&orderBy=nome&nomeU=<%=nome_utente%>')"><fmt:message key="orderModeName"/></a></li>
                                         <li class="dropdown-submenu">
                                             <a class="test mouseOver" id="2" tabindex="-1" id="2"><fmt:message key="orderModeUse"/><span class="caret"></span></a>
                                             <ul class="dropdown-menu" id="menu1">
-                                                <li><a tabindex="-1" class="mouseOver" id="3" onclick="doHref('ActionServlet?op=getList2&filtro=<%=filter%>&search=<%=key%>&tag=<%=tag%>&orderBy=utilizziMax&nomeU=<%=nome_utente%>')"><fmt:message key="orderMostUsed"/></a></li>
-                                                <li><a tabindex="-1" class="mouseOver" id="4" onclick="doHref('ActionServlet?op=getList2&filtro=<%=filter%>&search=<%=key%>&tag=<%=tag%>&orderBy=utilizziMin&nomeU=<%=nome_utente%>')"><fmt:message key="orderLessUsed"/></a></li>
+                                                <li><a tabindex="-1" class="mouseOver puntatore" id="3" onclick="doHref('ActionServlet?op=getList2&filtro=<%=filter%>&search=<%=key%>&tag=<%=tag%>&orderBy=utilizziMax&nomeU=<%=nome_utente%>')"><fmt:message key="orderMostUsed"/></a></li>
+                                                <li><a tabindex="-1" class="mouseOver puntatore" id="4" onclick="doHref('ActionServlet?op=getList2&filtro=<%=filter%>&search=<%=key%>&tag=<%=tag%>&orderBy=utilizziMin&nomeU=<%=nome_utente%>')"><fmt:message key="orderLessUsed"/></a></li>
                                             </ul>
                                         </li>
                                         <li class="dropdown-submenu">
                                             <a class="test1 mouseOver" id="5" tabindex="-1"><fmt:message key="orderModeVote"/><span class="caret"></span></a>
                                             <ul class="dropdown-menu" id="menu2">
-                                                <li><a tabindex="-1" class="mouseOver" id="6" onclick="doHref('ActionServlet?op=getList2&filtro=<%=filter%>&search=<%=key%>&tag=<%=tag%>&orderBy=votoMax&nomeU=<%=nome_utente%>')"><fmt:message key="orderMostVoted"/></a></li>
-                                                <li><a tabindex="-1" class="mouseOver" id="7" onclick="doHref('ActionServlet?op=getList2&filtro=<%=filter%>&search=<%=key%>&tag=<%=tag%>&orderBy=votoMin&nomeU=<%=nome_utente%>')"><fmt:message key="orderLessVoted"/></a></li>
+                                                <li><a tabindex="-1" class="mouseOver puntatore" id="6" onclick="doHref('ActionServlet?op=getList2&filtro=<%=filter%>&search=<%=key%>&tag=<%=tag%>&orderBy=votoMax&nomeU=<%=nome_utente%>')"><fmt:message key="orderMostVoted"/></a></li>
+                                                <li><a tabindex="-1" class="mouseOver puntatore" id="7" onclick="doHref('ActionServlet?op=getList2&filtro=<%=filter%>&search=<%=key%>&tag=<%=tag%>&orderBy=votoMin&nomeU=<%=nome_utente%>')"><fmt:message key="orderLessVoted"/></a></li>
                                             </ul>
                                         </li>
                                     </ul>
@@ -273,10 +273,9 @@
                                         <%
                                             if (numPages > 1) {
                                                 for (int i = 0; i < numPages; i++) {
-
                                         %>
 
-                                        <li><a onclick="doHref('ActionServlet?op=getList2&start=<%=i * DSPerPag%>&filtro=<%=filter%>&search=<%=key%>&tag=<%=tag%>&orderBy=<%=ordinamento%>&nomeU=<%=nome_utente%>')"><%=i + 1%></a></li>
+                                        <li><a class="puntatore" onclick="doHref('ActionServlet?op=getList2&start=<%=i * DSPerPag%>&filtro=<%=filter%>&search=<%=key%>&tag=<%=tag%>&orderBy=<%=ordinamento%>&nomeU=<%=nome_utente%>')"><%=i + 1%></a></li>
                                             <%
                                                     }
                                                 }
@@ -331,10 +330,10 @@
                                     </p>
                                 </div>
                                 <div class="col-sm-12 col-md-2 col-lg-2 margine-top-30">
-                                    <button onclick="selezione('<%=service.getId()%>')" type="button" data-toggle="modal" class="dimension" data-target="#myModal<%=service.getId()%>"><span class="glyphicon glyphicon-pencil"></span>   Vota</button>
+                                    <button onclick="selezione('<%=service.getId()%>')" type="button" data-toggle="modal" class="dimension btn btn-default" data-target="#myModal<%=service.getId()%>"><span class="glyphicon glyphicon-pencil"></span>   <fmt:message key="voteButton"/> </button>
                                     <br>
                                     <br>
-                                    <button type="button" data-toggle="modal" class="dimension" data-target="#myModalTag<%=service.getId()%>"> <span class="glyphicon glyphicon-tag"></span>   Tag</button>
+                                    <button type="button" data-toggle="modal" class="dimension btn btn-default" data-target="#myModalTag<%=service.getId()%>"> <span class="glyphicon glyphicon-tag "></span>   <fmt:message key="tagButton"/></button>
 
 
                                     <!-- Modal -->
@@ -408,7 +407,7 @@
                                                         <br>
                                                     </div>
                                                     <div class="msgModal hidden">
-                                                        <ul class="listaAggregazioni hidden list-group checked-list-box">
+                                                        <ul class="listaAggregazioni hidden list-group checked-list-box" onclick="abilitaVotoAggr()">
                                                         </ul>
                                                         <div class="jumbotron feedbackVoto hidden">                                                           
                                                         </div>
@@ -445,7 +444,7 @@
                     ArrayList<Aggregazione> mashup = (ArrayList<Aggregazione>) session.getAttribute("mashup");
                     if (mashup.size() == 0) {
                 %>
-                <div>No mash-up</div>
+                <div><fmt:message key="noMash" /></div>
                 <%
                 } else {
                     Iterator iterMash = mashup.iterator();
@@ -494,7 +493,7 @@
                                 </div>
                             </h4>
                         </div>
-                        <div id="collapse<%=nome%>" class="panel-collapse collapse">
+                        <div id="collapse<%=nome%>" class="panel-collapse collapse mashCollapse">
                             <ul id="<%=nome%>list" class="list-group">
                                 <%
                                     if (dataServiceByAggr.size() == 0) {
